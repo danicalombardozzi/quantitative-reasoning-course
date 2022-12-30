@@ -1,0 +1,28 @@
+# Exploratory Data Analysis
+
+
+## Data Types
+
+
+### Indexing
+
+
+## Explore
+
+### `Tidyverse` wrangling
+
+### Summarizing your data
+
+#### Measures of central tendancy
+
+#### Vairance
+
+#### Distributions
+
+
+## Visualize
+
+
+## Spatial Data
+
+

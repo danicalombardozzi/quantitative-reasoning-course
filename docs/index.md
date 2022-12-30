@@ -1,57 +1,24 @@
---- 
-title: "A Minimal Book Example"
-author: "John Doe"
-date: "2022-12-28"
+---
+title: "Quantitative Reasoning for Ecosystem Science"
+author: "Caitlin C. Mothes, PhD"
+date: "2022-12-29"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
-# url: your book url like https://bookdown.org/yihui/bookdown
+url: https://ccmothes.github.io/quantitative-reasoning-course/
 # cover-image: path to the social sharing image like images/cover.jpg
 description: |
-  This is a minimal example of using the bookdown package to write a book.
-  The HTML output format for this example is bookdown::gitbook,
-  set in the _output.yml file.
+  This site hosts the course lab content for ESS 330 at Colorado State University.
 link-citations: yes
-github-repo: rstudio/bookdown-demo
+github-repo: ccmothes/quantitative-reasoning-course
 ---
 
-# About
+# Introduction
 
-This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports; for example, a math equation $a^2 + b^2 = c^2$.
+This site hosts the lab curriculum for Colorado State University's **ESS 330** course: *Quantitative Reasoning for Ecosystem Science*
 
-## Usage 
+## Navigating this site {-}
 
-Each **bookdown** chapter is an .Rmd file, and each .Rmd file can contain one (and only one) chapter. A chapter *must* start with a first-level heading: `# A good chapter`, and can contain one (and only one) first-level heading.
+The table of contents on the left allows you to navigate to the lesson for each week of the course. Each lesson will walk you through working through the topic, analysis, etc. for that week with exercises at the end of the lesson that will be that week's homework assignment.
 
-Use second-level and higher headings within chapters like: `## A short section` or `### An even shorter section`.
-
-The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book.
-
-## Render book
-
-You can render the HTML version of this example book without changing anything:
-
-1. Find the **Build** pane in the RStudio IDE, and
-
-1. Click on **Build Book**, then select your output format, or select "All formats" if you'd like to use multiple formats from the same book source files.
-
-Or build the book from the R console:
-
-
-```r
-bookdown::render_book()
-```
-
-To render this example to PDF as a `bookdown::pdf_book`, you'll need to install XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
-
-## Preview book
-
-As you work, you may start a local server to live preview this HTML book. This preview will update as you edit the book when you save individual .Rmd files. You can start the server in a work session by using the RStudio add-in "Preview book", or from the R console:
-
-
-```r
-bookdown::serve_book()
-```
-
-
-
+Homework will be submitted through Canvas and exercise questions (including any code, figures, etc.) must be submitted in Word or PDF format. The Intro to R lesson will walk through how to create R Markdown documents in R, which you will use to write your code/answers to the exercises and then render to either Word or PDF report which is what you will submit through Canvas.

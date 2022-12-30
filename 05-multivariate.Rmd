@@ -1,0 +1,12 @@
+# Multivariate Statistics
+
+
+## ANOVA
+
+
+## Multiple Regression
+
+
+## Model Selection
+
+
