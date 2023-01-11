@@ -1,7 +1,7 @@
 # Introduction to R and RStudio
 
 ```{r include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 
 ## Getting to know RStudio
@@ -105,11 +105,148 @@ paste("Hello", "World", sep = "-")
 
 You may hear the terms 'Base R' and 'Tidyverse' a lot throughout this course. Base R includes functions that are installed with the R software and do not require the installation of additional packages to use them. The Tidyverse is a collection of R packages designed for data manipulation, exploration, and visualization that you are likely to use in every day data analysis, and all use the same design philosophy, grammar, and data structures. When you install the Tidyverse, it installs all of these packages, and you can then load all of them in your R session with `library(tidyverse)`. Base R and Tidyverse have many similar functions, but many prefer the style, efficiency and functionality of the Tidyverse packages, and we will mostly be sticking to Tidyverse functions for this course.
 
+#### Assignment operator
+
+Notice that when you ran the following functions above, the answers were printed to the console, but were not saved anywhere (i.e., you don't see them stored as variables in your environment). To save the output of some operation to your environment you use the assignment operator `<-`. For example, run the following line of code:
+
+```{r}
+x <- log(10)
+```
+
+And now you see the output, '2.3025...' saved as a variable named 'x'. You can now use this value in other functions
+
+```{r}
+x + 5
+```
+
 ### Data Types
 
-#### Indexing
+For this intro lesson, we are going to use the Palmer Penguins data set (which is loaded with the `palmerpenguins` package you installed during setup). This data was collected and made available by [Dr. Kristen Gorman](https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php) and the [Palmer Station, Antarctica LTER](https://pallter.marine.rutgers.edu/), a member of the [Long Term Ecological Research Network](https://lternet.edu/).
 
-### Reading data into R
+Load the `penguins` data set.
+
+```{r}
+data("penguins")
+```
+
+You now see it in the Environment pane. Print it to the console to see a snapshot of the data:
+
+```{r}
+penguins
+```
+
+This data is structured is a data frame, probably the most common data type and one you are most familiar with. These are like the spreadsheets you worked with in the first lesson, tabular data organized by rows and columns. However we see at the top this is called a `tibble` which is just a fancy kind of data frame specific to the `tidyvese`.
+
+At the top we can see the data type of each column. There are five main data types:
+
+-   **character**: `"a"`, `"swc"`
+
+-   **numeric**: `2`, `15.5`
+
+-   **integer**: `2L` (the `L` tells R to store this as an integer)
+
+-   **logical**: `TRUE`, `FALSE`
+
+-   **complex**: `1+4i` (complex numbers with real and imaginary parts)
+
+Data types are combined to form data structures. R's basic data structures include
+
+-   atomic vector
+
+-   list
+
+-   matrix
+
+-   data frame
+
+-   factors
+
+You can see the data type or structure of an object using the `class()` function, and get more specific details using the `str()` function. (Note that 'tbl' stands for tibble).
+
+```{r}
+class(penguins)
+str(penguins)
+```
+
+```{r}
+class(penguins$species)
+str(penguins$species)
+```
+
+When we pull one column from a data frame like we just did above, that returns a vector. Vectors are 1-dimensional, and must contain data of a single data type (i.e., you cannot have a vector of both numbers and characters).
+
+If you want a 1-dimensional object that holds mixed data types and structures, that would be a list. You can put together pretty much anything in a list.
+
+```{r}
+myList <- list("apple", 1993, FALSE, penguins)
+str(myList)
+```
+
+You can even nest lists within lists
+
+```{r}
+list(myList, list("more stuff here", list("and more")))
+
+```
+
+You can use the `names()` function to retrieve or assign names to list and vector elements
+
+```{r}
+names(myList) <- c("fruit", "year", "logic", "data")
+names(myList)
+```
+
+### Indexing
+
+Indexing is an extremely important aspect to data exploration and manipulation. In fact you already started indexing when we looked at the data type of individual columns with `penguins$species`. How you index is dependent on the data structure.
+
+Index lists:
+
+```{r}
+# for lists we use double brackes [[]]
+myList[[1]]
+
+myList[["data"]]
+
+```
+
+Index vectors:
+
+```{r}
+# for vectors we use single brackets []
+myVector <- c("apple", "banana", "pear")
+myVector[2]
+```
+
+Index data frames:
+
+```{r}
+# dataframe[row(s), columns()]
+penguins[1:5, 2]
+
+penguins[1:5, "island"]
+
+penguins[1, 1:5]
+
+penguins[1:5, c("species","sex")]
+
+penguins[penguins$sex=='female',]
+
+# $ for a single column
+penguins$species
+```
+
+### Read and Write Data
+
+We used an R data package today to read in our data frame, but that probably isn't how you will normally read in your data.There are many ways to read and write data in R. To read in .csv files, you can use `read_csv()` which is included in the Tidyverse with the `readr` package, and to save csv files use `write_csv()`. The `readxl` package is great for reading in excel files, however it is not included in the Tidyverse and will need to be loaded separately.
+
+Find the .csv you created at the end of last week's lesson. Created a folder in your project directory called 'data/' and copy the .csv file there. You will store various data sets in this 'data/' folder throughout the course.
+
+Say your .csv is called 'survey_data_clean.csv'. This is how you would read it in to R, giving it the object name 'survey_data'
+
+```{r}
+survey_data <- read_csv("data/survey_data_clean.csv")
+```
 
 ### Exercises
 
