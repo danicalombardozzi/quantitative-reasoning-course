@@ -23,7 +23,7 @@
 <meta name="author" content="Caitlin C. Mothes, PhD" />
 
 
-<meta name="date" content="2023-01-10" />
+<meta name="date" content="2023-01-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -314,23 +314,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>If you plan on doing any statistical analysis on your data , one of the first things you are likely to do is explore the distirbution of your variables. You can plot histograms with <code>geom_histogram()</code></p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="exploratory-data-analysis.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span> </span>
 <span id="cb37-2"><a href="exploratory-data-analysis.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm))</span></code></pre></div>
-<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 <p>This isn’t too informative, we want to see the distributions for each species. We can do that by coloring the bars by species</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="exploratory-data-analysis.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram example: flipper length by species</span></span>
 <span id="cb38-2"><a href="exploratory-data-analysis.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
 <span id="cb38-3"><a href="exploratory-data-analysis.html#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">fill =</span> species), <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">position =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
 <span id="cb38-4"><a href="exploratory-data-analysis.html#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;darkorange&quot;</span>,<span class="st">&quot;darkorchid&quot;</span>,<span class="st">&quot;cyan4&quot;</span>))</span></code></pre></div>
-<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <p>Or we can use <code>facet_wrap()</code> to create a separate plot for each species</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="exploratory-data-analysis.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
 <span id="cb39-2"><a href="exploratory-data-analysis.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">fill =</span> species), <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">position =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
 <span id="cb39-3"><a href="exploratory-data-analysis.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;darkorange&quot;</span>,<span class="st">&quot;darkorchid&quot;</span>,<span class="st">&quot;cyan4&quot;</span>)) <span class="sc">+</span></span>
 <span id="cb39-4"><a href="exploratory-data-analysis.html#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species)</span></code></pre></div>
-<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 <p>Lets make a quick bar plot showing the total count of each species studied on each island</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="exploratory-data-analysis.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
 <span id="cb40-2"><a href="exploratory-data-analysis.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> island, <span class="at">fill =</span> species))</span></code></pre></div>
-<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
 <p>As you may have already noticed, the beauty about <code>ggplot2</code> is there are a million ways you can customize your plots. This example builds on our simple bar plot</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="exploratory-data-analysis.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> island, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
 <span id="cb41-2"><a href="exploratory-data-analysis.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
@@ -339,11 +339,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb41-5"><a href="exploratory-data-analysis.html#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb41-6"><a href="exploratory-data-analysis.html#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb41-7"><a href="exploratory-data-analysis.html#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
-<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
 <p>Now make a scatterplot showing the relationship between body mass and flipper length, coloring the point by species</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="exploratory-data-analysis.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
 <span id="cb42-2"><a href="exploratory-data-analysis.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm, <span class="at">color =</span> species))</span></code></pre></div>
-<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 <div id="exercises-2" class="section level3 hasAnchor" number="4.3.1">
 <h3><span class="header-section-number">4.3.1</span> Exercises<a href="exploratory-data-analysis.html#exercises-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
