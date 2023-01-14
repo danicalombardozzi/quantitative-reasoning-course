@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4.2 Tidyverse wrangling | Quantitative Reasoning for Ecosystem Science</title>
+  <meta name="description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4.2 Tidyverse wrangling | Quantitative Reasoning for Ecosystem Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
+  <meta name="github-repo" content="ccmothes/quantitative-reasoning-course" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4.2 Tidyverse wrangling | Quantitative Reasoning for Ecosystem Science" />
+  
+  <meta name="twitter:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
+  
+
+<meta name="author" content="Caitlin C. Mothes, PhD" />
+
+
+<meta name="date" content="2023-01-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="summarizing-your-data.html"/>
+<link rel="next" href="visualize.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Quantitative Reasoning for Ecosystem Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="set-up-instructions.html"><a href="set-up-instructions.html"><i class="fa fa-check"></i>Set up Instructions</a></li>
+<li class="chapter" data-level="" data-path="navigating-this-site.html"><a href="navigating-this-site.html"><i class="fa fa-check"></i>Navigating this site</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="setup-instructions.html"><a href="setup-instructions.html"><i class="fa fa-check"></i><b>2</b> Setup Instructions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="install-r-and-rstudio.html"><a href="install-r-and-rstudio.html"><i class="fa fa-check"></i><b>2.1</b> Install R and RStudio</a></li>
+<li class="chapter" data-level="2.2" data-path="package-installation.html"><a href="package-installation.html"><i class="fa fa-check"></i><b>2.2</b> Package Installation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html"><i class="fa fa-check"></i><b>3</b> Introduction to R and RStudio</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="getting-to-know-rstudio.html"><a href="getting-to-know-rstudio.html"><i class="fa fa-check"></i><b>3.1</b> Getting to know RStudio</a></li>
+<li class="chapter" data-level="3.2" data-path="r-projects.html"><a href="r-projects.html"><i class="fa fa-check"></i><b>3.2</b> R Projects</a></li>
+<li class="chapter" data-level="3.3" data-path="write-your-first-script.html"><a href="write-your-first-script.html"><i class="fa fa-check"></i><b>3.3</b> Write your first script</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="write-your-first-script.html"><a href="write-your-first-script.html#commenting-code"><i class="fa fa-check"></i><b>3.3.1</b> Commenting code</a></li>
+<li class="chapter" data-level="3.3.2" data-path="write-your-first-script.html"><a href="write-your-first-script.html#executing-code"><i class="fa fa-check"></i><b>3.3.2</b> Executing code</a></li>
+<li class="chapter" data-level="3.3.3" data-path="write-your-first-script.html"><a href="write-your-first-script.html#getting-help-with-code"><i class="fa fa-check"></i><b>3.3.3</b> Getting help with code</a></li>
+<li class="chapter" data-level="3.3.4" data-path="write-your-first-script.html"><a href="write-your-first-script.html#functions"><i class="fa fa-check"></i><b>3.3.4</b> Functions</a></li>
+<li class="chapter" data-level="3.3.5" data-path="write-your-first-script.html"><a href="write-your-first-script.html#data-types"><i class="fa fa-check"></i><b>3.3.5</b> Data Types</a></li>
+<li class="chapter" data-level="3.3.6" data-path="write-your-first-script.html"><a href="write-your-first-script.html#indexing"><i class="fa fa-check"></i><b>3.3.6</b> Indexing</a></li>
+<li class="chapter" data-level="3.3.7" data-path="write-your-first-script.html"><a href="write-your-first-script.html#read-and-write-data"><i class="fa fa-check"></i><b>3.3.7</b> Read and Write Data</a></li>
+<li class="chapter" data-level="3.3.8" data-path="write-your-first-script.html"><a href="write-your-first-script.html#exercises"><i class="fa fa-check"></i><b>3.3.8</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="summarizing-your-data.html"><a href="summarizing-your-data.html"><i class="fa fa-check"></i><b>4.1</b> Summarizing your data</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="summarizing-your-data.html"><a href="summarizing-your-data.html#measures-of-central-tendency"><i class="fa fa-check"></i><b>4.1.1</b> Measures of central tendency</a></li>
+<li class="chapter" data-level="4.1.2" data-path="summarizing-your-data.html"><a href="summarizing-your-data.html#variance"><i class="fa fa-check"></i><b>4.1.2</b> Variance</a></li>
+<li class="chapter" data-level="4.1.3" data-path="summarizing-your-data.html"><a href="summarizing-your-data.html#distributions"><i class="fa fa-check"></i><b>4.1.3</b> Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="tidyverse-wrangling.html"><a href="tidyverse-wrangling.html"><i class="fa fa-check"></i><b>4.2</b> <code>Tidyverse</code> wrangling</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="tidyverse-wrangling.html"><a href="tidyverse-wrangling.html#the-dplyr-package"><i class="fa fa-check"></i><b>4.2.1</b> The <code>dplyr</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="visualize.html"><a href="visualize.html"><i class="fa fa-check"></i><b>4.3</b> Visualize</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="visualize.html"><a href="visualize.html#exercises-2"><i class="fa fa-check"></i><b>4.3.1</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="univariate-statistics.html"><a href="univariate-statistics.html"><i class="fa fa-check"></i><b>5</b> Univariate Statistics</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="t-test.html"><a href="t-test.html"><i class="fa fa-check"></i><b>5.1</b> t-test</a></li>
+<li class="chapter" data-level="5.2" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>5.2</b> Regression</a></li>
+<li class="chapter" data-level="5.3" data-path="chi-square.html"><a href="chi-square.html"><i class="fa fa-check"></i><b>5.3</b> Chi-square</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html"><i class="fa fa-check"></i><b>6</b> Multivariate Statistics</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="anova.html"><a href="anova.html"><i class="fa fa-check"></i><b>6.1</b> ANOVA</a></li>
+<li class="chapter" data-level="6.2" data-path="multiple-regression.html"><a href="multiple-regression.html"><i class="fa fa-check"></i><b>6.2</b> Multiple Regression</a></li>
+<li class="chapter" data-level="6.3" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>6.3</b> Model Selection</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Quantitative Reasoning for Ecosystem Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tidyverse-wrangling" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> <code>Tidyverse</code> wrangling<a href="tidyverse-wrangling.html#tidyverse-wrangling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-dplyr-package" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> The <code>dplyr</code> package<a href="tidyverse-wrangling.html#the-dplyr-package" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>So far the code you’ve been writing has consisted of Base R functionality. Now lets dive into the Tidyverse with the <code>dplyr</code> package.</p>
+<p><code>dplyr</code> is a Tidyverse package to handle most of your data exploration and manipulation tasks.</p>
+<p>Sort data with <a href="https://dplyr.tidyverse.org/reference/arrange.html" style="font-size: 13pt;"><code>arrange()</code></a></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="tidyverse-wrangling.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(penguins, sex)</span>
+<span id="cb28-2"><a href="tidyverse-wrangling.html#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="tidyverse-wrangling.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Sort first by species (in descending order) then by sex</span></span>
+<span id="cb28-4"><a href="tidyverse-wrangling.html#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(penguins, <span class="fu">desc</span>(species), sex)</span></code></pre></div>
+<p><strong>Note: Tidyverse package functions take in column names <em>without</em> quotations.</strong></p>
+<p>Subset rows with <code>filter()</code></p>
+<p>You can filter data in many ways using comparison operators (<code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>!=</code> (not equal), and <code>==</code> (equal)), logical operators (<code>&amp;</code> is “and”, <code>|</code> is “or”, and <code>!</code> is “not”) and other operations such as <code>%in%</code>, which returns everything that matches at least on of the values in a given vector, and <code>is.na()</code> and <code>!is.na()</code> to return all missing or all non-missing data.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="tidyverse-wrangling.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, species <span class="sc">==</span> <span class="st">&quot;Adelie&quot;</span>)</span>
+<span id="cb29-2"><a href="tidyverse-wrangling.html#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="tidyverse-wrangling.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, species <span class="sc">!=</span> <span class="st">&quot;Adelie&quot;</span>)</span>
+<span id="cb29-4"><a href="tidyverse-wrangling.html#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="tidyverse-wrangling.html#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, island <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Dream&quot;</span>, <span class="st">&quot;Torgersen&quot;</span>) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(bill_length_mm))</span></code></pre></div>
+<p>Using <code>dplyr</code> functions will not manipulate the original data, so if you want to save the returned object you need to assign it to a new variable.</p>
+<p>Select variables by their column names with <a href="https://dplyr.tidyverse.org/reference/select.html" style="font-size: 13pt;"><code>select()</code></a></p>
+<p><code>select()</code> has many helper functions you can use with it, such as <code>starts_with()</code>, <code>ends_with()</code>, <code>contains()</code> and many more that are very useful when dealing with large data sets. See <code>?select</code> for more details</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="tidyverse-wrangling.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select two specific variables</span></span>
+<span id="cb30-2"><a href="tidyverse-wrangling.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species, sex)</span>
+<span id="cb30-3"><a href="tidyverse-wrangling.html#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="tidyverse-wrangling.html#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Select a range of variables</span></span>
+<span id="cb30-5"><a href="tidyverse-wrangling.html#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species<span class="sc">:</span>flipper_length_mm)</span>
+<span id="cb30-6"><a href="tidyverse-wrangling.html#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="tidyverse-wrangling.html#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename columns within select</span></span>
+<span id="cb30-8"><a href="tidyverse-wrangling.html#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, <span class="at">genus =</span> species, island)</span>
+<span id="cb30-9"><a href="tidyverse-wrangling.html#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="tidyverse-wrangling.html#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Select column variables that are recorded in mm</span></span>
+<span id="cb30-11"><a href="tidyverse-wrangling.html#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, <span class="fu">contains</span>(<span class="st">&quot;mm&quot;</span>))</span></code></pre></div>
+<p>Create new variables with <a href="https://dplyr.tidyverse.org/reference/mutate.html" style="font-size: 13pt;"><code>mutate()</code></a></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="tidyverse-wrangling.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># New variable that calculates bill length in cm</span></span>
+<span id="cb31-2"><a href="tidyverse-wrangling.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(penguins, <span class="at">bill_length_cm =</span> bill_length_mm<span class="sc">/</span><span class="dv">10</span>)</span>
+<span id="cb31-3"><a href="tidyverse-wrangling.html#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="tidyverse-wrangling.html#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mutate based on conditional statements</span></span>
+<span id="cb31-5"><a href="tidyverse-wrangling.html#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(penguins, <span class="at">species_sex =</span> <span class="fu">if_else</span>(sex <span class="sc">==</span> <span class="st">&#39;male&#39;</span>, <span class="fu">paste0</span>(species,<span class="st">&quot;_m&quot;</span>), <span class="fu">paste0</span>(species, <span class="st">&quot;_f&quot;</span>)))</span></code></pre></div>
+<p>These can all be used in conjunction with <a href="https://dplyr.tidyverse.org/reference/group_by.html"><code>group_by()</code></a> which changes the scope of each function from operating on the entire dataset to operating on it group-by-group. <code>group_by()</code> becomes even more powerful when used along with <code>summarise()</code>. However before we start using multiple operations in conjunction with one another, we need to talk about the pipe operator <code>%&gt;%</code>.</p>
+<div id="the-pipe" class="section level4 hasAnchor" number="4.2.1.1">
+<h4><span class="header-section-number">4.2.1.1</span> The pipe <code>%&gt;%</code><a href="tidyverse-wrangling.html#the-pipe" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The pipe, <code>%&gt;%</code>, comes from the <strong>magrittr</strong> package by Stefan Milton Bache. Packages in the tidyverse load <code>%&gt;%</code> for you automatically, so you don’t usually load magrittr explicitly. Pipes are a powerful tool for clearly expressing a sequence of multiple operations.</p>
+<p>For example, the pipe operator can take this sequence of operations:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="tidyverse-wrangling.html#cb32-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(penguins, island <span class="sc">==</span> <span class="st">&quot;Dream&quot;</span>)</span>
+<span id="cb32-2"><a href="tidyverse-wrangling.html#cb32-2" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(df1, <span class="at">flipper_length_cm =</span> flipper_length_mm<span class="sc">/</span><span class="dv">10</span>)</span>
+<span id="cb32-3"><a href="tidyverse-wrangling.html#cb32-3" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> <span class="fu">select</span>(df2, species, year, flipper_length_cm)</span>
+<span id="cb32-4"><a href="tidyverse-wrangling.html#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="tidyverse-wrangling.html#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(df3)</span></code></pre></div>
+<p>And turn it into this, removing the need to create intermediate variables</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="tidyverse-wrangling.html#cb33-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="tidyverse-wrangling.html#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(island <span class="sc">==</span> <span class="st">&quot;Dream&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-3"><a href="tidyverse-wrangling.html#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">flipper_length_cm =</span> flipper_length_mm<span class="sc">/</span><span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-4"><a href="tidyverse-wrangling.html#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, year, flipper_length_cm)</span></code></pre></div>
+<p>You can read it as a series of imperative statements: filter, then mutate, then select. A good way to pronounce <code>%&gt;%</code> when reading code is “then”. It takes the output of the operation to the left of <code>%&gt;%</code> and feeds it into the next function as the input.</p>
+<p>Say you want to summarize data by some specified group, for example you want to find the average body mass for each species, this is where the <code>group_by()</code> function comes into play.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="tidyverse-wrangling.html#cb34-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="tidyverse-wrangling.html#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-3"><a href="tidyverse-wrangling.html#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">body_mass_avg =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<p>Or get a count of how many individuals were observed for each species each year</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="tidyverse-wrangling.html#cb35-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href="tidyverse-wrangling.html#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, year) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-3"><a href="tidyverse-wrangling.html#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_observations =</span> <span class="fu">n</span>())</span></code></pre></div>
+</div>
+<div id="exercises-1" class="section level4 hasAnchor" number="4.2.1.2">
+<h4><span class="header-section-number">4.2.1.2</span> Exercises<a href="tidyverse-wrangling.html#exercises-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ol style="list-style-type: decimal">
+<li><p>Reorder the variables in <code>penguins</code> so that <code>year</code> is the first column followed by the rest (Hint: look into the use of <code>everything()</code>).</p></li>
+<li><p>Create a new column called ‘size_group’ where individuals with body mass greater than the overall average are called ‘large’ and those smaller are called ‘small’.</p></li>
+<li><p>Find out which year for each species were individuals on average the largest according to body mass.</p></li>
+<li><p>You want to filter data for years that are <em>not</em> in a vector of given years, but this code doesn’t work. Tweak it so that it does. (Yes, you could just filter year to equal 2007 in this case but there is a trouble-shooting lessons here).</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="tidyverse-wrangling.html#cb36-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb36-2"><a href="tidyverse-wrangling.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">!%in%</span> <span class="fu">c</span>(<span class="dv">2008</span>, <span class="dv">2009</span>))</span></code></pre></div></li>
+</ol>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="summarizing-your-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="visualize.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-explore.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["quantitative-reasoning.pdf", "quantitative-reasoning.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

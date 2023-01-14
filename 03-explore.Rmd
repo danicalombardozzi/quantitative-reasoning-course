@@ -12,36 +12,31 @@ library(palmerpenguins)
 data("penguins")
 ```
 
-## Summarizing your data
+When working with a new data set, often the first thing you do is perform some initial investigations on the data using various summary statistics and graphical representations. This is exploratory data analysis! Or for short, EDA. EDA is used to help form initial hypotheses of your data that you can then test with statistics.
 
-### Measures of central tendency
+For our `penguins` data, we want to start by exploring things like sample size, variation and distribution of our variables, and comparisons among species, islands, and sex.
 
-### Variance
+A new Base R function we have yet to use is `summary()`. This functions gives us a very quick snapshot of each variable in our dataset, where we can see things like sample size and summary statistics.
 
-### Distributions
+```{r}
+summary(penguins)
+```
 
-## `Tidyverse` wrangling
+For some more in depth EDA, the `tidyverse` packages provide many useful functions to summarize and visualize data. Today we are going to simultaneously learn about various functions of `tidyverse` packages while investigating and formulating hypotheses about our `penguins` data set.
+
+## Data wrangling
 
 ### The `dplyr` package
 
-So far the code you've been writing has consisted of Base R functionality. Now lets dive into the Tidyverse with the `dplyr` package.
-
 `dplyr` is a Tidyverse package to handle most of your data exploration and manipulation tasks.
 
-Sort data with [`arrange()`](https://dplyr.tidyverse.org/reference/arrange.html){style="font-size: 13pt;"}
-
-```{r}
-arrange(penguins, sex)
-
-#Sort first by species (in descending order) then by sex
-arrange(penguins, desc(species), sex)
-```
-
-**Note: Tidyverse package functions take in column names *without* quotations.**
+::: {.alert .alert-info}
+Note: Tidyverse package functions take in column names *without* quotations.\*\*
+:::
 
 Subset rows with `filter()`
 
-You can filter data in many ways using comparison operators (`>`, `>=`, `<`, `<=`, `!=` (not equal), and `==` (equal)), logical operators (`&` is "and", `|` is "or", and `!` is "not") and other operations such as `%in%`, which returns everything that matches at least on of the values in a given vector, and `is.na()` and `!is.na()` to return all missing or all non-missing data.
+You can filter data in many ways using logical operators (`>`, `>=`, `<`, `<=`, `!=` (not equal), and `==` (equal)), AND (`&`), OR (`|`), and NOT (`!`) operators, and other operations such as `%in%`, which returns everything that matches at least one of the values in a given vector, and `is.na()` and `!is.na()` to return all missing or all non-missing data.
 
 ```{r}
 filter(penguins, species == "Adelie")
@@ -81,6 +76,8 @@ mutate(penguins, bill_length_cm = bill_length_mm/10)
 # mutate based on conditional statements
 mutate(penguins, species_sex = if_else(sex == 'male', paste0(species,"_m"), paste0(species, "_f")))
 ```
+
+[**`group_by()`**](https://dplyr.tidyverse.org/reference/group_by.html) **and [`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html)**
 
 These can all be used in conjunction with [`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html) which changes the scope of each function from operating on the entire dataset to operating on it group-by-group. `group_by()` becomes even more powerful when used along with `summarise()`. However before we start using multiple operations in conjunction with one another, we need to talk about the pipe operator `%>%`.
 
@@ -153,7 +150,7 @@ ggplot(data = <DATA>) +
   <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
 ```
 
-If you plan on doing any statistical analysis on your data , one of the first things you are likely to do is explore the distirbution of your variables. You can plot histograms with `geom_histogram()`
+If you plan on doing any statistical analysis on your data , one of the first things you are likely to do is explore the distribution of your variables. You can plot histograms with `geom_histogram()`
 
 ```{r, eval=TRUE}
 ggplot(penguins) + 

@@ -8,9 +8,10 @@ r-projects
 write-your-first-script
 commenting-code
 executing-code
+getting-help-with-code
 functions
-base-r-vs.-the-tidyverse
 assignment-operator
+base-r-vs.-the-tidyverse
 data-types
 indexing
 read-and-write-data
@@ -34,3 +35,4 @@ multivariate-statistics
 anova
 multiple-regression
 model-selection
+data-wrangling

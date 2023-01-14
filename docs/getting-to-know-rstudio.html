@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title> 3 Introduction to R and RStudio | Quantitative Reasoning for Ecosystem Science</title>
+  <title>3.1 Getting to know RStudio | Quantitative Reasoning for Ecosystem Science</title>
   <meta name="description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
   <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content=" 3 Introduction to R and RStudio | Quantitative Reasoning for Ecosystem Science" />
+  <meta property="og:title" content="3.1 Getting to know RStudio | Quantitative Reasoning for Ecosystem Science" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
   <meta name="github-repo" content="ccmothes/quantitative-reasoning-course" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content=" 3 Introduction to R and RStudio | Quantitative Reasoning for Ecosystem Science" />
+  <meta name="twitter:title" content="3.1 Getting to know RStudio | Quantitative Reasoning for Ecosystem Science" />
   
   <meta name="twitter:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="package-installation.html"/>
-<link rel="next" href="getting-to-know-rstudio.html"/>
+<link rel="prev" href="introduction-to-r-and-rstudio.html"/>
+<link rel="next" href="r-projects.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -211,16 +211,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction-to-r-and-rstudio" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number"> 3</span> Introduction to R and RStudio<a href="introduction-to-r-and-rstudio.html#introduction-to-r-and-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="getting-to-know-rstudio" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Getting to know RStudio<a href="getting-to-know-rstudio.html#getting-to-know-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When you first open RStudio, it is split into 3 panels:</p>
+<ul>
+<li><strong>The Console</strong> (left), where you can directly type and run code (by hitting Enter)</li>
+<li><strong>The Environment/History pane</strong> (upper-right), where you can view the objects you currently have stored in your environment and a history of the code you’ve run</li>
+<li><strong>The Files/Plots/Packages/Help pane</strong> (lower-right), where you can search for files, view and save your plots, view and manage what packages are loaded in your library and session, and get R help</li>
+</ul>
+<div class="figure">
+<img src="https://swcarpentry.github.io/r-novice-gapminder/fig/01-rstudio.png" style="width:100.0%" alt="Image Credit: Software Carpentry" />
+<p class="caption">Image Credit: Software Carpentry</p>
+</div>
+<p><br></p>
+<p>To write and save code you use <strong>scripts</strong>. You can open a new script with File -&gt; New File -&gt; R Script or by clicking the icon with the green plus sign in the upper left corner under ‘File’. When you open a script, RStudio then opens a fourth <strong>‘Source’ panel</strong> in the upper-left to write and save your code. You can also send code from a script directly to the console to execute it by highlighting the <strong>entire</strong> code line/chunk (or place your cursor at the very end of the code chunk) and hit CTRL+ENTER on a PC or CMD+ENTER on a Mac.</p>
+<div class="figure">
+<img src="https://swcarpentry.github.io/r-novice-gapminder/fig/01-rstudio-script.png" alt="Image Credit: Software Carpentry" />
+<p class="caption">Image Credit: Software Carpentry</p>
+</div>
+<p>It is good practice to add comments/notes throughout your scripts to document what the code is doing. To do this start your text with a <code>#</code>. R knows to ignore everything after a <code>#</code>, so you can write whatever you want there. Note that R reads line by line, so if you want your comments to carry over multiple lines you need a <code>#</code> at every line.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="package-installation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="getting-to-know-rstudio.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="introduction-to-r-and-rstudio.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r-projects.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

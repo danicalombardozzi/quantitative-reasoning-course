@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title> 3 Introduction to R and RStudio | Quantitative Reasoning for Ecosystem Science</title>
+  <title>4.3 Visualize | Quantitative Reasoning for Ecosystem Science</title>
   <meta name="description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
   <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content=" 3 Introduction to R and RStudio | Quantitative Reasoning for Ecosystem Science" />
+  <meta property="og:title" content="4.3 Visualize | Quantitative Reasoning for Ecosystem Science" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
   <meta name="github-repo" content="ccmothes/quantitative-reasoning-course" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content=" 3 Introduction to R and RStudio | Quantitative Reasoning for Ecosystem Science" />
+  <meta name="twitter:title" content="4.3 Visualize | Quantitative Reasoning for Ecosystem Science" />
   
   <meta name="twitter:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="package-installation.html"/>
-<link rel="next" href="getting-to-know-rstudio.html"/>
+<link rel="prev" href="tidyverse-wrangling.html"/>
+<link rel="next" href="univariate-statistics.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -211,16 +211,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction-to-r-and-rstudio" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number"> 3</span> Introduction to R and RStudio<a href="introduction-to-r-and-rstudio.html#introduction-to-r-and-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="visualize" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Visualize<a href="visualize.html#visualize" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A huge part of data exploration includes data visualization to get quick snapshots of your data and reveal patterns you can’t see from starting a a data frame of numbers. Here we are going to walk through a very quick introduction to <code>ggplot2</code>, using some code examples from the <code>palmerpenguins</code> R package tutorial: <a href="https://allisonhorst.github.io/palmerpenguins/articles/intro.html" class="uri">https://allisonhorst.github.io/palmerpenguins/articles/intro.html</a>.</p>
+<p><code>ggplot2</code> is perhaps the most popular data visualization package in the R language, and is also a part of the Tidyverse. One big difference about <code>ggplot</code> though is that it does not use the pipe <code>%&gt;%</code> operator like we just learned, but instead threads together arguments with <code>+</code> signs.</p>
+<p>The general structure for ggplots follows the template below. However note that you can also specify the <code>aes()</code> parameters withing <code>ggplot()</code> instead of your geom function, which you may see a lot of people do. The mappings include arguments such as the x and y variables from your data you want to use for the plot. The geom function is the type of plot you want to make, such as <code>geom_point()</code>, <code>geom_bar()</code>, etc, there are a lot to choose from.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="visualize.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>) <span class="sc">+</span> </span>
+<span id="cb37-2"><a href="visualize.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="er">&lt;</span>GEOM_FUNCTION<span class="sc">&gt;</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="sc">&lt;</span>MAPPINGS<span class="sc">&gt;</span>))</span></code></pre></div>
+<p>If you plan on doing any statistical analysis on your data , one of the first things you are likely to do is explore the distirbution of your variables. You can plot histograms with <code>geom_histogram()</code></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="visualize.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span> </span>
+<span id="cb38-2"><a href="visualize.html#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm))</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p>This isn’t too informative, we want to see the distributions for each species. We can do that by coloring the bars by species</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="visualize.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram example: flipper length by species</span></span>
+<span id="cb39-2"><a href="visualize.html#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="visualize.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">fill =</span> species), <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">position =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb39-4"><a href="visualize.html#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;darkorange&quot;</span>,<span class="st">&quot;darkorchid&quot;</span>,<span class="st">&quot;cyan4&quot;</span>))</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p>Or we can use <code>facet_wrap()</code> to create a separate plot for each species</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="visualize.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb40-2"><a href="visualize.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">fill =</span> species), <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">position =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="visualize.html#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;darkorange&quot;</span>,<span class="st">&quot;darkorchid&quot;</span>,<span class="st">&quot;cyan4&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb40-4"><a href="visualize.html#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species)</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p>Lets make a quick bar plot showing the total count of each species studied on each island</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="visualize.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb41-2"><a href="visualize.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> island, <span class="at">fill =</span> species))</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<p>As you may have already noticed, the beauty about <code>ggplot2</code> is there are a million ways you can customize your plots. This example builds on our simple bar plot</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="visualize.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> island, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb42-2"><a href="visualize.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb42-3"><a href="visualize.html#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;darkorange&quot;</span>,<span class="st">&quot;purple&quot;</span>,<span class="st">&quot;cyan4&quot;</span>), </span>
+<span id="cb42-4"><a href="visualize.html#cb42-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">guide =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb42-5"><a href="visualize.html#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb42-6"><a href="visualize.html#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb42-7"><a href="visualize.html#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p>Now make a scatterplot showing the relationship between body mass and flipper length, coloring the point by species</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="visualize.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
+<span id="cb43-2"><a href="visualize.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm, <span class="at">color =</span> species))</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<div id="exercises-2" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Exercises<a href="visualize.html#exercises-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><p>Make a barplot showing the average flipper length for each species.</p></li>
+<li><p>Make a scatter plot of bill length compared to bill depth but only for observations on the Dream island.</p></li>
+</ol>
+
 </div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="package-installation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="getting-to-know-rstudio.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="tidyverse-wrangling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="univariate-statistics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -241,7 +288,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/02-intro-r.Rmd",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-explore.Rmd",
 "text": "Edit"
 },
 "history": {

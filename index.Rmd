@@ -17,7 +17,11 @@ github-repo: ccmothes/quantitative-reasoning-course
 
 This site hosts the lab curriculum for Colorado State University's **ESS 330** course: *Quantitative Reasoning for Ecosystem Science*
 
-## Navigating this site {-}
+## Set up Instructions {.unnumbered}
+
+Before getting started with the first lesson, please follow the instructions on the [R Setup][Setup Instructions] to make sure you have all the necessary software installed on your computer.
+
+## Navigating this site {.unnumbered}
 
 The table of contents on the left allows you to navigate to the lesson for each week of the course. Each lesson will walk you through working through the topic, analysis, etc. for that week with exercises at the end of the lesson that will be that week's homework assignment.
 

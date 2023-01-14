@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title> 3 Introduction to R and RStudio | Quantitative Reasoning for Ecosystem Science</title>
+  <title>3.2 R Projects | Quantitative Reasoning for Ecosystem Science</title>
   <meta name="description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
   <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content=" 3 Introduction to R and RStudio | Quantitative Reasoning for Ecosystem Science" />
+  <meta property="og:title" content="3.2 R Projects | Quantitative Reasoning for Ecosystem Science" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
   <meta name="github-repo" content="ccmothes/quantitative-reasoning-course" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content=" 3 Introduction to R and RStudio | Quantitative Reasoning for Ecosystem Science" />
+  <meta name="twitter:title" content="3.2 R Projects | Quantitative Reasoning for Ecosystem Science" />
   
   <meta name="twitter:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="package-installation.html"/>
-<link rel="next" href="getting-to-know-rstudio.html"/>
+<link rel="prev" href="getting-to-know-rstudio.html"/>
+<link rel="next" href="write-your-first-script.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -211,16 +211,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction-to-r-and-rstudio" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number"> 3</span> Introduction to R and RStudio<a href="introduction-to-r-and-rstudio.html#introduction-to-r-and-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="r-projects" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> R Projects<a href="r-projects.html#r-projects" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As a first step whenever you start a new project, workflow, analysis, etc., it is good practice to set up an R project. R Projects are RStudio’s way of bundling together all your files for a specific project, such as data, scripts, results, figures. Your project directory also becomes your working directory, so everything is self-contained and easily portable.</p>
+<p>We recommend using a single R Project for this course, so lets create one now.</p>
+<p>You can start an R project in an existing directory or in a new one. To create a project go to File -&gt; New Project:</p>
+<p><img src="images/project-start.png" /></p>
+<p>Let’s choose ‘New Directory’ then ‘New Project’. Now choose a directory name, this will be both the folder name and the project name, so use proper spelling conventions (no spaces!). We recommend naming it something course specific, like ‘ESS-330-2023’. Choose where on your local file system you want to save this new folder/project, then click ‘Create Project’.</p>
+<p>Now you can see your RStudio session is working in the R project you just created. You can see the working directory printed at the top of your console is now the project directory, and in the ‘Files’ tab in RStudio you can see there is an .Rproj file with the same name as the R project, which will open up this R project in RStudio whenever you come back to it.</p>
+<p><strong>Test out how this .Rproj file works</strong>. Close out of your R session, navigate to the project folder on your computer, and double-click the .Rproj file.</p>
+<div class="alert alert-info">
+<p><strong><em>What is a working directory?</em></strong> A working directory is the default file path to a specific file location on your computer to read files from or save files to. Since everyone’s computer is unique, everyone’s full file paths will be different. This is an advantage of working in R Projects, you can use <em>relative</em> file paths, since the working directory defaults to wherever the .RProj file is saved on your computer you don’t need to specify the full unique path to read and write files within the project directory.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="package-installation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="getting-to-know-rstudio.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="getting-to-know-rstudio.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="write-your-first-script.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
