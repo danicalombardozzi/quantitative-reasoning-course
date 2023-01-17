@@ -17,16 +17,11 @@ indexing
 read-and-write-data
 exercises
 exploratory-data-analysis
-summarizing-your-data
-measures-of-central-tendency
-variance
-distributions
-tidyverse-wrangling
+data-wrangling
 the-dplyr-package
 the-pipe
+visualization
 exercises-1
-visualize
-exercises-2
 univariate-statistics
 t-test
 regression
@@ -35,4 +30,3 @@ multivariate-statistics
 anova
 multiple-regression
 model-selection
-data-wrangling

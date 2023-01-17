@@ -1,12 +1,13 @@
 # Exploratory Data Analysis
 
 ```{r include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = FALSE)
+
 ```
 
 For this lesson you will be working with the same `penguins` data from last week. Start a new script for this week, and add/execute the following lines of code to set up your session:
 
-```{r}
+```{r eval=TRUE}
 library(tidyverse)
 library(palmerpenguins)
 data("penguins")
