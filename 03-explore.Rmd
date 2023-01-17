@@ -157,7 +157,7 @@ ggplot(penguins) +
   geom_histogram(mapping = aes(x = flipper_length_mm))
 ```
 
-This tells us there may be a lot of variation in flipper size among species. We can use the 'fill = ' argument to color the bars by species, and `scale_fill_manual()` to specify the colors.
+This tells us there may be a lot of variation in flipper size among species. We can use the 'fill =' argument to color the bars by species, and `scale_fill_manual()` to specify the colors.
 
 ```{r, eval=TRUE}
 # Histogram example: flipper length by species
