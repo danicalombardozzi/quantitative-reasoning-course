@@ -260,7 +260,7 @@ Say your .csv is called 'survey_data_clean.csv'. This is how you would read it i
 survey_data <- read_csv("data/survey_data_clean.csv")
 ```
 
-### Exercises
+## Exercises
 
 *For each question you must also include the line(s) of code you used to arrive at the answer.*
 
@@ -269,7 +269,7 @@ survey_data <- read_csv("data/survey_data_clean.csv")
 2.  Why don't the following lines of code work? Tweak each one so the code runs (6 pts)
 
     ```{r}
-    myList["Fruit"]
+    myList[year]
     ```
 
     ```{r}

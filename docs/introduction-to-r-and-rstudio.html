@@ -159,8 +159,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.5" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#data-types"><i class="fa fa-check"></i><b>3.3.5</b> Data Types</a></li>
 <li class="chapter" data-level="3.3.6" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#indexing"><i class="fa fa-check"></i><b>3.3.6</b> Indexing</a></li>
 <li class="chapter" data-level="3.3.7" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#read-and-write-data"><i class="fa fa-check"></i><b>3.3.7</b> Read and Write Data</a></li>
-<li class="chapter" data-level="3.3.8" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#exercises"><i class="fa fa-check"></i><b>3.3.8</b> Exercises</a></li>
 </ul></li>
+<li class="chapter" data-level="3.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#exercises"><i class="fa fa-check"></i><b>3.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Exploratory Data Analysis</a>
 <ul>
@@ -374,13 +374,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Say your .csv is called ‘survey_data_clean.csv’. This is how you would read it in to R, giving it the object name ‘survey_data’</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="introduction-to-r-and-rstudio.html#cb23-1" aria-hidden="true" tabindex="-1"></a>survey_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/survey_data_clean.csv&quot;</span>)</span></code></pre></div>
 </div>
-<div id="exercises" class="section level3 hasAnchor" number="3.3.8">
-<h3><span class="header-section-number">3.3.8</span> Exercises<a href="introduction-to-r-and-rstudio.html#exercises" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="exercises" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Exercises<a href="introduction-to-r-and-rstudio.html#exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><em>For each question you must also include the line(s) of code you used to arrive at the answer.</em></p>
 <ol style="list-style-type: decimal">
 <li><p>Use <code>class()</code> and <code>str()</code> to inspect the .csv you created from last week’s lesson that you just read into R. How many rows and columns does it have? What data type is each column? (4 pts)</p></li>
 <li><p>Why don’t the following lines of code work? Tweak each one so the code runs (6 pts)</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introduction-to-r-and-rstudio.html#cb24-1" aria-hidden="true" tabindex="-1"></a>myList[<span class="st">&quot;Fruit&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introduction-to-r-and-rstudio.html#cb24-1" aria-hidden="true" tabindex="-1"></a>myList[year]</span></code></pre></div>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="introduction-to-r-and-rstudio.html#cb25-1" aria-hidden="true" tabindex="-1"></a>penguins<span class="sc">$</span>flipper_lenght_mm</span></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="introduction-to-r-and-rstudio.html#cb26-1" aria-hidden="true" tabindex="-1"></a>penguins[island<span class="sc">==</span><span class="st">&#39;Dream&#39;</span>,]</span></code></pre></div></li>
 <li><p>How many species are in the <code>penguins</code> dataset? What islands were the data collected for? (Note: the <code>unique()</code> function might help) (5 pts)</p></li>
@@ -388,7 +389,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Use indexing and the <code>mean()</code> function to find the average flipper length for the <em>Adelie</em> species on Dream island. (5 pts)</p></li>
 </ol>
 
-</div>
 </div>
 </div>
             </section>
