@@ -262,7 +262,9 @@ survey_data <- read_csv("data/survey_data_clean.csv")
 
 ### Exercises
 
-1.  Use `class()` and `str()` to inspect the .csv you created from last week's lesson that you just read in to R. How many rows and columns does it have? What data type is each column? (4 pts).
+*For each question you must also include the line(s) of code you used to arrive at the answer.*
+
+1.  Use `class()` and `str()` to inspect the .csv you created from last week's lesson that you just read into R. How many rows and columns does it have? What data type is each column? (4 pts)
 
 2.  Why don't the following lines of code work? Tweak each one so the code runs (6 pts)
 
@@ -282,4 +284,4 @@ survey_data <- read_csv("data/survey_data_clean.csv")
 
 4.  Use indexing to create a new data frame that has only 3 columns: species, island and flipper length columns, and subset all rows for just the 'Dream' island. (5 pts)
 
-5.  Use indexing and the `mean()` function to find the average flipper length for the *Adelie* species on Dream island. (Note: explore the `mean()` function and how to deal with NA values). (5 pts)
+5.  Use indexing and the `mean()` function to find the average flipper length for the *Adelie* species on Dream island. (5 pts)

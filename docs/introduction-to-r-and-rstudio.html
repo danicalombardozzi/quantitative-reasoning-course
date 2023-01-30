@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title> 3 Introduction to R and RStudio | Quantitative Reasoning for Ecosystem Science</title>
   <meta name="description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
   <meta property="og:title" content=" 3 Introduction to R and RStudio | Quantitative Reasoning for Ecosystem Science" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Caitlin C. Mothes, PhD" />
 
 
-<meta name="date" content="2023-01-17" />
+<meta name="date" content="2023-01-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -376,15 +376,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="exercises" class="section level3 hasAnchor" number="3.3.8">
 <h3><span class="header-section-number">3.3.8</span> Exercises<a href="introduction-to-r-and-rstudio.html#exercises" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><em>For each question you must also include the line(s) of code you used to arrive at the answer.</em></p>
 <ol style="list-style-type: decimal">
-<li><p>Use <code>class()</code> and <code>str()</code> to inspect the .csv you created from last week’s lesson that you just read in to R. How many rows and columns does it have? What data type is each column? (4 pts).</p></li>
+<li><p>Use <code>class()</code> and <code>str()</code> to inspect the .csv you created from last week’s lesson that you just read into R. How many rows and columns does it have? What data type is each column? (4 pts)</p></li>
 <li><p>Why don’t the following lines of code work? Tweak each one so the code runs (6 pts)</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introduction-to-r-and-rstudio.html#cb24-1" aria-hidden="true" tabindex="-1"></a>myList[<span class="st">&quot;Fruit&quot;</span>]</span></code></pre></div>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="introduction-to-r-and-rstudio.html#cb25-1" aria-hidden="true" tabindex="-1"></a>penguins<span class="sc">$</span>flipper_lenght_mm</span></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="introduction-to-r-and-rstudio.html#cb26-1" aria-hidden="true" tabindex="-1"></a>penguins[island<span class="sc">==</span><span class="st">&#39;Dream&#39;</span>,]</span></code></pre></div></li>
 <li><p>How many species are in the <code>penguins</code> dataset? What islands were the data collected for? (Note: the <code>unique()</code> function might help) (5 pts)</p></li>
 <li><p>Use indexing to create a new data frame that has only 3 columns: species, island and flipper length columns, and subset all rows for just the ‘Dream’ island. (5 pts)</p></li>
-<li><p>Use indexing and the <code>mean()</code> function to find the average flipper length for the <em>Adelie</em> species on Dream island. (Note: explore the <code>mean()</code> function and how to deal with NA values). (5 pts)</p></li>
+<li><p>Use indexing and the <code>mean()</code> function to find the average flipper length for the <em>Adelie</em> species on Dream island. (5 pts)</p></li>
 </ol>
 
 </div>
@@ -434,7 +435,7 @@ gitbook.start({
 "options": null
 },
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
 }
 });
 });
