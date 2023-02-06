@@ -23,7 +23,7 @@
 <meta name="author" content="Caitlin C. Mothes, PhD" />
 
 
-<meta name="date" content="2023-01-30" />
+<meta name="date" content="2023-02-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -211,8 +211,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="exploratory-data-analysis.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb27-2"><a href="exploratory-data-analysis.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
 <span id="cb27-3"><a href="exploratory-data-analysis.html#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;penguins&quot;</span>)</span></code></pre></div>
-<p>When working with a new data set, often the first thing you do is perform some initial investigations on the data using various summary statistics and graphical representations. This is exploratory data analysis! Or for short, EDA. EDA is used to help form initial hypotheses of your data that you can then test with statistics.</p>
-<p>For our <code>penguins</code> data, we want to start by exploring things like sample size, variation and distribution of our variables, and comparisons among species, islands, and sex.</p>
+<p>When working with a new data set, often the first thing you do is perform some initial investigations on the data using various summary statistics and graphical representations. This is exploratory data analysis! Or for short, EDA. EDA is used to catch any potential errors, assess statistical assumptions, observe patterns and help form initial hypotheses of your data that you can then test with statistics.</p>
+<p>For our <code>penguins</code> data, we want to start by exploring things like sample size, variation and distribution of our variables, and make initital comparisons among species, islands, and sex.</p>
 <p>A new Base R function we have yet to use is <code>summary()</code>. This functions gives us a very quick snapshot of each variable in our dataset, where we can see things like sample size and summary statistics.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="exploratory-data-analysis.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins)</span></code></pre></div>
 <p>For some more in depth EDA, the <code>tidyverse</code> packages provide many useful functions to summarize and visualize data. Today we are going to simultaneously learn about various functions of <code>tidyverse</code> packages while investigating and formulating hypotheses about our <code>penguins</code> data set.</p>
@@ -249,11 +249,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb31-9"><a href="exploratory-data-analysis.html#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-10"><a href="exploratory-data-analysis.html#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Select column variables that have &#39;mm&#39; in their name</span></span>
 <span id="cb31-11"><a href="exploratory-data-analysis.html#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, <span class="fu">contains</span>(<span class="st">&quot;mm&quot;</span>))</span></code></pre></div>
-<p>Create new variables with <a href="https://dplyr.tidyverse.org/reference/mutate.html" style="font-size: 13pt;"><code>mutate()</code></a></p>
+<p><strong>Create new variables with <a href="https://dplyr.tidyverse.org/reference/mutate.html" style="font-size: 13pt;"><code>mutate()</code></a></strong></p>
+<p><code>mutate()</code> allows you to edit existing columns or create new columns in an existing data frame, and you can perform calculations on existing columns to return outputs in the new column. The syntax is the name of the new column you want to make (or the current column you want to edit) on the left of <code>=</code>, and then to the right is what you want to put in the new column. Note that <code>mutate()</code> works row wise on the data frame.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="exploratory-data-analysis.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># New variable that calculates bill length in cm</span></span>
 <span id="cb32-2"><a href="exploratory-data-analysis.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(penguins, <span class="at">bill_length_cm =</span> bill_length_mm<span class="sc">/</span><span class="dv">10</span>)</span>
 <span id="cb32-3"><a href="exploratory-data-analysis.html#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="exploratory-data-analysis.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mutate based on conditional statements</span></span>
+<span id="cb32-4"><a href="exploratory-data-analysis.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mutate based on conditional statements with if_else()</span></span>
 <span id="cb32-5"><a href="exploratory-data-analysis.html#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(penguins, <span class="at">species_sex =</span> <span class="fu">if_else</span>(sex <span class="sc">==</span> <span class="st">&#39;male&#39;</span>, <span class="fu">paste0</span>(species,<span class="st">&quot;_m&quot;</span>), <span class="fu">paste0</span>(species, <span class="st">&quot;_f&quot;</span>)))</span></code></pre></div>
 <div class="alert alert-info">
 <p>Notice the use of <code>paste0()</code> here, and when we briefly used a similar function <code>paste()</code> in previous lessons. Explore the difference between these two. They are both very useful functions for pasting strings together.</p>
@@ -279,7 +280,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="exploratory-data-analysis.html#cb35-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
 <span id="cb35-2"><a href="exploratory-data-analysis.html#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
 <span id="cb35-3"><a href="exploratory-data-analysis.html#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">body_mass_avg =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
-<p>You can also group by multiple variables. Say you want to calculate the sample size for each species for each year of the study.</p>
+<p>You can also group by multiple variables. Say you want to calculate the sample size (i.e., count, which can be calculated with the <code>n()</code> function) for each species for each year of the study.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="exploratory-data-analysis.html#cb36-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
 <span id="cb36-2"><a href="exploratory-data-analysis.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, year) <span class="sc">%&gt;%</span> </span>
 <span id="cb36-3"><a href="exploratory-data-analysis.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_observations =</span> <span class="fu">n</span>())</span></code></pre></div>
@@ -327,20 +328,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 <p>This is important information, since we know now that not all species were sampled on every island, which will have complications for any comparisons we may want to make among islands.</p>
 <p><strong>Visualize variable relationships with <code>geom_point()</code></strong></p>
-<p>We can use <code>geom_point()</code> to view the relationship between two variables by specifying the x and y axes. Say we want o visualize the relationship between penguin body mass and flipper length and color the point by species:</p>
+<p>We can use <code>geom_point()</code> to view the relationship between two continuous variables by specifying the x and y axes. Say we want to visualize the relationship between penguin body mass and flipper length and color the points by species:</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="exploratory-data-analysis.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins) <span class="sc">+</span></span>
 <span id="cb43-2"><a href="exploratory-data-analysis.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm, <span class="at">color =</span> species))</span></code></pre></div>
 <p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 <div id="exercises-1" class="section level3 hasAnchor" number="4.2.1">
 <h3><span class="header-section-number">4.2.1</span> Exercises<a href="exploratory-data-analysis.html#exercises-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><em>For each exercise, please include the line(s) of code you used to answer the question.</em></p>
 <ol style="list-style-type: decimal">
-<li><p>Reorder the variables in <code>penguins</code> so that <code>year</code> is the first column followed by the rest (Hint: look into the use of <code>everything()</code>).</p></li>
-<li><p>Create a new column called ‘size_group’ where individuals with body mass greater than the overall average are called ‘large’ and those smaller are called ‘small’.</p></li>
-<li><p>Find out which year for each species were individuals on average the largest according to body mass.</p></li>
-<li><p>You want to filter data for years that are <em>not</em> in a vector of given years, but this code doesn’t work. Tweak it so that it does. (Yes, you could just filter year to equal 2007 in this case but there is a trouble-shooting lessons here).</p>
+<li><p>Reorder the variables in <code>penguins</code> so that <code>year</code> is the first column followed by the rest (Hint: look into the use of <code>everything()</code>). (5 pts.)</p></li>
+<li><p>Create a new column called ‘size_group’ where individuals with body mass greater than the overall average are called ‘large’ and those smaller are called ‘small’. (Note: this answer requires the additional use of both the <code>if_else()</code> and <code>mean()</code> functions. Remember how to deal with <code>NA</code> values in <code>mean()</code>). (5 pts.)</p></li>
+<li><p>Which year had the largest average weight of all individuals according to body mass. (5 pts.)</p></li>
+<li><p>You want to filter data for years that are <em>not</em> in a vector of given years, but this code doesn’t work. Tweak it so that it does. (5 pts.)</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="exploratory-data-analysis.html#cb44-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
 <span id="cb44-2"><a href="exploratory-data-analysis.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">!%in%</span> <span class="fu">c</span>(<span class="dv">2008</span>, <span class="dv">2009</span>))</span></code></pre></div></li>
-<li><p>Using the visualization techniques you learned today, create a figure that allows you to visualize some comparison of your choice among the <code>penguins</code> data set. From this figure, develop a testable hypothesis about the data and the patterns you see.</p></li>
+<li><p>Using the visualization techniques you learned today, create a figure that allows you to visualize some comparison of your choice among the <code>penguins</code> data set. Along with embedding the figure you made, write a testable hypothesis about the data and the patterns you see from this figure. (5 pts.)</p></li>
 </ol>
 
 </div>

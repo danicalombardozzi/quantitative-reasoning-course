@@ -13,9 +13,9 @@ library(palmerpenguins)
 data("penguins")
 ```
 
-When working with a new data set, often the first thing you do is perform some initial investigations on the data using various summary statistics and graphical representations. This is exploratory data analysis! Or for short, EDA. EDA is used to help form initial hypotheses of your data that you can then test with statistics.
+When working with a new data set, often the first thing you do is perform some initial investigations on the data using various summary statistics and graphical representations. This is exploratory data analysis! Or for short, EDA. EDA is used to catch any potential errors, assess statistical assumptions, observe patterns and help form initial hypotheses of your data that you can then test with statistics.
 
-For our `penguins` data, we want to start by exploring things like sample size, variation and distribution of our variables, and comparisons among species, islands, and sex.
+For our `penguins` data, we want to start by exploring things like sample size, variation and distribution of our variables, and make initital comparisons among species, islands, and sex.
 
 A new Base R function we have yet to use is `summary()`. This functions gives us a very quick snapshot of each variable in our dataset, where we can see things like sample size and summary statistics.
 
@@ -75,13 +75,15 @@ select(penguins, contains("mm"))
 
 ```
 
-Create new variables with [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html){style="font-size: 13pt;"}
+**Create new variables with [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html){style="font-size: 13pt;"}**
+
+`mutate()` allows you to edit existing columns or create new columns in an existing data frame, and you can perform calculations on existing columns to return outputs in the new column. The syntax is the name of the new column you want to make (or the current column you want to edit) on the left of `=`, and then to the right is what you want to put in the new column. Note that `mutate()` works row wise on the data frame.
 
 ```{r}
 # New variable that calculates bill length in cm
 mutate(penguins, bill_length_cm = bill_length_mm/10)
 
-# mutate based on conditional statements
+# mutate based on conditional statements with if_else()
 mutate(penguins, species_sex = if_else(sex == 'male', paste0(species,"_m"), paste0(species, "_f")))
 ```
 
@@ -126,7 +128,7 @@ penguins %>%
   summarise(body_mass_avg = mean(body_mass_g, na.rm = TRUE))
 ```
 
-You can also group by multiple variables. Say you want to calculate the sample size for each species for each year of the study.
+You can also group by multiple variables. Say you want to calculate the sample size (i.e., count, which can be calculated with the `n()` function) for each species for each year of the study.
 
 ```{r}
 penguins %>% 
@@ -201,7 +203,7 @@ This is important information, since we know now that not all species were sampl
 
 **Visualize variable relationships with `geom_point()`**
 
-We can use `geom_point()` to view the relationship between two variables by specifying the x and y axes. Say we want o visualize the relationship between penguin body mass and flipper length and color the point by species:
+We can use `geom_point()` to view the relationship between two continuous variables by specifying the x and y axes. Say we want to visualize the relationship between penguin body mass and flipper length and color the points by species:
 
 ```{r, eval=TRUE}
 ggplot(penguins) +
@@ -210,17 +212,19 @@ ggplot(penguins) +
 
 ### Exercises
 
-1.  Reorder the variables in `penguins` so that `year` is the first column followed by the rest (Hint: look into the use of `everything()`).
+*For each exercise, please include the line(s) of code you used to answer the question.*
 
-2.  Create a new column called 'size_group' where individuals with body mass greater than the overall average are called 'large' and those smaller are called 'small'.
+1.  Reorder the variables in `penguins` so that `year` is the first column followed by the rest (Hint: look into the use of `everything()`). (5 pts.)
 
-3.  Find out which year for each species were individuals on average the largest according to body mass.
+2.  Create a new column called 'size_group' where individuals with body mass greater than the overall average are called 'large' and those smaller are called 'small'. (Note: this answer requires the additional use of both the `if_else()` and `mean()` functions. Remember how to deal with `NA` values in `mean()`). (5 pts.)
 
-4.  You want to filter data for years that are *not* in a vector of given years, but this code doesn't work. Tweak it so that it does. (Yes, you could just filter year to equal 2007 in this case but there is a trouble-shooting lessons here).
+3.  Which year had the largest average weight of all individuals according to body mass. (5 pts.)
+
+4.  You want to filter data for years that are *not* in a vector of given years, but this code doesn't work. Tweak it so that it does. (5 pts.)
 
     ```{r}
     penguins %>% 
       filter(year !%in% c(2008, 2009))
     ```
 
-5.  Using the visualization techniques you learned today, create a figure that allows you to visualize some comparison of your choice among the `penguins` data set. From this figure, develop a testable hypothesis about the data and the patterns you see.
+5.  Using the visualization techniques you learned today, create a figure that allows you to visualize some comparison of your choice among the `penguins` data set. Along with embedding the figure you made, write a testable hypothesis about the data and the patterns you see from this figure. (5 pts.)
