@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title> 5 Introduction to Statistics | Quantitative Reasoning for Ecosystem Science</title>
+  <meta name="description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
+
+  <meta property="og:title" content=" 5 Introduction to Statistics | Quantitative Reasoning for Ecosystem Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
+  <meta name="github-repo" content="ccmothes/quantitative-reasoning-course" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content=" 5 Introduction to Statistics | Quantitative Reasoning for Ecosystem Science" />
+  
+  <meta name="twitter:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
+  
+
+<meta name="author" content="Caitlin C. Mothes, PhD" />
+
+
+<meta name="date" content="2023-02-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="exploratory-data-analysis.html"/>
+<link rel="next" href="multivariate-statistics.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Quantitative Reasoning for Ecosystem Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#set-up-instructions"><i class="fa fa-check"></i>Set up Instructions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#navigating-this-site"><i class="fa fa-check"></i>Navigating this site</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="setup-instructions.html"><a href="setup-instructions.html"><i class="fa fa-check"></i><b>2</b> Setup Instructions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="setup-instructions.html"><a href="setup-instructions.html#install-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> Install R and RStudio</a></li>
+<li class="chapter" data-level="2.2" data-path="setup-instructions.html"><a href="setup-instructions.html#package-installation"><i class="fa fa-check"></i><b>2.2</b> Package Installation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html"><i class="fa fa-check"></i><b>3</b> Introduction to R and RStudio</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#getting-to-know-rstudio"><i class="fa fa-check"></i><b>3.1</b> Getting to know RStudio</a></li>
+<li class="chapter" data-level="3.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#r-projects"><i class="fa fa-check"></i><b>3.2</b> R Projects</a></li>
+<li class="chapter" data-level="3.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#write-your-first-script"><i class="fa fa-check"></i><b>3.3</b> Write your first script</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#commenting-code"><i class="fa fa-check"></i><b>3.3.1</b> Commenting code</a></li>
+<li class="chapter" data-level="3.3.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#executing-code"><i class="fa fa-check"></i><b>3.3.2</b> Executing code</a></li>
+<li class="chapter" data-level="3.3.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#getting-help-with-code"><i class="fa fa-check"></i><b>3.3.3</b> Getting help with code</a></li>
+<li class="chapter" data-level="3.3.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#functions"><i class="fa fa-check"></i><b>3.3.4</b> Functions</a></li>
+<li class="chapter" data-level="3.3.5" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#data-types"><i class="fa fa-check"></i><b>3.3.5</b> Data Types</a></li>
+<li class="chapter" data-level="3.3.6" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#indexing"><i class="fa fa-check"></i><b>3.3.6</b> Indexing</a></li>
+<li class="chapter" data-level="3.3.7" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#read-and-write-data"><i class="fa fa-check"></i><b>3.3.7</b> Read and Write Data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#exercises"><i class="fa fa-check"></i><b>3.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-wrangling"><i class="fa fa-check"></i><b>4.1</b> Data wrangling</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#the-dplyr-package"><i class="fa fa-check"></i><b>4.1.1</b> The <code>dplyr</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#visualization"><i class="fa fa-check"></i><b>4.2</b> Visualization</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#exercises-1"><i class="fa fa-check"></i><b>4.2.1</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html"><i class="fa fa-check"></i><b>5</b> Introduction to Statistics</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#explore-the-dataset"><i class="fa fa-check"></i><b>5.1</b> Explore the dataset</a></li>
+<li class="chapter" data-level="5.2" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#chi-square---categorical-analysis"><i class="fa fa-check"></i><b>5.2</b> Chi-square - Categorical Analysis</a></li>
+<li class="chapter" data-level="5.3" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#t-test---compare-two-means"><i class="fa fa-check"></i><b>5.3</b> t-test - Compare two means</a></li>
+<li class="chapter" data-level="5.4" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#correlation---assess-relationships"><i class="fa fa-check"></i><b>5.4</b> Correlation - Assess relationships</a></li>
+<li class="chapter" data-level="5.5" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#exercises-2"><i class="fa fa-check"></i><b>5.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#acknowledgements"><i class="fa fa-check"></i><b>5.5.1</b> Acknowledgements</a></li>
+<li class="chapter" data-level="5.5.2" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#citations"><i class="fa fa-check"></i><b>5.5.2</b> Citations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html"><i class="fa fa-check"></i><b>6</b> Multivariate Statistics</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#anova"><i class="fa fa-check"></i><b>6.1</b> ANOVA</a></li>
+<li class="chapter" data-level="6.2" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#multiple-regression"><i class="fa fa-check"></i><b>6.2</b> Multiple Regression</a></li>
+<li class="chapter" data-level="6.3" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#model-selection"><i class="fa fa-check"></i><b>6.3</b> Model Selection</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Quantitative Reasoning for Ecosystem Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction-to-statistics" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number"> 5</span> Introduction to Statistics<a href="introduction-to-statistics.html#introduction-to-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this lesson you will be introduced to the process of conducting statistical tests in R, specifically chi-square, t-tests, and correlation tests.</p>
+<p>First, to access the dataset(s) you will be using today install the <code>remotes</code> package, and then install the <code>lterdatasampler</code> package (<code>remotes</code> is needed because <code>lterdatasampler</code> has to be installed from Git Hub as opposed to CRAN).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="introduction-to-statistics.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;remotes&quot;</span>)</span>
+<span id="cb1-2"><a href="introduction-to-statistics.html#cb1-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;lter/lterdatasampler&quot;</span>)</span></code></pre></div>
+<p>Now load in all libraries needed for this lesson:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="introduction-to-statistics.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="introduction-to-statistics.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lterdatasampler)</span></code></pre></div>
+<p>Then run the following line of code to retrieve the <code>and_vertebrates</code> data set and bring it into your R session:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction-to-statistics.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(and_vertebrates)</span></code></pre></div>
+<div id="explore-the-dataset" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Explore the dataset<a href="introduction-to-statistics.html#explore-the-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Do a little exploration of this data first to understand its structure, variables and data types:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="introduction-to-statistics.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View the data structure</span></span>
+<span id="cb4-2"><a href="introduction-to-statistics.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(and_vertebrates)</span></code></pre></div>
+<pre><code>## Rows: 32,209
+## Columns: 16
+## $ year        [3m[38;5;246m&lt;dbl&gt;[39m[23m 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987…
+## $ sitecode    [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;…
+## $ section     [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;…
+## $ reach       [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;…
+## $ pass        [3m[38;5;246m&lt;dbl&gt;[39m[23m 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+## $ unitnum     [3m[38;5;246m&lt;dbl&gt;[39m[23m 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…
+## $ unittype    [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;…
+## $ vert_index  [3m[38;5;246m&lt;dbl&gt;[39m[23m 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, …
+## $ pitnumber   [3m[38;5;246m&lt;dbl&gt;[39m[23m NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ species     [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;Cutthroat trout&quot;, &quot;Cutthroat trout&quot;, &quot;Cutthroat trout&quot;, &quot;Cutthroat trout&quot;, &quot;Cutthroat trout&quot;, &quot;Cutthroat trout&quot;, &quot;Cut…
+## $ length_1_mm [3m[38;5;246m&lt;dbl&gt;[39m[23m 58, 61, 89, 58, 93, 86, 107, 131, 103, 117, 100, 127, 99, 111, 149, 102, 53, 58, 58, 105, 145, 97, 118, 110, 133, 99, …
+## $ length_2_mm [3m[38;5;246m&lt;dbl&gt;[39m[23m NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ weight_g    [3m[38;5;246m&lt;dbl&gt;[39m[23m 1.75, 1.95, 5.60, 2.15, 6.90, 5.90, 10.50, 20.60, 9.55, 13.00, 8.25, 17.70, 8.15, 11.25, 27.15, 9.25, 1.45, 2.10, 2.05…
+## $ clip        [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;…
+## $ sampledate  [3m[38;5;246m&lt;date&gt;[39m[23m 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-0…
+## $ notes       [3m[38;5;246m&lt;chr&gt;[39m[23m NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="introduction-to-statistics.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore the metadata in the Help pane</span></span>
+<span id="cb6-2"><a href="introduction-to-statistics.html#cb6-2" aria-hidden="true" tabindex="-1"></a>?and_vertebrates</span></code></pre></div>
+<p>This data set contains length and weight observations for three aquatic species in clear cut and old growth coniferous forest sections of Mack Creek in HJ Andrews Experimental Forest in Oregon. The three species are Cutthroat trout, Coastal giant salamander and Cascade torrent salamander.</p>
+</div>
+<div id="chi-square---categorical-analysis" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Chi-square - Categorical Analysis<a href="introduction-to-statistics.html#chi-square---categorical-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When you are working with two categorical variables, the statistical test you would use is a Chi-square test. This test can tell you if there is a relationship between your two categorical variables.</p>
+<p>For example, we have two categorical variables in the <code>and_vertebrates</code> data set:</p>
+<ul>
+<li><p><code>section</code> = two forest sections, clear cut (CC) and old growth (OG)</p></li>
+<li><p><code>unittype</code> = channel unit classification type (C = cascade, I = riffle, IP = isolated pool (not connected to channel), P = pool, R = rapid, S = step (small falls), SC = side channel, NA = not sampled by unit)</p></li>
+</ul>
+<p>Lets focus this question on cutthroat trout. First explore the abundance of cutthroat trout in different channel types.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="introduction-to-statistics.html#cb7-1" aria-hidden="true" tabindex="-1"></a>and_vertebrates <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="introduction-to-statistics.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">&quot;Cutthroat trout&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="introduction-to-statistics.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(unittype) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="introduction-to-statistics.html#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">abundance =</span> <span class="fu">n</span>())</span></code></pre></div>
+<pre><code>## # A tibble: 8 × 2
+##   unittype abundance
+##   &lt;chr&gt;        &lt;int&gt;
+## 1 C            11419
+## 2 I               23
+## 3 IP             105
+## 4 P             5470
+## 5 R              420
+## 6 S                9
+## 7 SC            2377
+## 8 &lt;NA&gt;           610</code></pre>
+<p>This output tells us that there are quite a few observations with the <code>NA</code> category, meaning channel types was unknown. Let’s edit the workflow above slightly, using two new functions <code>drop_na()</code> and <code>count()</code>. <code>drop_na()</code> will remove any rows within a specified column (or columns) that have NA values, and we can use <code>count()</code> as an alternative to <code>group_by()</code> and <code>summarise()</code> when we just want number of observations for a single variable (in this case <code>unittype</code>).</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="introduction-to-statistics.html#cb9-1" aria-hidden="true" tabindex="-1"></a>and_vertebrates <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="introduction-to-statistics.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">&quot;Cutthroat trout&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="introduction-to-statistics.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(unittype) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-4"><a href="introduction-to-statistics.html#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(unittype)</span></code></pre></div>
+<pre><code>## # A tibble: 7 × 2
+##   unittype     n
+##   &lt;chr&gt;    &lt;int&gt;
+## 1 C        11419
+## 2 I           23
+## 3 IP         105
+## 4 P         5470
+## 5 R          420
+## 6 S            9
+## 7 SC        2377</code></pre>
+<p>This returns just about the same data frame as the first method, but now with the NA category removed.</p>
+<p>From this we also see the highest Cutthroat trout abundances are found in cascade (C), pool (P), and side channel (SC) habitats.</p>
+<p>Now, our question expands beyond this one categorical variable (channel type) and we want to know if abundance is affected by both channel and and forest type (<code>section</code>). Here, our null hypothesis is that forest and channel type are independent. To test this, we use the <code>chisq.test()</code> , but first we have to reformat our data into a <strong>contingency table</strong>. A contingency table is in matrix format, where each cell is the frequency (in this case seen as abundance) of Cutthroat trout in each combination of categorical variables (forest type and channel unit). We can create a contingency table with the <code>table()</code> function.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="introduction-to-statistics.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First clean the dataset to create the contingency table from</span></span>
+<span id="cb11-2"><a href="introduction-to-statistics.html#cb11-2" aria-hidden="true" tabindex="-1"></a>trout_clean <span class="ot">&lt;-</span> and_vertebrates <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="introduction-to-statistics.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#filter out Cutthroat trout</span></span>
+<span id="cb11-4"><a href="introduction-to-statistics.html#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">&quot;Cutthroat trout&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-5"><a href="introduction-to-statistics.html#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># lets test using just the 3 most abundant unittypes</span></span>
+<span id="cb11-6"><a href="introduction-to-statistics.html#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(unittype <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;C&quot;</span>, <span class="st">&quot;P&quot;</span>, <span class="st">&quot;SC&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-7"><a href="introduction-to-statistics.html#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># drop NAs for both unittype and section</span></span>
+<span id="cb11-8"><a href="introduction-to-statistics.html#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(unittype, section)</span>
+<span id="cb11-9"><a href="introduction-to-statistics.html#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="introduction-to-statistics.html#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="introduction-to-statistics.html#cb11-11" aria-hidden="true" tabindex="-1"></a>cont_table <span class="ot">&lt;-</span> <span class="fu">table</span>(trout_clean<span class="sc">$</span>section, trout_clean<span class="sc">$</span>unittype)</span></code></pre></div>
+<p>To execute the Chi Square test does not take that much code, but it is important to note that by default, <code>chisq.test()</code> assumes the null hypothesis is that all frequencies have equal probability. If you have different pre-conceived frequency probabilities for your data you have to define those within the <code>chisq.test()</code> function.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="introduction-to-statistics.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(cont_table)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  cont_table
+## X-squared = 188.68, df = 2, p-value &lt; 2.2e-16</code></pre>
+<p>Lets look at the abundance distribution visually:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="introduction-to-statistics.html#cb14-1" aria-hidden="true" tabindex="-1"></a>trout_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="introduction-to-statistics.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(unittype, section) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="introduction-to-statistics.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> unittype, <span class="at">y =</span> n))<span class="sc">+</span></span>
+<span id="cb14-4"><a href="introduction-to-statistics.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill =</span> section))<span class="sc">+</span></span>
+<span id="cb14-5"><a href="introduction-to-statistics.html#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;orange&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>))<span class="sc">+</span></span>
+<span id="cb14-6"><a href="introduction-to-statistics.html#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="t-test---compare-two-means" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> t-test - Compare two means<a href="introduction-to-statistics.html#t-test---compare-two-means" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Previous work has shown that forest harvesting can impact aquatic vertebrate biomass (Kaylor &amp; Warren 2017). With this <code>and_vertebrates</code> data set we can investigate this hypothesis, by comparing weight to forest type (clear cut or old growth). This therefore involves a test comparing the means (average weight) among two groups (clear cut and old growth forests), which then requires a t-test.</p>
+<div class="alert alert-info">
+<p>Note: In the <code>t.test()</code> function you can add <code>paired = TRUE</code> to conduct a paired t-test. These are for cases when the groups are ‘paired’ for each observation, meaning each group/treatment was applied to the same individual, such as before and after experiments.</p>
+</div>
+<p>Lets focus on conducting this test for just Cutthroat trout (to reduce species-level variances in weight) and first visualize the differences in weight among forest type with a boxplot:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="introduction-to-statistics.html#cb15-1" aria-hidden="true" tabindex="-1"></a>and_vertebrates <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="introduction-to-statistics.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">&quot;Cutthroat trout&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="introduction-to-statistics.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(section, weight_g) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="introduction-to-statistics.html#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> section, <span class="at">y =</span> weight_g))<span class="sc">+</span></span>
+<span id="cb15-5"><a href="introduction-to-statistics.html#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>We don’t see too much of a difference based on this visual, but lets conduct the statistical test to see if your hypothesis is supported.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="introduction-to-statistics.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(trout_clean<span class="sc">$</span>weight_g <span class="sc">~</span> trout_clean<span class="sc">$</span>section)</span></code></pre></div>
+<pre><code>## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  trout_clean$weight_g by trout_clean$section
+## W = 17107703, p-value = 0.0005299
+## alternative hypothesis: true location shift is not equal to 0</code></pre>
+</div>
+<div id="correlation---assess-relationships" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Correlation - Assess relationships<a href="introduction-to-statistics.html#correlation---assess-relationships" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="exercises-2" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Exercises<a href="introduction-to-statistics.html#exercises-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Conduct a correlation test similar to the one we carried out earlier in this lesson plan, but test for a relationship between forest type (<code>section</code>) and channel unit (<code>unittype</code>) for the Coastal giant salamander. Keep all unittypes instead of filtering any like we did for the Cutthroat trout. To answer this questions fully (10 pts):
+<ol style="list-style-type: decimal">
+<li><p>Include the code you used to clean the data and conduct the Chi square test.</p></li>
+<li><p>Report the findings of your test in proper scientific format (with the p-value in parentheses).</p></li>
+</ol></li>
+<li></li>
+<li></li>
+</ol>
+<div id="acknowledgements" class="section level3 hasAnchor" number="5.5.1">
+<h3><span class="header-section-number">5.5.1</span> Acknowledgements<a href="introduction-to-statistics.html#acknowledgements" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Thanks to the developers of <a href="https://lter.github.io/lterdatasampler/index.html"><code>lterdatasampler</code></a> for providing the data set and vignettes that helped guide the creation of this lesson plan.</p>
+</div>
+<div id="citations" class="section level3 hasAnchor" number="5.5.2">
+<h3><span class="header-section-number">5.5.2</span> Citations<a href="introduction-to-statistics.html#citations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong><em>Data Source:</em></strong> Gregory, S.V. and I. Arismendi. 2020. Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present ver 14. Environmental Data Initiative. <a href="https://doi.org/10.6073/pasta/7c78d662e847cdbe33584add8f809165" class="uri">https://doi.org/10.6073/pasta/7c78d662e847cdbe33584add8f809165</a></p>
+<p>Kaylor, M.J. and D.R. Warren. 2017. Linking riparian shade and the legacies of forest management to fish and vertebrate biomass in forested streams. Ecosphere <em>8</em>(6). <a href="https://doi.org/10.1002/ecs2.1845" class="uri">https://doi.org/10.1002/ecs2.1845</a></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="exploratory-data-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="multivariate-statistics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/04-univariate.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["quantitative-reasoning.pdf", "quantitative-reasoning.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
