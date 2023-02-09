@@ -110,36 +110,135 @@ trout_clean %>%
 
 Previous work has shown that forest harvesting can impact aquatic vertebrate biomass (Kaylor & Warren 2017). With this `and_vertebrates` data set we can investigate this hypothesis, by comparing weight to forest type (clear cut or old growth). This therefore involves a test comparing the means (average weight) among two groups (clear cut and old growth forests), which then requires a t-test.
 
-::: {.alert .alert-info}
-Note: In the `t.test()` function you can add `paired = TRUE` to conduct a paired t-test. These are for cases when the groups are 'paired' for each observation, meaning each group/treatment was applied to the same individual, such as before and after experiments.
-:::
-
-Lets focus on conducting this test for just Cutthroat trout (to reduce species-level variances in weight) and first visualize the differences in weight among forest type with a boxplot:
+Lets focus on conducting this test for just Cutthroat trout (to reduce species-level variances in weight), so we can use the same `trout_clean` dataset we made earlier, but let's also drop all NAs in `weight_g`. Then, lets first visualize the differences in weight among forest type with a boxplot:
 
 ```{r}
-and_vertebrates %>% 
-  filter(species == "Cutthroat trout") %>% 
-  drop_na(section, weight_g) %>% 
+trout_clean %>% 
+  drop_na(weight_g) %>% 
   ggplot(aes(x = section, y = weight_g))+
   geom_boxplot()
 ```
 
 We don't see too much of a difference based on this visual, but lets conduct the statistical test to see if your hypothesis is supported.
 
+We can do this with the `t.test()` function in R by specifying your dependent (in our case trout weight) and independent (forest type) variables, which are entered in the `t.test()` function as vectors (instead of just column names like you can do in the Tidyverse). Remember how we can index single columns of data frames with the `$` operator. The order of the variables in the `t.test()` function is {dependent variable} \~ {independent variable}.
+
 ```{r}
 
-wilcox.test(trout_clean$weight_g ~ trout_clean$section)
+t.test(trout_clean$weight_g ~ trout_clean$section)
 ```
+
+The output of this test gives us the test statistics, p-value, and the means for each of our forest groups. Given the very small p-value, we can conclude that we reject the null hypothesis that mean Cutthroat weight is the same in clear cut and old growth forest sections, and looking at our results (specifically the means) we can conclude that Cutthroat trout weight was observed to be significantly higher in clear cut forests compared to old growth forests.
+
+How does this relate to your original hypothesis?
+
+::: {.alert .alert-info}
+Note: In the `t.test()` function you can add `paired = TRUE` to conduct a paired t-test. These are for cases when the groups are 'paired' for each observation, meaning each group/treatment was applied to the same individual, such as before and after experiments.
+:::
 
 ## Correlation - Assess relationships
 
+When you want to assess the relationship between two **continuous variables**, the test you would use is a correlation test. Correlation tests asses both the presence of a significant relationship along with the strength of that relationship (i.e., the correlation coefficient).
+
+For our `and_vertebrates` data set, we can test length-mass relationships for our species with our length and weight continuous variables. Lets test the hypothesis that body length is positively correlated with weight, such that longer individuals will also weight more, specifically looking at the Coastal Giant salamander.
+
+First let's clean our data set to just include the Coastal giant salamander and remove missing values for length and weight. Let's focus on the variable 'length_2\_mm' for SVL (snout-vent length).
+
+```{r}
+sally_clean <- and_vertebrates %>% 
+  filter(species == "Coastal giant salamander") %>% 
+  drop_na(length_2_mm, weight_g)
+  
+```
+
+Now we can perform the correlation test with the `cor.test()` function. There are multiple correlation methods you can use with this function, by default it uses the Pearson correlation method. However this test assumes that your data is normally distributed, so if that is not the case you can specify `spearman` for `method =` to use a Spearman Rank correlation test, a non-parametric test that is not sensitive to the variable distribution.
+
+Let's look at the distribution of these variables first:
+
+```{r}
+hist(sally_clean$length_2_mm)
+
+hist(sally_clean$weight_g)
+```
+
+They both look pretty left skewed, therefore likely not normally distributed. We can statistically test if a variable fits a normal distribution with the `shapiro.test()` function. However note that this function only runs for 5000 observations or less, so lets test for normally of the first 5000 obs of our `sally_clean` data set:
+
+```{r}
+shapiro.test(sally_clean$length_2_mm[1:5000])
+
+shapiro.test(sally_clean$weight_g[1:5000])
+```
+
+The null hypothesis of the Shapiro-Wilk normality test is that the variable is normally distirbuted, so a significant p-value less than 0.05 (as we see for both of our variables here) tells use that our data does not fit a normal distribution.
+
+Therefore we have two options:
+
+1) transform the data or 2) use the non-parametric Spearman correlation test instead of the Pearson's correlation test.
+
+Lets try the first option by log transforming our variables, first viewing the new distribution and then performing the Pearson's correlation test (the default for `cor.test()`).
+
+```{r}
+hist(log(sally_clean$length_2_mm))
+
+hist(log(sally_clean$weight_g))
+```
+
+Now try the Pearson's test. All we need to add to the `cor.test()` argument is the two variables of our `sally_clean` data set we want to test a relationship for, and let's keep them log-transformed since those distributions looked closer to a normal distribution (visually at least).
+
+```{r}
+cor.test(log(sally_clean$length_2_mm), log(sally_clean$weight_g))
+```
+
+Okay, from these results we see a very small p-value, meaning there is a significant association between the two, and a correlation coefficient of 0.98, representing a very strong, positive correlation.
+
+Let's look at this correlation visually:
+
+```{r}
+sally_clean %>% 
+  ggplot(aes(x = length_2_mm, y = weight_g))+
+  geom_point()
+```
+
+We can use `geom_smooth()` to add a line of best fit using a linear model equation (which you will learn more about next week)
+
+```{r}
+sally_clean %>% 
+  ggplot(aes(x = length_2_mm, y = weight_g))+
+  geom_point()+
+  geom_smooth()
+```
+
+This tells us it used the 'gam' method, and this best-fit relationship shows a non-linear relationship.
+
+Let's now perform the correlation test again but with `method = 'spearman'`, as the Spearman test is better for non-parametric and non-linear data sets. Therefore we do not need to transform our variables this time.
+
+```{r}
+cor.test(sally_clean$length_2_mm, sally_clean$weight_g)
+```
+
+These results still represent a significant, positive relationship between SVL and weight for the Coastal Giant salamander, but this test gives a slightly less correlation coefficient compared to the Pearson's test.
+
+```{r}
+and_vertebrates %>% 
+  filter(species != "Cascade torrent salamander" & !is.na(species)) %>% 
+  count(species, sitecode) %>% 
+  ggplot(aes(x = sitecode, y = n))+
+  geom_col(aes(fill = species))
+
+```
+
 ## Exercises
 
-1.  Conduct a correlation test similar to the one we carried out earlier in this lesson plan, but test for a relationship between forest type (`section`) and channel unit (`unittype`) for the Coastal giant salamander. Keep all unittypes instead of filtering any like we did for the Cutthroat trout. To answer this questions fully (10 pts):
-    1.  Include the code you used to clean the data and conduct the Chi square test.
+Each question requires you to carry out a statistical analysis to test some hypothesis related to the `and_vertebrates` data set. To answer each question fully:
 
-    2.  Report the findings of your test in proper scientific format (with the p-value in parentheses).
-2.  
+-   Include the code you used to clean the data and conduct the appropriate statistical test.
+
+-   Report the findings of your test in proper scientific format (with the p-value in parentheses).
+
+1.  Conduct a chi-square test similar to the one we carried out earlier in this lesson plan, but test for a relationship between forest type (`section`) and channel unit (`unittype`) for Coastal giant salamander abundance. Keep all unittypes instead of filtering any like we did for the Cutthroat trout (9 pts.)
+
+2.   Test the hypothesis that there is a significant difference in species biomass between clear cut and old growth forest types for the Coastal Giant salamander. (Note: the steps to carry out this test are similar to what you did in this lesson plan for the Cutthroat trout) (8 pts.)
+
 3.  
 
 ### Acknowledgements
