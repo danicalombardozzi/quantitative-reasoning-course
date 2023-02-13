@@ -277,19 +277,17 @@ Each question requires you to carry out a statistical analysis to test some hypo
 
 <br>
 
-
-**1.**  Conduct a chi-square test similar to the one we carried out earlier in this lesson plan, but test for a relationship between forest type (`section`) and channel unit (`unittype`) for *Coastal giant salamander* abundance. *Keep all unittypes* instead of filtering any like we did for the Cutthroat trout (9 pts.)
-
-<br>
-
-**2.**  Test the hypothesis that there is a significant difference in species biomass between clear cut and old growth forest types for the *Coastal Giant salamander*. (8 pts.)
+**1.** Conduct a chi-square test similar to the one we carried out earlier in this lesson plan, but test for a relationship between forest type (`section`) and channel unit (`unittype`) for *Coastal giant salamander* abundance. *Keep all unittypes* instead of filtering any like we did for the Cutthroat trout (9 pts.)
 
 <br>
 
-**3.**  Test the correlation between body length and body mass for *Cutthroat trout*. (8 pts.)
+**2.** Test the hypothesis that there is a significant difference in species biomass between clear cut and old growth forest types for the *Coastal Giant salamander*. (8 pts.)
 
 <br>
-<br>
+
+**3.** Test the correlation between body length and body mass for *Cutthroat trout*. (8 pts.)
+
+<br> <br>
 
 ### Acknowledgements
 
