@@ -23,7 +23,7 @@
 <meta name="author" content="Caitlin C. Mothes, PhD" />
 
 
-<meta name="date" content="2023-02-08" />
+<meta name="date" content="2023-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -229,22 +229,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-2"><a href="introduction-to-statistics.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(and_vertebrates)</span></code></pre></div>
 <pre><code>## Rows: 32,209
 ## Columns: 16
-## $ year        [3m[38;5;246m&lt;dbl&gt;[39m[23m 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987…
-## $ sitecode    [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;…
-## $ section     [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;…
-## $ reach       [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;…
-## $ pass        [3m[38;5;246m&lt;dbl&gt;[39m[23m 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-## $ unitnum     [3m[38;5;246m&lt;dbl&gt;[39m[23m 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…
-## $ unittype    [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;…
-## $ vert_index  [3m[38;5;246m&lt;dbl&gt;[39m[23m 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, …
-## $ pitnumber   [3m[38;5;246m&lt;dbl&gt;[39m[23m NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-## $ species     [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;Cutthroat trout&quot;, &quot;Cutthroat trout&quot;, &quot;Cutthroat trout&quot;, &quot;Cutthroat trout&quot;, &quot;Cutthroat trout&quot;, &quot;Cutthroat trout&quot;, &quot;Cut…
-## $ length_1_mm [3m[38;5;246m&lt;dbl&gt;[39m[23m 58, 61, 89, 58, 93, 86, 107, 131, 103, 117, 100, 127, 99, 111, 149, 102, 53, 58, 58, 105, 145, 97, 118, 110, 133, 99, …
-## $ length_2_mm [3m[38;5;246m&lt;dbl&gt;[39m[23m NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-## $ weight_g    [3m[38;5;246m&lt;dbl&gt;[39m[23m 1.75, 1.95, 5.60, 2.15, 6.90, 5.90, 10.50, 20.60, 9.55, 13.00, 8.25, 17.70, 8.15, 11.25, 27.15, 9.25, 1.45, 2.10, 2.05…
-## $ clip        [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;…
-## $ sampledate  [3m[38;5;246m&lt;date&gt;[39m[23m 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-0…
-## $ notes       [3m[38;5;246m&lt;chr&gt;[39m[23m NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</code></pre>
+## $ year        &lt;dbl&gt; 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987…
+## $ sitecode    &lt;chr&gt; &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;, &quot;MACKCC-L&quot;…
+## $ section     &lt;chr&gt; &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;, &quot;CC&quot;…
+## $ reach       &lt;chr&gt; &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;, &quot;L&quot;…
+## $ pass        &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+## $ unitnum     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…
+## $ unittype    &lt;chr&gt; &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;R&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;C&quot;…
+## $ vert_index  &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, …
+## $ pitnumber   &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ species     &lt;chr&gt; &quot;Cutthroat trout&quot;, &quot;Cutthroat trout&quot;, &quot;Cutthroat trout&quot;, &quot;Cutthroat trout&quot;, &quot;Cutthroat trout&quot;, &quot;Cutthroat trout&quot;, &quot;Cut…
+## $ length_1_mm &lt;dbl&gt; 58, 61, 89, 58, 93, 86, 107, 131, 103, 117, 100, 127, 99, 111, 149, 102, 53, 58, 58, 105, 145, 97, 118, 110, 133, 99, …
+## $ length_2_mm &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ weight_g    &lt;dbl&gt; 1.75, 1.95, 5.60, 2.15, 6.90, 5.90, 10.50, 20.60, 9.55, 13.00, 8.25, 17.70, 8.15, 11.25, 27.15, 9.25, 1.45, 2.10, 2.05…
+## $ clip        &lt;chr&gt; &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;, &quot;NONE&quot;…
+## $ sampledate  &lt;date&gt; 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-0…
+## $ notes       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="introduction-to-statistics.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore the metadata in the Help pane</span></span>
 <span id="cb6-2"><a href="introduction-to-statistics.html#cb6-2" aria-hidden="true" tabindex="-1"></a>?and_vertebrates</span></code></pre></div>
 <p>This data set contains length and weight observations for three aquatic species in clear cut and old growth coniferous forest sections of Mack Creek in HJ Andrews Experimental Forest in Oregon. The three species are Cutthroat trout, Coastal giant salamander and Cascade torrent salamander.</p>
@@ -321,37 +321,126 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="t-test---compare-two-means" class="section level2 hasAnchor" number="5.3">
 <h2><span class="header-section-number">5.3</span> t-test - Compare two means<a href="introduction-to-statistics.html#t-test---compare-two-means" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Previous work has shown that forest harvesting can impact aquatic vertebrate biomass (Kaylor &amp; Warren 2017). With this <code>and_vertebrates</code> data set we can investigate this hypothesis, by comparing weight to forest type (clear cut or old growth). This therefore involves a test comparing the means (average weight) among two groups (clear cut and old growth forests), which then requires a t-test.</p>
+<p>Lets focus on conducting this test for just Cutthroat trout (to reduce species-level variances in weight), so we can use the same <code>trout_clean</code> dataset we made earlier, but let’s also drop all NAs in <code>weight_g</code>. Then, lets first visualize the differences in weight among forest type with a boxplot:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="introduction-to-statistics.html#cb15-1" aria-hidden="true" tabindex="-1"></a>trout_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="introduction-to-statistics.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(weight_g) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="introduction-to-statistics.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> section, <span class="at">y =</span> weight_g))<span class="sc">+</span></span>
+<span id="cb15-4"><a href="introduction-to-statistics.html#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>We don’t see too much of a difference based on this visual, but lets conduct the statistical test to see if your hypothesis is supported.</p>
+<p>We can do this with the <code>t.test()</code> function in R by specifying your dependent (in our case trout weight) and independent (forest type) variables, which are entered in the <code>t.test()</code> function as vectors (instead of just column names like you can do in the Tidyverse). Remember how we can index single columns of data frames with the <code>$</code> operator. The order of the variables in the <code>t.test()</code> function is {dependent variable} ~ {independent variable}.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="introduction-to-statistics.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(trout_clean<span class="sc">$</span>weight_g <span class="sc">~</span> trout_clean<span class="sc">$</span>section)</span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  trout_clean$weight_g by trout_clean$section
+## t = 4.5265, df = 11491, p-value = 6.056e-06
+## alternative hypothesis: true difference in means between group CC and group OG is not equal to 0
+## 95 percent confidence interval:
+##  0.4642016 1.1733126
+## sample estimates:
+## mean in group CC mean in group OG 
+##         8.988807         8.170050</code></pre>
+<p>The output of this test gives us the test statistics, p-value, and the means for each of our forest groups. Given the very small p-value, we can conclude that we reject the null hypothesis that mean Cutthroat weight is the same in clear cut and old growth forest sections, and looking at our results (specifically the means) we can conclude that Cutthroat trout weight was observed to be significantly higher in clear cut forests compared to old growth forests.</p>
+<p>How does this relate to your original hypothesis?</p>
 <div class="alert alert-info">
 <p>Note: In the <code>t.test()</code> function you can add <code>paired = TRUE</code> to conduct a paired t-test. These are for cases when the groups are ‘paired’ for each observation, meaning each group/treatment was applied to the same individual, such as before and after experiments.</p>
 </div>
-<p>Lets focus on conducting this test for just Cutthroat trout (to reduce species-level variances in weight) and first visualize the differences in weight among forest type with a boxplot:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="introduction-to-statistics.html#cb15-1" aria-hidden="true" tabindex="-1"></a>and_vertebrates <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="introduction-to-statistics.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">&quot;Cutthroat trout&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-3"><a href="introduction-to-statistics.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(section, weight_g) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-4"><a href="introduction-to-statistics.html#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> section, <span class="at">y =</span> weight_g))<span class="sc">+</span></span>
-<span id="cb15-5"><a href="introduction-to-statistics.html#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<p>We don’t see too much of a difference based on this visual, but lets conduct the statistical test to see if your hypothesis is supported.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="introduction-to-statistics.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(trout_clean<span class="sc">$</span>weight_g <span class="sc">~</span> trout_clean<span class="sc">$</span>section)</span></code></pre></div>
-<pre><code>## 
-##  Wilcoxon rank sum test with continuity correction
-## 
-## data:  trout_clean$weight_g by trout_clean$section
-## W = 17107703, p-value = 0.0005299
-## alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 <div id="correlation---assess-relationships" class="section level2 hasAnchor" number="5.4">
 <h2><span class="header-section-number">5.4</span> Correlation - Assess relationships<a href="introduction-to-statistics.html#correlation---assess-relationships" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When you want to assess the relationship between two <strong>continuous variables</strong>, the test you would use is a correlation test. Correlation tests asses both the presence of a significant relationship along with the strength of that relationship (i.e., the correlation coefficient).</p>
+<p>For our <code>and_vertebrates</code> data set, we can test length-mass relationships for our species with our length and weight continuous variables. Lets test the hypothesis that body length is positively correlated with weight, such that longer individuals will also weight more, specifically looking at the Coastal Giant salamander.</p>
+<p>First let’s clean our data set to just include the Coastal giant salamander and remove missing values for length and weight. Let’s focus on the variable ‘length_2_mm’ for SVL (snout-vent length).</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="introduction-to-statistics.html#cb18-1" aria-hidden="true" tabindex="-1"></a>sally_clean <span class="ot">&lt;-</span> and_vertebrates <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="introduction-to-statistics.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">&quot;Coastal giant salamander&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="introduction-to-statistics.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(length_2_mm, weight_g)</span></code></pre></div>
+<p>Now we can perform the correlation test with the <code>cor.test()</code> function. There are multiple correlation methods you can use with this function, by default it uses the Pearson correlation method. However this test assumes that your data is normally distributed, so if that is not the case you can specify <code>spearman</code> for <code>method =</code> to use a Spearman Rank correlation test, a non-parametric test that is not sensitive to the variable distribution.</p>
+<p>Let’s look at the distribution of these variables first:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="introduction-to-statistics.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(sally_clean<span class="sc">$</span>length_2_mm)</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="introduction-to-statistics.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(sally_clean<span class="sc">$</span>weight_g)</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
+<p>They both look pretty left skewed, therefore likely not normally distributed. We can statistically test if a variable fits a normal distribution with the <code>shapiro.test()</code> function. However note that this function only runs for 5000 observations or less, so lets test for normally of the first 5000 obs of our <code>sally_clean</code> data set:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="introduction-to-statistics.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(sally_clean<span class="sc">$</span>length_2_mm[<span class="dv">1</span><span class="sc">:</span><span class="dv">5000</span>])</span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  sally_clean$length_2_mm[1:5000]
+## W = 0.94018, p-value &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="introduction-to-statistics.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(sally_clean<span class="sc">$</span>weight_g[<span class="dv">1</span><span class="sc">:</span><span class="dv">5000</span>])</span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  sally_clean$weight_g[1:5000]
+## W = 0.58178, p-value &lt; 2.2e-16</code></pre>
+<p>The null hypothesis of the Shapiro-Wilk normality test is that the variable is normally distirbuted, so a significant p-value less than 0.05 (as we see for both of our variables here) tells use that our data does not fit a normal distribution.</p>
+<p>Therefore we have two options:</p>
+<ol style="list-style-type: decimal">
+<li>transform the data or 2) use the non-parametric Spearman correlation test instead of the Pearson’s correlation test.</li>
+</ol>
+<p>Lets try the first option by log transforming our variables, first viewing the new distribution and then performing the Pearson’s correlation test (the default for <code>cor.test()</code>).</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="introduction-to-statistics.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(sally_clean<span class="sc">$</span>length_2_mm))</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="introduction-to-statistics.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(sally_clean<span class="sc">$</span>weight_g))</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
+<p>Now try the Pearson’s test. All we need to add to the <code>cor.test()</code> argument is the two variables of our <code>sally_clean</code> data set we want to test a relationship for, and let’s keep them log-transformed since those distributions looked closer to a normal distribution (visually at least).</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="introduction-to-statistics.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="fu">log</span>(sally_clean<span class="sc">$</span>length_2_mm), <span class="fu">log</span>(sally_clean<span class="sc">$</span>weight_g))</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  log(sally_clean$length_2_mm) and log(sally_clean$weight_g)
+## t = 402.85, df = 6229, p-value &lt; 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.9804036 0.9822403
+## sample estimates:
+##       cor 
+## 0.9813443</code></pre>
+<p>Okay, from these results we see a very small p-value, meaning there is a significant association between the two, and a correlation coefficient of 0.98, representing a very strong, positive correlation.</p>
+<p>Let’s look at this correlation visually:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="introduction-to-statistics.html#cb29-1" aria-hidden="true" tabindex="-1"></a>sally_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="introduction-to-statistics.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> length_2_mm, <span class="at">y =</span> weight_g))<span class="sc">+</span></span>
+<span id="cb29-3"><a href="introduction-to-statistics.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>We can use <code>geom_smooth()</code> to add a line of best fit using a linear model equation (which you will learn more about next week)</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="introduction-to-statistics.html#cb30-1" aria-hidden="true" tabindex="-1"></a>sally_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="introduction-to-statistics.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> length_2_mm, <span class="at">y =</span> weight_g))<span class="sc">+</span></span>
+<span id="cb30-3"><a href="introduction-to-statistics.html#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb30-4"><a href="introduction-to-statistics.html#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>This tells us it used the ‘gam’ method, and this best-fit relationship shows a non-linear relationship.</p>
+<p>Let’s now perform the correlation test again but with <code>method = 'spearman'</code>, as the Spearman test is better for non-parametric and non-linear data sets. Therefore we do not need to transform our variables this time.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="introduction-to-statistics.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(sally_clean<span class="sc">$</span>length_2_mm, sally_clean<span class="sc">$</span>weight_g)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  sally_clean$length_2_mm and sally_clean$weight_g
+## t = 137.39, df = 6229, p-value &lt; 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.8608201 0.8731471
+## sample estimates:
+##       cor 
+## 0.8671163</code></pre>
+<p>These results still represent a significant, positive relationship between SVL and weight for the Coastal Giant salamander, but this test gives a slightly less correlation coefficient compared to the Pearson’s test.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="introduction-to-statistics.html#cb33-1" aria-hidden="true" tabindex="-1"></a>and_vertebrates <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="introduction-to-statistics.html#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">!=</span> <span class="st">&quot;Cascade torrent salamander&quot;</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(species)) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-3"><a href="introduction-to-statistics.html#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(species, sitecode) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-4"><a href="introduction-to-statistics.html#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sitecode, <span class="at">y =</span> n))<span class="sc">+</span></span>
+<span id="cb33-5"><a href="introduction-to-statistics.html#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill =</span> species))</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
 <div id="exercises-2" class="section level2 hasAnchor" number="5.5">
 <h2><span class="header-section-number">5.5</span> Exercises<a href="introduction-to-statistics.html#exercises-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ol style="list-style-type: decimal">
-<li>Conduct a correlation test similar to the one we carried out earlier in this lesson plan, but test for a relationship between forest type (<code>section</code>) and channel unit (<code>unittype</code>) for the Coastal giant salamander. Keep all unittypes instead of filtering any like we did for the Cutthroat trout. To answer this questions fully (10 pts):
-<ol style="list-style-type: decimal">
-<li><p>Include the code you used to clean the data and conduct the Chi square test.</p></li>
+<p>Each question requires you to carry out a statistical analysis to test some hypothesis related to the <code>and_vertebrates</code> data set. To answer each question fully:</p>
+<ul>
+<li><p>Include the code you used to clean the data and conduct the appropriate statistical test.</p></li>
 <li><p>Report the findings of your test in proper scientific format (with the p-value in parentheses).</p></li>
-</ol></li>
-<li></li>
+</ul>
+<ol style="list-style-type: decimal">
+<li><p>Conduct a chi-square test similar to the one we carried out earlier in this lesson plan, but test for a relationship between forest type (<code>section</code>) and channel unit (<code>unittype</code>) for Coastal giant salamander abundance. Keep all unittypes instead of filtering any like we did for the Cutthroat trout (9 pts.)</p></li>
+<li><p>Test the hypothesis that there is a significant difference in species biomass between clear cut and old growth forest types for the Coastal Giant salamander. (Note: the steps to carry out this test are similar to what you did in this lesson plan for the Cutthroat trout) (8 pts.)</p></li>
 <li></li>
 </ol>
 <div id="acknowledgements" class="section level3 hasAnchor" number="5.5.1">

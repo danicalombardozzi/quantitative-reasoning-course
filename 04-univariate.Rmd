@@ -173,7 +173,7 @@ The null hypothesis of the Shapiro-Wilk normality test is that the variable is n
 
 Therefore we have two options:
 
-1) transform the data or 2) use the non-parametric Spearman correlation test instead of the Pearson's correlation test.
+1)  transform the data or 2) use the non-parametric Spearman correlation test instead of the Pearson's correlation test.
 
 Lets try the first option by log transforming our variables, first viewing the new distribution and then performing the Pearson's correlation test (the default for `cor.test()`).
 
@@ -237,7 +237,7 @@ Each question requires you to carry out a statistical analysis to test some hypo
 
 1.  Conduct a chi-square test similar to the one we carried out earlier in this lesson plan, but test for a relationship between forest type (`section`) and channel unit (`unittype`) for Coastal giant salamander abundance. Keep all unittypes instead of filtering any like we did for the Cutthroat trout (9 pts.)
 
-2.   Test the hypothesis that there is a significant difference in species biomass between clear cut and old growth forest types for the Coastal Giant salamander. (Note: the steps to carry out this test are similar to what you did in this lesson plan for the Cutthroat trout) (8 pts.)
+2.  Test the hypothesis that there is a significant difference in species biomass between clear cut and old growth forest types for the Coastal Giant salamander. (Note: the steps to carry out this test are similar to what you did in this lesson plan for the Cutthroat trout) (8 pts.)
 
 3.  
 
