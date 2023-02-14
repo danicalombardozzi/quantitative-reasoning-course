@@ -262,10 +262,10 @@ sally_clean %>%
 Let's now perform the correlation test again but keeping our raw data and instead specifying `method = 'spearman'`, as the Spearman test is better for non-parametric and non-linear data sets.
 
 ```{r}
-cor.test(sally_clean$length_2_mm, sally_clean$weight_g)
+cor.test(sally_clean$length_2_mm, sally_clean$weight_g, method = "spearman")
 ```
 
-These results still represent a significant, positive relationship between length and weight for the Coastal Giant salamander, but this test gives a slightly smaller correlation coefficient compared to the Pearson's test on our transformed data.
+These results also represent a significant, positive relationship between length and weight for the Coastal Giant salamander, with a very high correlation coefficient.
 
 ## Exercises
 
