@@ -27,7 +27,6 @@ explore-the-dataset
 chi-square---categorical-analysis
 t-test---compare-two-means
 correlation---assess-relationships
-section
 exercises-2
 acknowledgements
 citations

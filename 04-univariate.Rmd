@@ -191,7 +191,7 @@ When you want to assess the relationship between two **continuous variables**, t
 
 For our `and_vertebrates` data set, we can test length-mass relationships for our species with our length and weight continuous variables. Lets test the hypothesis that body length is positively correlated with weight, such that longer individuals will also weigh more, specifically looking at the Coastal Giant salamander.
 
-First let's clean our data set to just include the Coastal giant salamander and remove missing values for length and weight. Let's focus on the variable 'length_2\_mm' for SVL (snout-vent length).
+First let's clean our data set to just include the Coastal giant salamander and remove missing values for length and weight. Let's focus on the variable 'length_2\_mm' for snout to tail length.
 
 ```{r}
 sally_clean <- and_vertebrates %>% 
@@ -265,7 +265,7 @@ Let's now perform the correlation test again but keeping our raw data and instea
 cor.test(sally_clean$length_2_mm, sally_clean$weight_g)
 ```
 
-These results still represent a significant, positive relationship between SVL and weight for the Coastal Giant salamander, but this test gives a slightly smaller correlation coefficient compared to the Pearson's test on our transformed data.
+These results still represent a significant, positive relationship between length and weight for the Coastal Giant salamander, but this test gives a slightly smaller correlation coefficient compared to the Pearson's test on our transformed data.
 
 ## Exercises
 
@@ -285,7 +285,7 @@ Each question requires you to carry out a statistical analysis to test some hypo
 
 <br>
 
-**3.** Test the correlation between body length and body mass for *Cutthroat trout*. (8 pts.)
+**3.** Test the correlation between body length (snout to fork length) and body mass for *Cutthroat trout*. (Hint: run `?and_vertebrates` to find which length variable represents snout to fork length) (8 pts.)
 
 <br> <br>
 
