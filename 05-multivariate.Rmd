@@ -1,12 +1,73 @@
 # Multivariate Statistics
 
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE)
+```
+
+In this lesson you will be introduced to statistical tests for dealing with more complex data sets, when you need to compare across more than two groups (ANOVA) or assess relationships in the form of an equation to predict response variables give single or multiple predictors (Regression).
+
+First you'll need to load in the libraries and data sets for the lesson
+
+```{r}
+#packages
+library(tidyverse)
+library(lterdatasampler)
+
+# data set
+data("pie_crab")
+```
+
+## 
+Explore the Data
+
+This data set consists of Fiddler crab body size measured in salt marshes from Florida to Massachusetts, USA during summer 2016 at Plum Island Ecosystem LTER.
+
+```{r}
+glimpse(pie_crab)
+```
+
+Learn more about each variable:
+
+```{r}
+?pie_crab
+```
+
+This data set provides a great opportunity to explore Bergmann's rule: where organisms at higher latitudes are larger than those at lower latitudes. There are various hypotheses on what drives this phenomenon, which you can read more about in Johnson et al. 2019.
+
+We have a continuous size variable (carapace width in mm), our dependent variable, and various predictor variables: site (categorical), latitude (continuous), air temperature (continuous) and water temperature (continuous).
+
+Let's explore the sample size at each site and how many sites are in this data set
+
+```{r}
+# sample size per site
+pie_crab %>% 
+  group_by(site) %>% 
+  count()
+
+```
+
+We have 13 sites with \~30 individual male crabs measured at each site.
+
+Let's also check the range of our continuous variables
+
+```{r}
+summary(pie_crab)
+```
 
 ## ANOVA
 
+First we can see if there is a significant difference in crab size among sites. Since we have a continuous response variable (size) and a categorical predictor (site) with \> 2 groups (13 sites), we will use an ANOVA test.
 
-## Multiple Regression
+## Simple Linear Regression
 
+## Multiple Linear Regression
 
-## Model Selection
+### Acknowledgements
 
+Thanks to the developers of [`lterdatasampler`](https://lter.github.io/lterdatasampler/index.html) for providing the data set and vignettes that helped guide the creation of this lesson plan.
 
+### Citations
+
+-   Johnson, D. 2019. Fiddler crab body size in salt marshes from Florida to Massachusetts, USA at PIE and VCR LTER and NOAA NERR sites during summer 2016. ver 1. Environmental Data Initiative. <https://doi.org/10.6073/pasta/4c27d2e778d3325d3830a5142e3839bb> (Accessed 2021-05-27).
+
+-   Johnson DS, Crowley C, Longmire K, Nelson J, Williams B, Wittyngham S. The fiddler crab, Minuca pugnax, follows Bergmann\'s rule. Ecol Evol. 2019;00:1--9. <https://doi.org/10.1002/ece3.5883>
