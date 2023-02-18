@@ -23,7 +23,7 @@
 <meta name="author" content="Caitlin C. Mothes, PhD" />
 
 
-<meta name="date" content="2023-02-14" />
+<meta name="date" content="2023-02-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -187,9 +187,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html"><i class="fa fa-check"></i><b>6</b> Multivariate Statistics</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#anova"><i class="fa fa-check"></i><b>6.1</b> ANOVA</a></li>
-<li class="chapter" data-level="6.2" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#multiple-regression"><i class="fa fa-check"></i><b>6.2</b> Multiple Regression</a></li>
-<li class="chapter" data-level="6.3" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#model-selection"><i class="fa fa-check"></i><b>6.3</b> Model Selection</a></li>
+<li class="chapter" data-level="6.1" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#explore-the-dataset-1"><i class="fa fa-check"></i><b>6.1</b> Explore the Dataset</a></li>
+<li class="chapter" data-level="6.2" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#anova"><i class="fa fa-check"></i><b>6.2</b> ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#assumptions"><i class="fa fa-check"></i><b>6.2.1</b> Assumptions</a></li>
+<li class="chapter" data-level="6.2.2" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#post-hoc-tukeys-hds-test"><i class="fa fa-check"></i><b>6.2.2</b> Post-hoc Tukey’s HDS test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#simple-linear-regression"><i class="fa fa-check"></i><b>6.3</b> Simple Linear Regression</a></li>
+<li class="chapter" data-level="6.4" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#multiple-linear-regression"><i class="fa fa-check"></i><b>6.4</b> Multiple Linear Regression</a></li>
+<li class="chapter" data-level="6.5" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#exercises-3"><i class="fa fa-check"></i><b>6.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#acknowledgements-1"><i class="fa fa-check"></i><b>6.5.1</b> Acknowledgements</a></li>
+<li class="chapter" data-level="6.5.2" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#citations-1"><i class="fa fa-check"></i><b>6.5.2</b> Citations</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -213,15 +223,143 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="multivariate-statistics" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number"> 6</span> Multivariate Statistics<a href="multivariate-statistics.html#multivariate-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="anova" class="section level2 hasAnchor" number="6.1">
-<h2><span class="header-section-number">6.1</span> ANOVA<a href="multivariate-statistics.html#anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this lesson you will be introduced to statistical tests for dealing with more complex data sets, such as when you need to compare across more than two groups (ANOVA) or assess relationships in the form of an equation to predict response variables given single or multiple predictors (Regression).</p>
+<p>First you’ll need to load in the libraries and data set for the lesson.</p>
+<p>We need to install one new package for today to use a specific statistical test. This package is called <code>car</code>. Follow the steps below to install the package, and then read in your libraries and data set for the lesson.<br />
+</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="multivariate-statistics.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install the car package</span></span>
+<span id="cb68-2"><a href="multivariate-statistics.html#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;car&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="multivariate-statistics.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co">#load in packages</span></span>
+<span id="cb69-2"><a href="multivariate-statistics.html#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb69-3"><a href="multivariate-statistics.html#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lterdatasampler)</span>
+<span id="cb69-4"><a href="multivariate-statistics.html#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb69-5"><a href="multivariate-statistics.html#cb69-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-6"><a href="multivariate-statistics.html#cb69-6" aria-hidden="true" tabindex="-1"></a><span class="co"># data set</span></span>
+<span id="cb69-7"><a href="multivariate-statistics.html#cb69-7" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;pie_crab&quot;</span>)</span></code></pre></div>
+<div id="explore-the-dataset-1" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Explore the Dataset<a href="multivariate-statistics.html#explore-the-dataset-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This data set consists of Fiddler crab body size measured in salt marshes from Florida to Massachusetts during summer 2016 at Plum Island Ecosystem LTER.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="multivariate-statistics.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(pie_crab)</span></code></pre></div>
+<p>Learn more about each variable:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="multivariate-statistics.html#cb71-1" aria-hidden="true" tabindex="-1"></a>?pie_crab</span></code></pre></div>
+<p>This data set provides a great opportunity to explore Bergmann’s rule: where organisms at higher latitudes are larger than those at lower latitudes. There are various hypotheses on what drives this phenomenon, which you can read more about in <a href="https://onlinelibrary.wiley.com/doi/10.1002/ece3.5883">Johnson et al. 2019</a>.</p>
+<p>We have a continuous size variable (carapace width in mm), our dependent variable, and various predictor variables: site (categorical), latitude (continuous), air temperature (continuous) and water temperature (continuous).</p>
+<p>Let’s explore the sample size at each site and how many sites are in this data set</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="multivariate-statistics.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample size per site</span></span>
+<span id="cb72-2"><a href="multivariate-statistics.html#cb72-2" aria-hidden="true" tabindex="-1"></a>pie_crab <span class="sc">%&gt;%</span> </span>
+<span id="cb72-3"><a href="multivariate-statistics.html#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(site) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-4"><a href="multivariate-statistics.html#cb72-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span></code></pre></div>
+<p>We have 13 sites with ~30 individual male crabs measured at each site.</p>
+<p>Let’s also check the range of our continuous variables</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="multivariate-statistics.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pie_crab)</span></code></pre></div>
 </div>
-<div id="multiple-regression" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> Multiple Regression<a href="multivariate-statistics.html#multiple-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="anova" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> ANOVA<a href="multivariate-statistics.html#anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>First we can see if there is a significant difference in crab size among sites. Since we have a continuous response variable (size) and a categorical predictor (site) with &gt; 2 groups (13 sites), we will use an ANOVA test.</p>
+<p>Lets first visualize the distribution of size values for each site using a new visualization technique with ggplot called <code>geom_jitter()</code>. This function adds a small amount of variation to each point, so that all our points for each site are not stacked on top of each other (<em>for example, try running the following code below but with <code>geom_point()</code> instead of <code>geom_jitter()</code> and notice the difference</em>).</p>
+<p>In this code we also use the <code>reorder()</code> function to order our x axis value (site) by latitude to see any initial trends fitting Bergmann’s rule.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="multivariate-statistics.html#cb74-1" aria-hidden="true" tabindex="-1"></a>pie_crab <span class="sc">%&gt;%</span> </span>
+<span id="cb74-2"><a href="multivariate-statistics.html#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(site, latitude), <span class="at">y =</span> size, <span class="at">color =</span> site)) <span class="sc">+</span> </span>
+<span id="cb74-3"><a href="multivariate-statistics.html#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()<span class="sc">+</span></span>
+<span id="cb74-4"><a href="multivariate-statistics.html#cb74-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># edit y axis label</span></span>
+<span id="cb74-5"><a href="multivariate-statistics.html#cb74-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Carapace width (mm)&quot;</span>)<span class="sc">+</span></span>
+<span id="cb74-6"><a href="multivariate-statistics.html#cb74-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove the legend and x axis label</span></span>
+<span id="cb74-7"><a href="multivariate-statistics.html#cb74-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb74-8"><a href="multivariate-statistics.html#cb74-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<p>Looks like there is variation among sites, so lets test for statistical significance with the ANOVA test.</p>
+<div id="assumptions" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Assumptions<a href="multivariate-statistics.html#assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong><em>Normality</em></strong></p>
+<p>ANOVA assumes normal distributions within each group. Here our group sample sizes are ~30 each which can be considered as large enough to not worry about this assumption, but lets walk through how to statistically check for normality if you had smaller sample sizes.</p>
+<p>You could test for normality with the Shaprio-Wilk test for each group individually, but here we have a lot of groups (13) and that would be tedious. Instead, we can calculate the residuals for all groups and test for normal distribution on the single set of residuals.</p>
+<div class="alert alert-info">
+<p>A residual value is computed for each observation as the difference between that value and the mean of all values for that group.</p>
 </div>
-<div id="model-selection" class="section level2 hasAnchor" number="6.3">
-<h2><span class="header-section-number">6.3</span> Model Selection<a href="multivariate-statistics.html#model-selection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can get the residuals from the ANOVA model by running <code>aov()</code>. To carry out the ANOVA model, we specify the name of our continuous response (size) ~ the name of our categorical predictor (site), and specify the data set name. <em>Note that the <code>aov()</code> function won’t work the <code>%&gt;%</code> pipe.</em></p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="multivariate-statistics.html#cb75-1" aria-hidden="true" tabindex="-1"></a>res_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(size <span class="sc">~</span> site, <span class="at">data =</span> pie_crab)</span></code></pre></div>
+<p>We can then pull out the residuals of this <code>aov()</code> model like we do by indexing columns with the <code>$</code> operator. Let’s check the distribution visually with <code>hist()</code> and then statistically with <code>shapiro.test()</code>.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="multivariate-statistics.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(res_aov<span class="sc">$</span>residuals)</span>
+<span id="cb76-2"><a href="multivariate-statistics.html#cb76-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-3"><a href="multivariate-statistics.html#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(res_aov<span class="sc">$</span>residuals)</span></code></pre></div>
+<p>This returns a p-value of 0.72, so we accept the null that this data <strong>does</strong> fit the normal distribution assumption.</p>
+<p><strong><em>Equal Variances</em></strong></p>
+<p>To test for equal variances among more than two groups, it is easiest to use a Levene’s Test. To use this test we need to install a new package called <code>car</code>, which you should have done at the beginning of this lesson.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="multivariate-statistics.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(size<span class="sc">~</span>site, <span class="at">data =</span> pie_crab)</span></code></pre></div>
+<p>SImilar to the <code>var.test()</code> function you’ve used before, the null hypothesis of the Levene’s test is that the variances are equal. Given this small p-value (denoted the the ‘Pr(&gt;F)’ value) we see that the variances of our groups are not equal.</p>
+<p>Therefore we would have to perform a Welch ANOVA:</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="multivariate-statistics.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(size <span class="sc">~</span> site, <span class="at">data =</span> pie_crab, <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Our results here are highly significant, meaning that at least one of our groups means is significantly different from the others.</p>
+<p>Now ANOVAs don’t tell us which groups are significantly different, for that we would need to use the post-hoc Tukey’s HSD test.</p>
+<p>However for 13 groups that is a lot of pairwise comparisons to perform. For the next example lets filter our analysis to check for differences among 3 sites, choose sites at the two extremes in latitude and one in the middle of the range.</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="multivariate-statistics.html#cb79-1" aria-hidden="true" tabindex="-1"></a>pie_sites <span class="ot">&lt;-</span> pie_crab <span class="sc">%&gt;%</span> </span>
+<span id="cb79-2"><a href="multivariate-statistics.html#cb79-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(site <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;GTM&quot;</span>, <span class="st">&quot;DB&quot;</span>, <span class="st">&quot;PIE&quot;</span>))</span></code></pre></div>
+<p>We already know that this dataset fits the normality assumption, but now lets check if the variances of these 3 sites are equal or not.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="multivariate-statistics.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(size <span class="sc">~</span> site, <span class="at">data =</span> pie_sites)</span></code></pre></div>
+<p>A p-value of 0.58 is much higher than our cut-off of 0.05, so we are confident that the variances are equal and we can therefore carry out the ANOVA with the <code>aov()</code> as we meet all its assumptions.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="multivariate-statistics.html#cb81-1" aria-hidden="true" tabindex="-1"></a>pie_anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(size <span class="sc">~</span> site, <span class="at">data =</span> pie_sites)</span></code></pre></div>
+<p>To view the ANOVA results of this model we use <code>summary()</code></p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="multivariate-statistics.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pie_anova)</span></code></pre></div>
+</div>
+<div id="post-hoc-tukeys-hds-test" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> Post-hoc Tukey’s HDS test<a href="multivariate-statistics.html#post-hoc-tukeys-hds-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>From the ANOVA test we find that at least one of our group means is significantly different from the others. Now we can use the <code>TukeyHSD()</code> function to test all the pairwise differences to see which groups are different from each other.</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="multivariate-statistics.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(pie_anova)</span></code></pre></div>
+<p>This returns each combination of site comparisons and a p-value (the ‘p adj’ variable) for each.</p>
+</div>
+</div>
+<div id="simple-linear-regression" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Simple Linear Regression<a href="multivariate-statistics.html#simple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Lets more directly test Bergmann’s rule by testing for a relationship between carapcace width and latitude. Since our predictor (latitude) is a continuous, quantitative variable, we can conduct a simple linear regression.</p>
+<p>To conduct a regression model, we use the <code>lm()</code> function.</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="multivariate-statistics.html#cb84-1" aria-hidden="true" tabindex="-1"></a>pie_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(size <span class="sc">~</span> latitude, <span class="at">data =</span> pie_crab)</span>
+<span id="cb84-2"><a href="multivariate-statistics.html#cb84-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-3"><a href="multivariate-statistics.html#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="co">#view the results of the linear model</span></span>
+<span id="cb84-4"><a href="multivariate-statistics.html#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pie_lm)</span></code></pre></div>
+<p>Our p-value is indicated in the ‘Pr(&gt;|t|)’ column for ‘latitude’ and at the bottom of these results, telling us that latitude does have a significant effect on crab size.</p>
+<p>From the results we also have an Estimate for latitude (0.49), which reflects the regression coefficient or strength and direction of the effect of latitude, along with the standard error for that estimate (0.03), reflecting the variation in that estimate.</p>
+<p>Lets view this visually and fit the linear regression line of best fit.</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="multivariate-statistics.html#cb85-1" aria-hidden="true" tabindex="-1"></a>pie_crab <span class="sc">%&gt;%</span> </span>
+<span id="cb85-2"><a href="multivariate-statistics.html#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> latitude, <span class="at">y =</span> size))<span class="sc">+</span></span>
+<span id="cb85-3"><a href="multivariate-statistics.html#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb85-4"><a href="multivariate-statistics.html#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<p>Now that we fit this model, we can use it to predict crab size at different latitudes with <code>predict()</code>. For example, lets predict carapace width at a latitude of 36 degrees.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="multivariate-statistics.html#cb86-1" aria-hidden="true" tabindex="-1"></a>new_lat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">latitude =</span> <span class="fu">c</span>(<span class="dv">32</span>, <span class="dv">36</span>, <span class="dv">38</span>))</span>
+<span id="cb86-2"><a href="multivariate-statistics.html#cb86-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-3"><a href="multivariate-statistics.html#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(pie_lm, <span class="at">newdata =</span> new_lat)</span></code></pre></div>
+</div>
+<div id="multiple-linear-regression" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Multiple Linear Regression<a href="multivariate-statistics.html#multiple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Say we want to model the effect of more than one predictor on crab size. In this data set we also have continuous variables for air temperature and water temperature. Lets model the effect of latitude, air and water temperature on carapace width.</p>
+<p>Running a multiple linear regression is very similar to the simple linear regression, but now we specify our multiple predictor variables by adding them together with a <code>+</code> sign like this:</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="multivariate-statistics.html#cb87-1" aria-hidden="true" tabindex="-1"></a>pie_mlm <span class="ot">&lt;-</span> <span class="fu">lm</span>(size <span class="sc">~</span> latitude <span class="sc">+</span> air_temp <span class="sc">+</span> water_temp, <span class="at">data =</span> pie_crab)</span>
+<span id="cb87-2"><a href="multivariate-statistics.html#cb87-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-3"><a href="multivariate-statistics.html#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pie_mlm)</span></code></pre></div>
+<p>These results show an overall p-value for the model, indicating a significant impact of the combination of predictor variables on crab size, and individual p-values for the effect of each individual predictor on crab size.</p>
+<p>Note however that normally with multiple regression, one of the assumptions is that there is no correlation between the predictor variables. We can test for correlations between more than two variables with the <code>cor()</code> function. Lets test for correlation between our three predictors:</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="multivariate-statistics.html#cb88-1" aria-hidden="true" tabindex="-1"></a>pie_crab <span class="sc">%&gt;%</span> </span>
+<span id="cb88-2"><a href="multivariate-statistics.html#cb88-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(latitude, air_temp, water_temp) <span class="sc">%&gt;%</span> </span>
+<span id="cb88-3"><a href="multivariate-statistics.html#cb88-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>()</span></code></pre></div>
+<p>Normally tests remove variables that have a correlation coefficient greater than 0.7/-0.7. These are all highly correlated (with coefficients near 1/-1), therefore probably not the best set of predictors to use for a multiple linear regression. Below in your assignment you will perform a multiple linear regression using variables that a a bit less correlated.</p>
+</div>
+<div id="exercises-3" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Exercises<a href="multivariate-statistics.html#exercises-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>After completing the ANOVA to test for significant differences in crab size among sites: 1) Create a boxplot showing the carapace width for each site where sites are ordered by latitude and 2) report the findings of the statistical test as you would in a scientific paper.</li>
+<li>Conduct a simple linear regression for the effect of water_temp_sd (a measure reflecting annual variation in water temperature) on carapace width. Report your findings and create a plot with a line of best fit.</li>
+<li>Conduct a multiple linear regression for the effects of latitude, air_temp_sd, and water_temp_sd on carapace width. First check for correlations among the three predictor variables (and report the correlation table) second report your findings from the multiple linear regression.</li>
+</ol>
+<div id="acknowledgements-1" class="section level3 hasAnchor" number="6.5.1">
+<h3><span class="header-section-number">6.5.1</span> Acknowledgements<a href="multivariate-statistics.html#acknowledgements-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Thanks to the developers of <a href="https://lter.github.io/lterdatasampler/index.html"><code>lterdatasampler</code></a> for providing the data set and vignettes that helped guide the creation of this lesson plan.</p>
+</div>
+<div id="citations-1" class="section level3 hasAnchor" number="6.5.2">
+<h3><span class="header-section-number">6.5.2</span> Citations<a href="multivariate-statistics.html#citations-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p>Johnson, D. 2019. Fiddler crab body size in salt marshes from Florida to Massachusetts, USA at PIE and VCR LTER and NOAA NERR sites during summer 2016. ver 1. Environmental Data Initiative. <a href="https://doi.org/10.6073/pasta/4c27d2e778d3325d3830a5142e3839bb" class="uri">https://doi.org/10.6073/pasta/4c27d2e778d3325d3830a5142e3839bb</a> (Accessed 2021-05-27).</p></li>
+<li><p>Johnson DS, Crowley C, Longmire K, Nelson J, Williams B, Wittyngham S. The fiddler crab, Minuca pugnax, follows Bergmann’s rule. Ecol Evol. 2019;00:1–9. <a href="https://doi.org/10.1002/ece3.5883" class="uri">https://doi.org/10.1002/ece3.5883</a></p></li>
+</ul>
 
+</div>
 </div>
 </div>
             </section>

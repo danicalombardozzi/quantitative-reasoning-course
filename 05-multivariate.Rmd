@@ -4,23 +4,31 @@
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE)
 ```
 
-In this lesson you will be introduced to statistical tests for dealing with more complex data sets, when you need to compare across more than two groups (ANOVA) or assess relationships in the form of an equation to predict response variables give single or multiple predictors (Regression).
+In this lesson you will be introduced to statistical tests for dealing with more complex data sets, such as when you need to compare across more than two groups (ANOVA) or assess relationships in the form of an equation to predict response variables given single or multiple predictors (Regression).
 
-First you'll need to load in the libraries and data sets for the lesson
+First you'll need to load in the libraries and data set for the lesson.
+
+We need to install one new package for today to use a specific statistical test. This package is called `car`. Follow the steps below to install the package, and then read in your libraries and data set for the lesson.\
+
+```{r eval = FALSE}
+#install the car package
+install.packages("car")
+
+```
 
 ```{r}
-#packages
+#load in packages
 library(tidyverse)
 library(lterdatasampler)
+library(car)
 
 # data set
 data("pie_crab")
 ```
 
-## 
-Explore the Data
+## Explore the Dataset
 
-This data set consists of Fiddler crab body size measured in salt marshes from Florida to Massachusetts, USA during summer 2016 at Plum Island Ecosystem LTER.
+This data set consists of Fiddler crab body size measured in salt marshes from Florida to Massachusetts during summer 2016 at Plum Island Ecosystem LTER.
 
 ```{r}
 glimpse(pie_crab)
@@ -32,7 +40,7 @@ Learn more about each variable:
 ?pie_crab
 ```
 
-This data set provides a great opportunity to explore Bergmann's rule: where organisms at higher latitudes are larger than those at lower latitudes. There are various hypotheses on what drives this phenomenon, which you can read more about in Johnson et al. 2019.
+This data set provides a great opportunity to explore Bergmann's rule: where organisms at higher latitudes are larger than those at lower latitudes. There are various hypotheses on what drives this phenomenon, which you can read more about in [Johnson et al. 2019](https://onlinelibrary.wiley.com/doi/10.1002/ece3.5883).
 
 We have a continuous size variable (carapace width in mm), our dependent variable, and various predictor variables: site (categorical), latitude (continuous), air temperature (continuous) and water temperature (continuous).
 
@@ -58,9 +66,170 @@ summary(pie_crab)
 
 First we can see if there is a significant difference in crab size among sites. Since we have a continuous response variable (size) and a categorical predictor (site) with \> 2 groups (13 sites), we will use an ANOVA test.
 
+Lets first visualize the distribution of size values for each site using a new visualization technique with ggplot called `geom_jitter()`. This function adds a small amount of variation to each point, so that all our points for each site are not stacked on top of each other (*for example, try running the following code below but with `geom_point()` instead of `geom_jitter()` and notice the difference*).
+
+In this code we also use the `reorder()` function to order our x axis value (site) by latitude to see any initial trends fitting Bergmann's rule.
+
+```{r}
+pie_crab %>% 
+  ggplot(aes(x = reorder(site, latitude), y = size, color = site)) + 
+  geom_jitter()+
+  # edit y axis label
+  labs(x = "", y = "Carapace width (mm)")+
+  # remove the legend and x axis label
+  theme(legend.position = "none",
+        axis.title.x = element_blank())
+```
+
+Looks like there is variation among sites, so lets test for statistical significance with the ANOVA test.
+
+### Assumptions
+
+***Normality***
+
+ANOVA assumes normal distributions within each group. Here our group sample sizes are \~30 each which can be considered as large enough to not worry about this assumption, but lets walk through how to statistically check for normality if you had smaller sample sizes.
+
+You could test for normality with the Shaprio-Wilk test for each group individually, but here we have a lot of groups (13) and that would be tedious. Instead, we can calculate the residuals for all groups and test for normal distribution on the single set of residuals.
+
+::: {.alert .alert-info}
+A residual value is computed for each observation as the difference between that value and the mean of all values for that group.
+:::
+
+We can get the residuals from the ANOVA model by running `aov()`. To carry out the ANOVA model, we specify the name of our continuous response (size) \~ the name of our categorical predictor (site), and specify the data set name. *Note that the `aov()` function won't work the `%>%` pipe.*
+
+```{r}
+res_aov <- aov(size ~ site, data = pie_crab)
+```
+
+We can then pull out the residuals of this `aov()` model like we do by indexing columns with the `$` operator. Let's check the distribution visually with `hist()` and then statistically with `shapiro.test()`.
+
+```{r}
+hist(res_aov$residuals)
+
+shapiro.test(res_aov$residuals)
+```
+
+This returns a p-value of 0.72, so we accept the null that this data **does** fit the normal distribution assumption.
+
+***Equal Variances***
+
+To test for equal variances among more than two groups, it is easiest to use a Levene's Test. To use this test we need to install a new package called `car`, which you should have done at the beginning of this lesson.
+
+```{r}
+leveneTest(size~site, data = pie_crab)
+```
+
+SImilar to the `var.test()` function you've used before, the null hypothesis of the Levene's test is that the variances are equal. Given this small p-value (denoted the the 'Pr(\>F)' value) we see that the variances of our groups are not equal.
+
+Therefore we would have to perform a Welch ANOVA:
+
+```{r}
+oneway.test(size ~ site, data = pie_crab, var.equal = FALSE)
+```
+
+Our results here are highly significant, meaning that at least one of our groups means is significantly different from the others.
+
+Now ANOVAs don't tell us which groups are significantly different, for that we would need to use the post-hoc Tukey's HSD test.
+
+However for 13 groups that is a lot of pairwise comparisons to perform. For the next example lets filter our analysis to check for differences among 3 sites, choose sites at the two extremes in latitude and one in the middle of the range.
+
+```{r}
+pie_sites <- pie_crab %>% 
+  filter(site %in% c("GTM", "DB", "PIE"))
+```
+
+We already know that this dataset fits the normality assumption, but now lets check if the variances of these 3 sites are equal or not.
+
+```{r}
+leveneTest(size ~ site, data = pie_sites)
+```
+
+A p-value of 0.58 is much higher than our cut-off of 0.05, so we are confident that the variances are equal and we can therefore carry out the ANOVA with the `aov()` as we meet all its assumptions.
+
+```{r}
+pie_anova <- aov(size ~ site, data = pie_sites)
+```
+
+To view the ANOVA results of this model we use `summary()`
+
+```{r}
+summary(pie_anova)
+```
+
+### Post-hoc Tukey's HDS test
+
+From the ANOVA test we find that at least one of our group means is significantly different from the others. Now we can use the `TukeyHSD()` function to test all the pairwise differences to see which groups are different from each other.
+
+```{r}
+TukeyHSD(pie_anova)
+```
+
+This returns each combination of site comparisons and a p-value (the 'p adj' variable) for each.
+
 ## Simple Linear Regression
 
+Lets more directly test Bergmann's rule by testing for a relationship between carapcace width and latitude. Since our predictor (latitude) is a continuous, quantitative variable, we can conduct a simple linear regression.
+
+To conduct a regression model, we use the `lm()` function.
+
+```{r}
+pie_lm <- lm(size ~ latitude, data = pie_crab)
+
+#view the results of the linear model
+summary(pie_lm)
+```
+
+Our p-value is indicated in the 'Pr(\>\|t\|)' column for 'latitude' and at the bottom of these results, telling us that latitude does have a significant effect on crab size.
+
+From the results we also have an Estimate for latitude (0.49), which reflects the regression coefficient or strength and direction of the effect of latitude, along with the standard error for that estimate (0.03), reflecting the variation in that estimate.
+
+Lets view this visually and fit the linear regression line of best fit.
+
+```{r}
+pie_crab %>% 
+  ggplot(aes(x = latitude, y = size))+
+  geom_point()+
+  geom_smooth(method = "lm")
+
+```
+
+Now that we fit this model, we can use it to predict crab size at different latitudes with `predict()`. For example, lets predict carapace width at a latitude of 36 degrees.
+
+```{r}
+new_lat <- data.frame(latitude = c(32, 36, 38))
+
+predict(pie_lm, newdata = new_lat)
+```
+
 ## Multiple Linear Regression
+
+Say we want to model the effect of more than one predictor on crab size. In this data set we also have continuous variables for air temperature and water temperature. Lets model the effect of latitude, air and water temperature on carapace width.
+
+Running a multiple linear regression is very similar to the simple linear regression, but now we specify our multiple predictor variables by adding them together with a `+` sign like this:
+
+```{r}
+pie_mlm <- lm(size ~ latitude + air_temp + water_temp, data = pie_crab)
+
+summary(pie_mlm)
+```
+
+These results show an overall p-value for the model, indicating a significant impact of the combination of predictor variables on crab size, and individual p-values for the effect of each individual predictor on crab size.
+
+Note however that normally with multiple regression, one of the assumptions is that there is no correlation between the predictor variables. We can test for correlations between more than two variables with the `cor()` function. Lets test for correlation between our three predictors:
+
+```{r}
+pie_crab %>% 
+  select(latitude, air_temp, water_temp) %>% 
+  cor()
+```
+
+Normally tests remove variables that have a correlation coefficient greater than 0.7/-0.7. These are all highly correlated (with coefficients near 1/-1), therefore probably not the best set of predictors to use for a multiple linear regression. Below in your assignment you will perform a multiple linear regression using variables that a a bit less correlated.
+
+## Exercises
+
+1.  After completing the ANOVA to test for significant differences in crab size among sites: 1) Create a boxplot showing the carapace width for each site where sites are ordered by latitude and 2) report the findings of the statistical test as you would in a scientific paper.
+2.  Conduct a simple linear regression for the effect of water_temp_sd (a measure reflecting annual variation in water temperature) on carapace width. Report your findings and create a plot with a line of best fit.
+3.  Conduct a multiple linear regression for the effects of latitude, air_temp_sd, and water_temp_sd on carapace width. First check for correlations among the three predictor variables (and report the correlation table) second report your findings from the multiple linear regression.
 
 ### Acknowledgements
 
@@ -70,4 +239,4 @@ Thanks to the developers of [`lterdatasampler`](https://lter.github.io/lterdatas
 
 -   Johnson, D. 2019. Fiddler crab body size in salt marshes from Florida to Massachusetts, USA at PIE and VCR LTER and NOAA NERR sites during summer 2016. ver 1. Environmental Data Initiative. <https://doi.org/10.6073/pasta/4c27d2e778d3325d3830a5142e3839bb> (Accessed 2021-05-27).
 
--   Johnson DS, Crowley C, Longmire K, Nelson J, Williams B, Wittyngham S. The fiddler crab, Minuca pugnax, follows Bergmann\'s rule. Ecol Evol. 2019;00:1--9. <https://doi.org/10.1002/ece3.5883>
+-   Johnson DS, Crowley C, Longmire K, Nelson J, Williams B, Wittyngham S. The fiddler crab, Minuca pugnax, follows Bergmann's rule. Ecol Evol. 2019;00:1--9. <https://doi.org/10.1002/ece3.5883>
