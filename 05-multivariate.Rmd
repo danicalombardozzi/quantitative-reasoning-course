@@ -26,7 +26,7 @@ library(car)
 data("pie_crab")
 ```
 
-## Explore the Dataset
+## Explore the Data set
 
 This data set consists of Fiddler crab body size measured in salt marshes from Florida to Massachusetts during summer 2016 at Plum Island Ecosystem LTER.
 
@@ -56,7 +56,7 @@ pie_crab %>%
 
 We have 13 sites with \~30 individual male crabs measured at each site.
 
-Let's also check the range of our continuous variables
+Let's also check the range of our continuous variables:
 
 ```{r}
 summary(pie_crab)
@@ -116,10 +116,10 @@ This returns a p-value of 0.72, so we accept the null that this data **does** fi
 To test for equal variances among more than two groups, it is easiest to use a Levene's Test. To use this test we need to install a new package called `car`, which you should have done at the beginning of this lesson.
 
 ```{r}
-leveneTest(size~site, data = pie_crab)
+leveneTest(size ~ site, data = pie_crab)
 ```
 
-SImilar to the `var.test()` function you've used before, the null hypothesis of the Levene's test is that the variances are equal. Given this small p-value (denoted the the 'Pr(\>F)' value) we see that the variances of our groups are not equal.
+Similar to the `var.test()` function you've used before, the *null hypothesis* of the Levene's test is that the variances *are* *equal*. Given this small p-value (denoted the the 'Pr(\>F)' value) we see that the variances of our groups are not equal.
 
 Therefore we would have to perform a Welch ANOVA:
 
@@ -131,14 +131,14 @@ Our results here are highly significant, meaning that at least one of our groups
 
 Now ANOVAs don't tell us which groups are significantly different, for that we would need to use the post-hoc Tukey's HSD test.
 
-However for 13 groups that is a lot of pairwise comparisons to perform. For the next example lets filter our analysis to check for differences among 3 sites, choose sites at the two extremes in latitude and one in the middle of the range.
+However for 13 groups that is a lot of pairwise comparisons to perform. For the next example lets filter our analysis to check for differences among 3 sites, choosing sites at the two extremes in latitude and one in the middle of the range.
 
 ```{r}
 pie_sites <- pie_crab %>% 
   filter(site %in% c("GTM", "DB", "PIE"))
 ```
 
-We already know that this dataset fits the normality assumption, but now lets check if the variances of these 3 sites are equal or not.
+We already know that this data set fits the normality assumption, but now lets check if the variances of these 3 sites are equal or not.
 
 ```{r}
 leveneTest(size ~ site, data = pie_sites)
@@ -156,7 +156,7 @@ To view the ANOVA results of this model we use `summary()`
 summary(pie_anova)
 ```
 
-### Post-hoc Tukey's HDS test
+### Post-hoc Tukey's HSD test
 
 From the ANOVA test we find that at least one of our group means is significantly different from the others. Now we can use the `TukeyHSD()` function to test all the pairwise differences to see which groups are different from each other.
 
@@ -168,7 +168,7 @@ This returns each combination of site comparisons and a p-value (the 'p adj' var
 
 ## Simple Linear Regression
 
-Lets more directly test Bergmann's rule by testing for a relationship between carapcace width and latitude. Since our predictor (latitude) is a continuous, quantitative variable, we can conduct a simple linear regression.
+Lets more directly test Bergmann's rule by testing for a relationship between carapace width and latitude. Since our predictor (latitude) is a continuous, quantitative variable, we can conduct a simple linear regression.
 
 To conduct a regression model, we use the `lm()` function.
 
@@ -193,7 +193,7 @@ pie_crab %>%
 
 ```
 
-Now that we fit this model, we can use it to predict crab size at different latitudes with `predict()`. For example, lets predict carapace width at a latitude of 36 degrees.
+Now that we fit this model, we can use it to predict crab size at different latitudes with `predict()`. For example, lets predict carapace width at a latitudes of 32, 36, and 38 degrees. Note that we need to create these values as a new data frame with the same column name used in the data that the model was built of off.
 
 ```{r}
 new_lat <- data.frame(latitude = c(32, 36, 38))
@@ -223,13 +223,15 @@ pie_crab %>%
   cor()
 ```
 
-Normally tests remove variables that have a correlation coefficient greater than 0.7/-0.7. These are all highly correlated (with coefficients near 1/-1), therefore probably not the best set of predictors to use for a multiple linear regression. Below in your assignment you will perform a multiple linear regression using variables that a a bit less correlated.
+Normally tests remove variables that have a correlation coefficient greater than 0.7/-0.7. These are all highly correlated (with coefficients near 1/-1), therefore probably not the best set of predictors to use for a multiple linear regression. Below in your assignment you will perform a multiple linear regression using variables that are a bit less correlated.
 
 ## Exercises
 
-1.  After completing the ANOVA to test for significant differences in crab size among sites: 1) Create a boxplot showing the carapace width for each site where sites are ordered by latitude and 2) report the findings of the statistical test as you would in a scientific paper.
-2.  Conduct a simple linear regression for the effect of water_temp_sd (a measure reflecting annual variation in water temperature) on carapace width. Report your findings and create a plot with a line of best fit.
-3.  Conduct a multiple linear regression for the effects of latitude, air_temp_sd, and water_temp_sd on carapace width. First check for correlations among the three predictor variables (and report the correlation table) second report your findings from the multiple linear regression.
+1.  After completing the ANOVA test in section 6.2 to test for significant differences in crab size among sites: **1)** Create a boxplot showing the carapace width for each site where sites are *ordered by latitude* and **2)** report the findings of the statistical test as you would in a scientific paper. (6 pts.)
+
+2.  Conduct a simple linear regression for the effect of `water_temp_sd` (a measure reflecting annual variation in water temperature) on carapace width. Report your findings (include code *and* a sentence reporting the results) AND create a plot with a line of best fit. (10 pts).
+
+3.  Conduct a multiple linear regression for the effects of `latitude`, `air_temp_sd`, and `water_temp_sd` on carapace width. **First** check for correlations among the three predictor variables (and report the correlation table) and **second** report your findings from the multiple linear regression (code *and* a sentence reporting the results). (9 pts.)
 
 ### Acknowledgements
 
