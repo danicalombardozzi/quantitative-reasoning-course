@@ -31,14 +31,12 @@ exercises-2
 acknowledgements
 citations
 multivariate-statistics
-explore-the-dataset-1
+explore-the-data-set
 anova
 assumptions
-post-hoc-tukeys-hds-test
+post-hoc-tukeys-hsd-test
 simple-linear-regression
 multiple-linear-regression
 exercises-3
 acknowledgements-1
 citations-1
-explore-the-data-set
-post-hoc-tukeys-hsd-test

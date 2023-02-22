@@ -227,9 +227,9 @@ Normally tests remove variables that have a correlation coefficient greater than
 
 ## Exercises
 
-1.  After completing the ANOVA test in section 6.2 to test for significant differences in crab size among sites: **1)** Create a boxplot showing the carapace width for each site where sites are *ordered by latitude* and **2)** report the findings of the statistical test as you would in a scientific paper. (6 pts.)
+1.  **After** completing the ANOVA test (and post-hoc Tukey's HSD) in **section 6.2** to test for significant differences in crab size among 3 different sites: **1)** Create a boxplot showing the carapace width for each site where sites are *ordered by latitude* and **2)** report the findings of the statistical test as you would in a scientific paper. *Include both the code to create the boxplot and an image of the figure.* (6 pts.)
 
-2.  Conduct a simple linear regression for the effect of `water_temp_sd` (a measure reflecting annual variation in water temperature) on carapace width. Report your findings (include code *and* a sentence reporting the results) AND create a plot with a line of best fit. (10 pts).
+2.  Conduct a simple linear regression for the effect of `water_temp_sd` (a measure reflecting annual variation in water temperature) on carapace width. Report your findings (include code *and* a sentence reporting the results) AND create a plot with a line of best fit. *Include both the code to create the plot and an image of the figure*. (10 pts).
 
 3.  Conduct a multiple linear regression for the effects of `latitude`, `air_temp_sd`, and `water_temp_sd` on carapace width. **First** check for correlations among the three predictor variables (and report the correlation table) and **second** report your findings from the multiple linear regression (code *and* a sentence reporting the results). (9 pts.)
 
