@@ -1,0 +1,149 @@
+# PCA and R Markdown Intro
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE)
+```
+
+Before we get started with the conducing a PCA, we are going to carry out this lesson in an R Markdown document and see how it can be used to 1) organize workflows with text, code, and figures/results and 2) render a nicely formatted report, which is what you will submit for this week's assignment.
+
+## Intro to R Markdown
+
+R Markdown is a notebook style interface integrating text and code, allowing you to create fully reproducible documents and render them to various elegantly formatted static or dynamic outputs.
+
+You can learn more about R Markdown at their website, which has really informative lessons on their [Getting Started](https://rmarkdown.rstudio.com/lesson-1.html) page and see the range of outputs you can create at their [Gallery](https://rmarkdown.rstudio.com/gallery.html) page.
+
+### Getting started with R Markdown
+
+Let's create a new document by going to File -\> New File -\> R Markdown. You will be prompted to add information like title and author, fill those in (let's call it "Intro to R and R Markdown") and keep the output as HTML for now. Click OK to create the document.
+
+This creates an outline of an R Markdown document, and you see the title, author and date you gave the prompt at the top of the document which is called the YAML header.
+
+Notice that the file contains three types of content:
+
+-   An (optional) YAML header surrounded by `---`s
+
+-   R code chunks surrounded by ```` ``` ````s
+
+-   text mixed with simple text formatting
+
+Since this is a notebook style document, you run the code chunks by clicking the green play button, and then the output is returned directly below the chunk.
+
+When you want to create a report from your notebook, you render it by hitting the 'knit' button, and it will render to the format you have specified in the YAML header. In order to do so though, you need to have the `rmarkdown` package installed.
+
+You can delete the rest of the code/text below the YAML header, and insert a new code chunk at the top. You can insert code chunks by clicking the green C with the '+' sign at the top of the source editor, or with the keyboard short cut (Ctrl+Alt+I for Windows, Option+Command+I for Macs). For the rest of the lesson (and course) you will be writing and executing code through code chunks, and you can type any notes in the main body of the document.
+
+The first chunk is almost always your set up code, where you read in libraries and any necessary data sets. Add code chunks at the top of your R Markdown document to install some new packages, load in all necessary libraries, and read in the data set for today's lesson.
+
+```{r eval=FALSE}
+install.packages("rmarkdown")
+install.packages("plotly")
+#maybeee, this makes autoplots for prcomp objects
+install.packages("ggfortify")
+```
+
+```{r}
+# set up
+library(rmarkdown)
+library(tidyverse)
+library(lterdatasampler)
+library(plotly)
+
+
+# retrieve data
+data("hbr_maples")
+```
+
+Learn a little bit more about this data set:
+
+```{r}
+?hbr_maples
+```
+
+We have a lot of continuous variables representing leaf characteristics, and a few categorical variables (calcium-treated and non treated sites, low and mid elevation sites).
+
+With a large set of quantitative variables that are likely inter-correlated, this is a highly multivariate data space. This is where Principal Component Analysis (PCA) comes in to play. PCA is a type of ordination technique, which is a way of organizing things based on how similar they are. A PCA finds a new coordinate system by defining principal component (PC) axes that best account for the variation in this multivariate space, essentially reducing a large set of variables down to two variables that represent the two PC axes that explain the most variance in the data. PCA is a common EDA (exploratory data analysis) technique
+
+## Principal Component Analysis (PCA)
+
+How many years was this data collected:
+
+```{r}
+unique(hbr_maples$year)
+```
+
+Two years. Let's run through this demonstration with just data from the year 2003 (then your exercise will be to run the test with data from 2004, and maybe even see any potential differences among years). Its also important to note that the PCA test does not handle NA values well, so let's use `drop_na()` here to drop any observations that have any NAs in them. (Note: when we leave `drop_na()` empty it will by default check all columns for NA values).
+
+```{r}
+maples03 <- hbr_maples %>% 
+  filter(year == 2003) %>% 
+  drop_na()
+
+```
+
+Let's first see if our quantitative variables are inter-correlated at all. To do this, we can use the `cor()` test you've seen before, and we need to reduce our `maples_03` data to just the quantitative variables we are performing the PCA on.
+
+```{r}
+vars <- maples03 %>% 
+  #remove year because it may be numeric but not one of our continuous variables we want to assess
+  select(where(is.numeric), -year)
+
+cor(vars)
+```
+
+That looks better, and from this we see quite a few correlated variables. A great example to demonstrate PCA!
+
+Run the PCA
+
+```{r}
+maples03_pca <- prcomp(vars)
+
+summary(maples03_pca)
+```
+
+Turn this into a screeplot to visualize proportion of the variance each axis represents
+
+```{r}
+screeplot(maples03_pca)
+```
+
+Looks like the first 2 axes explain nearly all the variance of the data space (which we also saw in the summary table).
+
+Now lets see the individual variable loadings for each axis
+
+```{r}
+maples03_pca$rotation
+```
+
+```{r}
+autoplot(maples03_pca, loadings = TRUE, loadings.label = TRUE)
+```
+
+Interpret this.....
+
+Color points by watershed treatment
+
+```{r}
+ggplotly(autoplot(maples03_pca, data = maples03, colour = "elevation"))
+
+
+```
+
+```{r}
+maples <- hbr_maples %>% drop_na(where(is.numeric))
+
+vars <- maples %>% 
+  #remove year because it may be numeric but not one of our continuous variables we want to assess
+  select(where(is.numeric), -year)
+
+cor(vars)
+
+maples_pca <- prcomp(vars, scale = TRUE)
+
+summary(maples_pca)
+
+ggplotly(autoplot(maples_pca, data = maples, colour = "year"))
+```
+
+Exercise: run for the year 2004. Make a screeplot, biplot and autoplot colored by watershed. Render report as word doc and submit word doc (include the entire code, comments, etc.
+
+Add PC1 and PC2 as columns in maples04 (or whatever you called the 2004 data frame) and perform a t-test between watershed treatment using the PC1 axis as the response. Significant difference in plant traits among treatments? Looking at the loadings for
