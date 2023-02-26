@@ -1,0 +1,47 @@
+# PCA demo
+
+```{r}
+library(tidyverse)
+library(lterdatasampler)
+library(ggfortify)
+
+data("pie_crab")
+```
+
+
+```{r}
+crab_pca <- pie_crab %>%
+  #reduce to quant variables
+  select(latitude, air_temp:water_temp_sd) %>%
+  prcomp(scale = TRUE)
+```
+
+
+```{r}
+summary(crab_pca)
+```
+
+```{r}
+crab_pca$rotation
+```
+
+```{r}
+screeplot(crab_pca)
+```
+
+
+Make a screeplot with ggplot showing proportion of variance explained
+
+```{r}
+biplot(crab_pca)
+```
+
+
+
+Make this look better with ggfortify (and more customization)
+
+```{r}
+autoplot(crab_pca, loadings = TRUE, loadings.label = TRUE)+
+  theme_minimal()
+```
+

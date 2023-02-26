@@ -1,0 +1,60 @@
+# Population Dynamics
+
+```{r include =FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE)
+```
+
+
+```{r}
+library(tidyverse)
+library(lterdatasampler)
+```
+
+
+Read in dataset to look at salamander abundance over time
+```{r}
+data("and_vertebrates")
+
+glimpse(and_vertebrates)
+```
+
+
+```{r}
+and_vertebrates %>% 
+  filter(species == "Coastal giant salamander") %>% 
+  group_by(year) %>% 
+  count() %>% 
+  ggplot(aes(x = n, y = year))+
+  geom_point()+
+  geom_line()
+```
+
+
+Can calculate lambda (annual growth rate) from this data (n2/n1, n3/n2, etc.)
+```{r}
+abundance <- and_vertebrates %>% 
+  filter(species == "Coastal giant salamander") %>% 
+  group_by(year) %>% 
+  count()
+
+counts <- abundance$n
+lambdas <-  counts[-1]/counts[-length(counts)]
+round(lambdas, 2)
+```
+
+Calculate mean r
+
+```{r}
+r <- log(mean(lambdas))
+
+sd <- sd(log(lambdas))
+```
+
+growth rate close to zero so stable, but variance is large
+
+Project/simulate population over 20 years
+
+
+Estimate extinction risk
+
+https://rstudio-pubs-static.s3.amazonaws.com/252603_9c6a71110dc74cc7832f154449235f7f.html 
