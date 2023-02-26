@@ -4,7 +4,7 @@
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE)
 ```
 
-Before we get started with the conducing a PCA, we are going to carry out this lesson in an R Markdown document and see how it can be used to 1) organize workflows with text, code, and figures/results and 2) render a nicely formatted report, which is what you will submit for this week's assignment.
+Before we get started with conducing a Principal Component Analysis (PCA), we are going to carry out this lesson in an R Markdown document and see how it can be used to 1) organize workflows with text, code, and figures/results and 2) render a nicely formatted report, which is what you will submit for this week's assignment.
 
 ## Intro to R Markdown
 
@@ -14,7 +14,7 @@ You can learn more about R Markdown at their website, which has really informati
 
 ### Getting started with R Markdown
 
-Let's create a new document by going to File -\> New File -\> R Markdown. You will be prompted to add information like title and author, fill those in (let's call it "Intro to R and R Markdown") and keep the output as HTML for now. Click OK to create the document.
+Let's create a new document by going to File -\> New File -\> R Markdown. You will be prompted to add information like title and author. **Give it the title "Week 7 Assignment- PCA" and change the output to Word document.** Click OK to create the document.
 
 This creates an outline of an R Markdown document, and you see the title, author and date you gave the prompt at the top of the document which is called the YAML header.
 
@@ -26,124 +26,156 @@ Notice that the file contains three types of content:
 
 -   text mixed with simple text formatting
 
-Since this is a notebook style document, you run the code chunks by clicking the green play button, and then the output is returned directly below the chunk.
+Since this is a notebook style document, you run the code chunks by clicking the green play button, and then the output is returned either directly below the chunk or in the console depending on settings in Tools -\> Global Options -\> R Markdown.
 
-When you want to create a report from your notebook, you render it by hitting the 'knit' button, and it will render to the format you have specified in the YAML header. In order to do so though, you need to have the `rmarkdown` package installed.
+When you want to create a report from your notebook, you render it by hitting the 'Knit' button in the top of the Source pane, and it will render to the format you have specified in the YAML header. In order to do so though, you need to have the `rmarkdown` package installed *(which you will do below*).
 
-You can delete the rest of the code/text below the YAML header, and insert a new code chunk at the top. You can insert code chunks by clicking the green C with the '+' sign at the top of the source editor, or with the keyboard short cut (Ctrl+Alt+I for Windows, Option+Command+I for Macs). For the rest of the lesson (and course) you will be writing and executing code through code chunks, and you can type any notes in the main body of the document.
+You can delete the rest of the code/text below the YAML header, and insert a new code chunk at the top. **You can insert code chunks by clicking the green C with the '+' sign at the top of the source editor, or with the keyboard short cut (Ctrl+Alt+I for Windows, Option+Command+I for Macs).** For the rest of the lesson you will be writing and executing code through code chunks, and you can type any notes in the main body of the document.
 
-The first chunk is almost always your set up code, where you read in libraries and any necessary data sets. Add code chunks at the top of your R Markdown document to install some new packages, load in all necessary libraries, and read in the data set for today's lesson.
+The first chunk is almost always your set up code, where you read in libraries and any necessary data sets.
+
+We need three new packages for this lesson. `rmarkdown` is necessary in order to render your R Markdown (or .Rmd) files to specified formats (e.g., HTML, Word, PDF). `plotly` is a graphics library that we will use to demonstrate how you can make ggplot figures interactive and `ggfortify` is needed to plot PCA objects with `gpglot2`.
+
+Since you only need to install packages once, you do not need to include this in your R Markdown document, you can just run it directly in the console:
 
 ```{r eval=FALSE}
 install.packages("rmarkdown")
 install.packages("plotly")
-#maybeee, this makes autoplots for prcomp objects
 install.packages("ggfortify")
 ```
 
+This chunk should be placed at the beginning of your document to set up your environment for carrying out the analysis for the lesson.
+
 ```{r}
-# set up
-library(rmarkdown)
 library(tidyverse)
 library(lterdatasampler)
 library(plotly)
+library(ggfortify)
 
 
 # retrieve data
 data("hbr_maples")
 ```
 
-Learn a little bit more about this data set:
+The `hbr_maples` data set consists of sugar maple seedling traits measured in calcium-treated and non-treated sites to study the response of seedlings to calcium addition at the Hubbard Brook LTER.
+
+Let's learn a little more about this data set:
 
 ```{r}
 ?hbr_maples
 ```
 
-We have a lot of continuous variables representing leaf characteristics, and a few categorical variables (calcium-treated and non treated sites, low and mid elevation sites).
+We have a lot of continuous variables representing leaf characteristics, and a few categorical variables (calcium-treated and non treated (reference) sites, low and mid elevation sites).
 
-With a large set of quantitative variables that are likely inter-correlated, this is a highly multivariate data space. This is where Principal Component Analysis (PCA) comes in to play. PCA is a type of ordination technique, which is a way of organizing things based on how similar they are. A PCA finds a new coordinate system by defining principal component (PC) axes that best account for the variation in this multivariate space, essentially reducing a large set of variables down to two variables that represent the two PC axes that explain the most variance in the data. PCA is a common EDA (exploratory data analysis) technique
+With a large set of quantitative variables that are likely inter-correlated, this is a highly multivariate data space. This is where Principal Component Analysis (PCA) comes in to play. PCA is a type of ordination technique, which is a way of organizing things based on how similar they are. A PCA finds a new coordinate system by defining principal component (PC) axes that best account for the variation in this multivariate space, essentially reducing a large set of variables down to two variables that represent the two PC axes that (often) explain the most variance in the data. PCA is a common EDA (exploratory data analysis) technique to see patterns in multi-variable data sets, such as clusters among sites or samples, and/or you can use the PC variables in other analyses such as linear regression.
 
 ## Principal Component Analysis (PCA)
 
-How many years was this data collected:
+First, what is the temporal scale of this data set:
 
 ```{r}
 unique(hbr_maples$year)
 ```
 
-Two years. Let's run through this demonstration with just data from the year 2003 (then your exercise will be to run the test with data from 2004, and maybe even see any potential differences among years). Its also important to note that the PCA test does not handle NA values well, so let's use `drop_na()` here to drop any observations that have any NAs in them. (Note: when we leave `drop_na()` empty it will by default check all columns for NA values).
+Data was collected for two years, 2003 and 2004. Let's run through this lesson with just the 2003 data. You notice that if you filter out just the 2004 samples, there was no data collected on leaf area, so lets just analyze the 2003 data which has 6 different trait variables. Its important to note that the PCA test does not handle NA values well, so let's use `drop_na()` here to drop any additional observations that have may have NAs for the quantitative variables.
+
+::: {.alert .alert-info}
+Note: using the `:` operator will select the range of columns from that on the left of `:` to that on the right, which works well for this data set since all of our quantitative variables of interest are ordered together.
+:::
 
 ```{r}
 maples03 <- hbr_maples %>% 
   filter(year == 2003) %>% 
-  drop_na()
+  drop_na(stem_length:corrected_leaf_area)
 
 ```
 
-Let's first see if our quantitative variables are inter-correlated at all. To do this, we can use the `cor()` test you've seen before, and we need to reduce our `maples_03` data to just the quantitative variables we are performing the PCA on.
+Let's first see if our quantitative variables are inter-correlated at all, as a PCA does not work the best with entirely uncorrelated data. To do this, we can use the `cor()` test you've seen before, and we need to reduce our `maples_03` data to just the quantitative variables we are performing the PCA on.
 
 ```{r}
 vars <- maples03 %>% 
-  #remove year because it may be numeric but not one of our continuous variables we want to assess
-  select(where(is.numeric), -year)
+  select(stem_length:corrected_leaf_area)
 
 cor(vars)
 ```
 
-That looks better, and from this we see quite a few correlated variables. A great example to demonstrate PCA!
+From this we see quite a few correlated variables (coefficients \~0.7 or greater). This tells us a PCA is a good analysis to use to summarize this data set.
 
-Run the PCA
+There are a few different functions to conduct a PCA in R (many available in additional R packages such as the `vegan` package for community analyses), but we are going to use the `prcomp()` function from base R, a reliable and stable function for conducting PCA.
+
+::: {.alert .alert-info}
+PCA is influenced by the magnitude of each variable, therefore scaling all your variables is often necessary. The `prcomp()` function can do this for us by adding `scale = TRUE`.
+:::
 
 ```{r}
-maples03_pca <- prcomp(vars)
+maples03_pca <- prcomp(vars, scale = TRUE)
+```
 
+## Variance explained
+
+First we want to view the PC axes created and assess the variance explained by each. We can do this with `summary()` of our PCA object.
+
+```{r}
 summary(maples03_pca)
 ```
 
-Turn this into a screeplot to visualize proportion of the variance each axis represents
+We can also view these results visually using a plot called a screeplot.
 
 ```{r}
 screeplot(maples03_pca)
 ```
 
-Looks like the first 2 axes explain nearly all the variance of the data space (which we also saw in the summary table).
+Looks like the first 2 axes explain nearly all the variance of the data space (\>80%, which is often the desired outcome).
 
-Now lets see the individual variable loadings for each axis
+## Variable loadings
+
+We can next view the individual loadings of each variable (i.e., how much each variable contributes to each axis), by indexing the `rotation` element of the PCA object with the `$` operator.
 
 ```{r}
 maples03_pca$rotation
 ```
 
+Note that when we look at these individual loadings, when variables have opposite +/- values that means those variables are negatively correlated. From this we see that on the first axis PC1 (which explains the vast majority of the variance in the data set) all these variables are positively correlated. On PC2 we see a few negatively correlated, such as stem length stem dry mass.
+
+## Visualize patterns
+
+Now lets visualize some patterns with a biplot. We can create a biplot in base R with the `biplot()` function
+
+```{r}
+biplot(maples03_pca)
+```
+
+This however is pretty messy and hard to interpret. With the `ggfortify` package we can create biplots with `ggplot2` using the `autoplot()` function. We add `loadings = TRUE` and `loadings.label = TRUE` to add the variable loadings to the plots, on top of the sample scores (denoted with points).
+
 ```{r}
 autoplot(maples03_pca, loadings = TRUE, loadings.label = TRUE)
 ```
 
-Interpret this.....
+**ADD INTERPRETATION HERE**
 
-Color points by watershed treatment
+We can view more patterns in the data by coloring points (i.e., seeding samples) by one of the other variables in our data set. This project involved assessing the impacts of Calcium addition on sugar maple seedlings by comparing seedlings traits and calcium treated (W1) and untreated (Reference) sites. Therefore let's color points by watershed treatment (the `watershed` variable) to see if there is any clustering in seedlings traits among treatments.
+
+To do so with the `autoplot()` function we also specify the original dataset we used in `prcomp()` and the name of the column we want to color by. *(Note the `colour:` argument is spelled the British way.)*
 
 ```{r}
-ggplotly(autoplot(maples03_pca, data = maples03, colour = "elevation"))
-
+autoplot(maples03_pca, data = maples03, colour = "watershed")
 
 ```
 
+This plot definitely shows some clustering among sites along the first PC axis.
+
+We can make ggplot objects interactive with the `plotly` package by feeding it into the `ggplotly()` function.
+
 ```{r}
-maples <- hbr_maples %>% drop_na(where(is.numeric))
-
-vars <- maples %>% 
-  #remove year because it may be numeric but not one of our continuous variables we want to assess
-  select(where(is.numeric), -year)
-
-cor(vars)
-
-maples_pca <- prcomp(vars, scale = TRUE)
-
-summary(maples_pca)
-
-ggplotly(autoplot(maples_pca, data = maples, colour = "year"))
+ggplotly(autoplot(maples03_pca, data = maples03, colour = "watershed"))
 ```
 
-Exercise: run for the year 2004. Make a screeplot, biplot and autoplot colored by watershed. Render report as word doc and submit word doc (include the entire code, comments, etc.
+## Exercises
 
-Add PC1 and PC2 as columns in maples04 (or whatever you called the 2004 data frame) and perform a t-test between watershed treatment using the PC1 axis as the response. Significant difference in plant traits among treatments? Looking at the loadings for
+**Still working on these...**
+
+Report/interpret some of the results. Looking at biplot, interpret variable loadings based on vector angles (lecture material).
+
+Make a biplot coloring samples by elevation. Do you notice any clustering?
+
+Add PC1 and PC2 as columns in maples03 and perform a t-test between watershed treatment using the PC1 axis as the response. Is there a significant difference in plant traits among treatments?

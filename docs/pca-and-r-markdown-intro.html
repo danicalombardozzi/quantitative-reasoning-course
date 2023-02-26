@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title> 7 PCA and R Markdown Intro | Quantitative Reasoning for Ecosystem Science</title>
+  <meta name="description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+
+  <meta property="og:title" content=" 7 PCA and R Markdown Intro | Quantitative Reasoning for Ecosystem Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
+  <meta name="github-repo" content="ccmothes/quantitative-reasoning-course" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content=" 7 PCA and R Markdown Intro | Quantitative Reasoning for Ecosystem Science" />
+  
+  <meta name="twitter:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
+  
+
+<meta name="author" content="Caitlin C. Mothes, PhD" />
+
+
+<meta name="date" content="2023-02-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="multivariate-statistics.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Quantitative Reasoning for Ecosystem Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#set-up-instructions"><i class="fa fa-check"></i>Set up Instructions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#navigating-this-site"><i class="fa fa-check"></i>Navigating this site</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="setup-instructions.html"><a href="setup-instructions.html"><i class="fa fa-check"></i><b>2</b> Setup Instructions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="setup-instructions.html"><a href="setup-instructions.html#install-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> Install R and RStudio</a></li>
+<li class="chapter" data-level="2.2" data-path="setup-instructions.html"><a href="setup-instructions.html#package-installation"><i class="fa fa-check"></i><b>2.2</b> Package Installation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html"><i class="fa fa-check"></i><b>3</b> Introduction to R and RStudio</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#getting-to-know-rstudio"><i class="fa fa-check"></i><b>3.1</b> Getting to know RStudio</a></li>
+<li class="chapter" data-level="3.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#r-projects"><i class="fa fa-check"></i><b>3.2</b> R Projects</a></li>
+<li class="chapter" data-level="3.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#write-your-first-script"><i class="fa fa-check"></i><b>3.3</b> Write your first script</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#commenting-code"><i class="fa fa-check"></i><b>3.3.1</b> Commenting code</a></li>
+<li class="chapter" data-level="3.3.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#executing-code"><i class="fa fa-check"></i><b>3.3.2</b> Executing code</a></li>
+<li class="chapter" data-level="3.3.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#getting-help-with-code"><i class="fa fa-check"></i><b>3.3.3</b> Getting help with code</a></li>
+<li class="chapter" data-level="3.3.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#functions"><i class="fa fa-check"></i><b>3.3.4</b> Functions</a></li>
+<li class="chapter" data-level="3.3.5" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#data-types"><i class="fa fa-check"></i><b>3.3.5</b> Data Types</a></li>
+<li class="chapter" data-level="3.3.6" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#indexing"><i class="fa fa-check"></i><b>3.3.6</b> Indexing</a></li>
+<li class="chapter" data-level="3.3.7" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#read-and-write-data"><i class="fa fa-check"></i><b>3.3.7</b> Read and Write Data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#exercises"><i class="fa fa-check"></i><b>3.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-wrangling"><i class="fa fa-check"></i><b>4.1</b> Data wrangling</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#the-dplyr-package"><i class="fa fa-check"></i><b>4.1.1</b> The <code>dplyr</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#visualization"><i class="fa fa-check"></i><b>4.2</b> Visualization</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#exercises-1"><i class="fa fa-check"></i><b>4.2.1</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html"><i class="fa fa-check"></i><b>5</b> Introduction to Statistics</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#explore-the-dataset"><i class="fa fa-check"></i><b>5.1</b> Explore the dataset</a></li>
+<li class="chapter" data-level="5.2" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#chi-square---categorical-analysis"><i class="fa fa-check"></i><b>5.2</b> Chi-square - Categorical Analysis</a></li>
+<li class="chapter" data-level="5.3" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#t-test---compare-two-means"><i class="fa fa-check"></i><b>5.3</b> t-test - Compare two means</a></li>
+<li class="chapter" data-level="5.4" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#correlation---assess-relationships"><i class="fa fa-check"></i><b>5.4</b> Correlation - Assess relationships</a></li>
+<li class="chapter" data-level="5.5" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#exercises-2"><i class="fa fa-check"></i><b>5.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#acknowledgements"><i class="fa fa-check"></i><b>5.5.1</b> Acknowledgements</a></li>
+<li class="chapter" data-level="5.5.2" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#citations"><i class="fa fa-check"></i><b>5.5.2</b> Citations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html"><i class="fa fa-check"></i><b>6</b> Multivariate Statistics</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#explore-the-data-set"><i class="fa fa-check"></i><b>6.1</b> Explore the Data set</a></li>
+<li class="chapter" data-level="6.2" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#anova"><i class="fa fa-check"></i><b>6.2</b> ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#assumptions"><i class="fa fa-check"></i><b>6.2.1</b> Assumptions</a></li>
+<li class="chapter" data-level="6.2.2" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#post-hoc-tukeys-hsd-test"><i class="fa fa-check"></i><b>6.2.2</b> Post-hoc Tukey’s HSD test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#simple-linear-regression"><i class="fa fa-check"></i><b>6.3</b> Simple Linear Regression</a></li>
+<li class="chapter" data-level="6.4" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#multiple-linear-regression"><i class="fa fa-check"></i><b>6.4</b> Multiple Linear Regression</a></li>
+<li class="chapter" data-level="6.5" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#exercises-3"><i class="fa fa-check"></i><b>6.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#acknowledgements-1"><i class="fa fa-check"></i><b>6.5.1</b> Acknowledgements</a></li>
+<li class="chapter" data-level="6.5.2" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#citations-1"><i class="fa fa-check"></i><b>6.5.2</b> Citations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html"><i class="fa fa-check"></i><b>7</b> PCA and R Markdown Intro</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#intro-to-r-markdown"><i class="fa fa-check"></i><b>7.1</b> Intro to R Markdown</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#getting-started-with-r-markdown"><i class="fa fa-check"></i><b>7.1.1</b> Getting started with R Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#principal-component-analysis-pca"><i class="fa fa-check"></i><b>7.2</b> Principal Component Analysis (PCA)</a></li>
+<li class="chapter" data-level="7.3" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#variance-explained"><i class="fa fa-check"></i><b>7.3</b> Variance explained</a></li>
+<li class="chapter" data-level="7.4" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#variable-loadings"><i class="fa fa-check"></i><b>7.4</b> Variable loadings</a></li>
+<li class="chapter" data-level="7.5" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#visualize-patterns"><i class="fa fa-check"></i><b>7.5</b> Visualize patterns</a></li>
+<li class="chapter" data-level="7.6" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#exercises-4"><i class="fa fa-check"></i><b>7.6</b> Exercises</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Quantitative Reasoning for Ecosystem Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="pca-and-r-markdown-intro" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number"> 7</span> PCA and R Markdown Intro<a href="pca-and-r-markdown-intro.html#pca-and-r-markdown-intro" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Before we get started with conducing a Principal Component Analysis (PCA), we are going to carry out this lesson in an R Markdown document and see how it can be used to 1) organize workflows with text, code, and figures/results and 2) render a nicely formatted report, which is what you will submit for this week’s assignment.</p>
+<div id="intro-to-r-markdown" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Intro to R Markdown<a href="pca-and-r-markdown-intro.html#intro-to-r-markdown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>R Markdown is a notebook style interface integrating text and code, allowing you to create fully reproducible documents and render them to various elegantly formatted static or dynamic outputs.</p>
+<p>You can learn more about R Markdown at their website, which has really informative lessons on their <a href="https://rmarkdown.rstudio.com/lesson-1.html">Getting Started</a> page and see the range of outputs you can create at their <a href="https://rmarkdown.rstudio.com/gallery.html">Gallery</a> page.</p>
+<div id="getting-started-with-r-markdown" class="section level3 hasAnchor" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Getting started with R Markdown<a href="pca-and-r-markdown-intro.html#getting-started-with-r-markdown" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s create a new document by going to File -&gt; New File -&gt; R Markdown. You will be prompted to add information like title and author. <strong>Give it the title “Week 7 Assignment- PCA” and change the output to Word document.</strong> Click OK to create the document.</p>
+<p>This creates an outline of an R Markdown document, and you see the title, author and date you gave the prompt at the top of the document which is called the YAML header.</p>
+<p>Notice that the file contains three types of content:</p>
+<ul>
+<li><p>An (optional) YAML header surrounded by <code>---</code>s</p></li>
+<li><p>R code chunks surrounded by <code>```</code>s</p></li>
+<li><p>text mixed with simple text formatting</p></li>
+</ul>
+<p>Since this is a notebook style document, you run the code chunks by clicking the green play button, and then the output is returned either directly below the chunk or in the console depending on settings in Tools -&gt; Global Options -&gt; R Markdown.</p>
+<p>When you want to create a report from your notebook, you render it by hitting the ‘Knit’ button in the top of the Source pane, and it will render to the format you have specified in the YAML header. In order to do so though, you need to have the <code>rmarkdown</code> package installed <em>(which you will do below</em>).</p>
+<p>You can delete the rest of the code/text below the YAML header, and insert a new code chunk at the top. <strong>You can insert code chunks by clicking the green C with the ‘+’ sign at the top of the source editor, or with the keyboard short cut (Ctrl+Alt+I for Windows, Option+Command+I for Macs).</strong> For the rest of the lesson you will be writing and executing code through code chunks, and you can type any notes in the main body of the document.</p>
+<p>The first chunk is almost always your set up code, where you read in libraries and any necessary data sets.</p>
+<p>We need three new packages for this lesson. <code>rmarkdown</code> is necessary in order to render your R Markdown (or .Rmd) files to specified formats (e.g., HTML, Word, PDF). <code>plotly</code> is a graphics library that we will use to demonstrate how you can make ggplot figures interactive and <code>ggfortify</code> is needed to plot PCA objects with <code>gpglot2</code>.</p>
+<p>Since you only need to install packages once, you do not need to include this in your R Markdown document, you can just run it directly in the console:</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="pca-and-r-markdown-intro.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rmarkdown&quot;</span>)</span>
+<span id="cb89-2"><a href="pca-and-r-markdown-intro.html#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;plotly&quot;</span>)</span>
+<span id="cb89-3"><a href="pca-and-r-markdown-intro.html#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggfortify&quot;</span>)</span></code></pre></div>
+<p>This chunk should be placed at the beginning of your document to set up your environment for carrying out the analysis for the lesson.</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="pca-and-r-markdown-intro.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb90-2"><a href="pca-and-r-markdown-intro.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lterdatasampler)</span>
+<span id="cb90-3"><a href="pca-and-r-markdown-intro.html#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb90-4"><a href="pca-and-r-markdown-intro.html#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
+<span id="cb90-5"><a href="pca-and-r-markdown-intro.html#cb90-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-6"><a href="pca-and-r-markdown-intro.html#cb90-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-7"><a href="pca-and-r-markdown-intro.html#cb90-7" aria-hidden="true" tabindex="-1"></a><span class="co"># retrieve data</span></span>
+<span id="cb90-8"><a href="pca-and-r-markdown-intro.html#cb90-8" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;hbr_maples&quot;</span>)</span></code></pre></div>
+<p>The <code>hbr_maples</code> data set consists of sugar maple seedling traits measured in calcium-treated and non-treated sites to study the response of seedlings to calcium addition at the Hubbard Brook LTER.</p>
+<p>Let’s learn a little more about this data set:</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="pca-and-r-markdown-intro.html#cb91-1" aria-hidden="true" tabindex="-1"></a>?hbr_maples</span></code></pre></div>
+<p>We have a lot of continuous variables representing leaf characteristics, and a few categorical variables (calcium-treated and non treated (reference) sites, low and mid elevation sites).</p>
+<p>With a large set of quantitative variables that are likely inter-correlated, this is a highly multivariate data space. This is where Principal Component Analysis (PCA) comes in to play. PCA is a type of ordination technique, which is a way of organizing things based on how similar they are. A PCA finds a new coordinate system by defining principal component (PC) axes that best account for the variation in this multivariate space, essentially reducing a large set of variables down to two variables that represent the two PC axes that (often) explain the most variance in the data. PCA is a common EDA (exploratory data analysis) technique to see patterns in multi-variable data sets, such as clusters among sites or samples, and/or you can use the PC variables in other analyses such as linear regression.</p>
+</div>
+</div>
+<div id="principal-component-analysis-pca" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Principal Component Analysis (PCA)<a href="pca-and-r-markdown-intro.html#principal-component-analysis-pca" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>First, what is the temporal scale of this data set:</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="pca-and-r-markdown-intro.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(hbr_maples<span class="sc">$</span>year)</span></code></pre></div>
+<p>Data was collected for two years, 2003 and 2004. Let’s run through this lesson with just the 2003 data. You notice that if you filter out just the 2004 samples, there was no data collected on leaf area, so lets just analyze the 2003 data which has 6 different trait variables. Its important to note that the PCA test does not handle NA values well, so let’s use <code>drop_na()</code> here to drop any additional observations that have may have NAs for the quantitative variables.</p>
+<div class="alert alert-info">
+<p>Note: using the <code>:</code> operator will select the range of columns from that on the left of <code>:</code> to that on the right, which works well for this data set since all of our quantitative variables of interest are ordered together.</p>
+</div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="pca-and-r-markdown-intro.html#cb93-1" aria-hidden="true" tabindex="-1"></a>maples03 <span class="ot">&lt;-</span> hbr_maples <span class="sc">%&gt;%</span> </span>
+<span id="cb93-2"><a href="pca-and-r-markdown-intro.html#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2003</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb93-3"><a href="pca-and-r-markdown-intro.html#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(stem_length<span class="sc">:</span>corrected_leaf_area)</span></code></pre></div>
+<p>Let’s first see if our quantitative variables are inter-correlated at all, as a PCA does not work the best with entirely uncorrelated data. To do this, we can use the <code>cor()</code> test you’ve seen before, and we need to reduce our <code>maples_03</code> data to just the quantitative variables we are performing the PCA on.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="pca-and-r-markdown-intro.html#cb94-1" aria-hidden="true" tabindex="-1"></a>vars <span class="ot">&lt;-</span> maples03 <span class="sc">%&gt;%</span> </span>
+<span id="cb94-2"><a href="pca-and-r-markdown-intro.html#cb94-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(stem_length<span class="sc">:</span>corrected_leaf_area)</span>
+<span id="cb94-3"><a href="pca-and-r-markdown-intro.html#cb94-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-4"><a href="pca-and-r-markdown-intro.html#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(vars)</span></code></pre></div>
+<p>From this we see quite a few correlated variables (coefficients ~0.7 or greater). This tells us a PCA is a good analysis to use to summarize this data set.</p>
+<p>There are a few different functions to conduct a PCA in R (many available in additional R packages such as the <code>vegan</code> package for community analyses), but we are going to use the <code>prcomp()</code> function from base R, a reliable and stable function for conducting PCA.</p>
+<div class="alert alert-info">
+<p>PCA is influenced by the magnitude of each variable, therefore scaling all your variables is often necessary. The <code>prcomp()</code> function can do this for us by adding <code>scale = TRUE</code>.</p>
+</div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="pca-and-r-markdown-intro.html#cb95-1" aria-hidden="true" tabindex="-1"></a>maples03_pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(vars, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+</div>
+<div id="variance-explained" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Variance explained<a href="pca-and-r-markdown-intro.html#variance-explained" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>First we want to view the PC axes created and assess the variance explained by each. We can do this with <code>summary()</code> of our PCA object.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="pca-and-r-markdown-intro.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(maples03_pca)</span></code></pre></div>
+<p>We can also view these results visually using a plot called a screeplot.</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="pca-and-r-markdown-intro.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">screeplot</span>(maples03_pca)</span></code></pre></div>
+<p>Looks like the first 2 axes explain nearly all the variance of the data space (&gt;80%, which is often the desired outcome).</p>
+</div>
+<div id="variable-loadings" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Variable loadings<a href="pca-and-r-markdown-intro.html#variable-loadings" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can next view the individual loadings of each variable (i.e., how much each variable contributes to each axis), by indexing the <code>rotation</code> element of the PCA object with the <code>$</code> operator.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="pca-and-r-markdown-intro.html#cb98-1" aria-hidden="true" tabindex="-1"></a>maples03_pca<span class="sc">$</span>rotation</span></code></pre></div>
+<p>Note that when we look at these individual loadings, when variables have opposite +/- values that means those variables are negatively correlated. From this we see that on the first axis PC1 (which explains the vast majority of the variance in the data set) all these variables are positively correlated. On PC2 we see a few negatively correlated, such as stem length stem dry mass.</p>
+</div>
+<div id="visualize-patterns" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Visualize patterns<a href="pca-and-r-markdown-intro.html#visualize-patterns" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now lets visualize some patterns with a biplot. We can create a biplot in base R with the <code>biplot()</code> function</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="pca-and-r-markdown-intro.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">biplot</span>(maples03_pca)</span></code></pre></div>
+<p>This however is pretty messy and hard to interpret. With the <code>ggfortify</code> package we can create biplots with <code>ggplot2</code> using the <code>autoplot()</code> function. We add <code>loadings = TRUE</code> and <code>loadings.label = TRUE</code> to add the variable loadings to the plots, on top of the sample scores (denoted with points).</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="pca-and-r-markdown-intro.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(maples03_pca, <span class="at">loadings =</span> <span class="cn">TRUE</span>, <span class="at">loadings.label =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><strong>ADD INTERPRETATION HERE</strong></p>
+<p>We can view more patterns in the data by coloring points (i.e., seeding samples) by one of the other variables in our data set. This project involved assessing the impacts of Calcium addition on sugar maple seedlings by comparing seedlings traits and calcium treated (W1) and untreated (Reference) sites. Therefore let’s color points by watershed treatment (the <code>watershed</code> variable) to see if there is any clustering in seedlings traits among treatments.</p>
+<p>To do so with the <code>autoplot()</code> function we also specify the original dataset we used in <code>prcomp()</code> and the name of the column we want to color by. <em>(Note the <code>colour:</code> argument is spelled the British way.)</em></p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="pca-and-r-markdown-intro.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(maples03_pca, <span class="at">data =</span> maples03, <span class="at">colour =</span> <span class="st">&quot;watershed&quot;</span>)</span></code></pre></div>
+<p>This plot definitely shows some clustering among sites along the first PC axis.</p>
+<p>We can make ggplot objects interactive with the <code>plotly</code> package by feeding it into the <code>ggplotly()</code> function.</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="pca-and-r-markdown-intro.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(<span class="fu">autoplot</span>(maples03_pca, <span class="at">data =</span> maples03, <span class="at">colour =</span> <span class="st">&quot;watershed&quot;</span>))</span></code></pre></div>
+</div>
+<div id="exercises-4" class="section level2 hasAnchor" number="7.6">
+<h2><span class="header-section-number">7.6</span> Exercises<a href="pca-and-r-markdown-intro.html#exercises-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Still working on these…</strong></p>
+<p>Report/interpret some of the results. Looking at biplot, interpret variable loadings based on vector angles (lecture material).</p>
+<p>Make a biplot coloring samples by elevation. Do you notice any clustering?</p>
+<p>Add PC1 and PC2 as columns in maples03 and perform a t-test between watershed treatment using the PC1 axis as the response. Is there a significant difference in plant traits among treatments?</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="multivariate-statistics.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/06-pca.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["quantitative-reasoning.pdf", "quantitative-reasoning.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

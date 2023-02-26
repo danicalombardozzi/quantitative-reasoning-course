@@ -40,3 +40,11 @@ multiple-linear-regression
 exercises-3
 acknowledgements-1
 citations-1
+pca-and-r-markdown-intro
+intro-to-r-markdown
+getting-started-with-r-markdown
+principal-component-analysis-pca
+variance-explained
+variable-loadings
+visualize-patterns
+exercises-4
