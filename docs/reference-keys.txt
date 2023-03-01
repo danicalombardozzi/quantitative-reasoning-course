@@ -47,5 +47,5 @@ principal-component-analysis-pca
 variance-explained
 variable-loadings
 visualize-patterns
-exercises-4
 a-note-on-rendering
+exercises-4

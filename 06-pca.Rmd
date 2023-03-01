@@ -34,7 +34,7 @@ You can delete the rest of the code/text below the YAML header, and insert a new
 
 The first chunk is almost always your set up code, where you read in libraries and any necessary data sets.
 
-We need three new packages for this lesson. `rmarkdown` is necessary in order to render your R Markdown (or .Rmd) files to specified formats (e.g., HTML, Word, PDF). `plotly` is a graphics library that we will use to demonstrate how you can make ggplot figures interactive and `ggfortify` is needed to plot PCA objects with `gpglot2`.
+We need three new packages for this lesson. `rmarkdown` is necessary in order to render your R Markdown (or .Rmd) files to specified formats (e.g., HTML, Word, PDF). `plotly` is a graphics library that we will use to demonstrate how you can make ggplot figures interactive and `ggfortify` is needed to plot PCA objects with `ggplot2`.
 
 Since you only need to install packages once, you do not need to include this in your R Markdown document, you can just run it directly in the console:
 
