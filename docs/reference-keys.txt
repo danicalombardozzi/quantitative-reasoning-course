@@ -48,3 +48,4 @@ variance-explained
 variable-loadings
 visualize-patterns
 exercises-4
+a-note-on-rendering
