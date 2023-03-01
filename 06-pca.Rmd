@@ -178,15 +178,8 @@ To complete the assignment this week, you will write your entire workflow (i.e.,
 3.  We notice that there seems to be a visual separation among watershed treatment along our PC1 axis (which represents the entire set of seedling traits). Since we now have a single quantitative variable (PC1) and a categorical predictor (watershed), we can perform a t-test between watershed treatment to see if this difference in seedling traits is significant. Run the following chunk of code to add the PC1 variable to the original `maples03` data. Then perform a t-test and report your findings. Include all the code you ran (remember how to test for t-test assumptions and properly address them if needed) and format your interpretation as you would in a scientific paper/report. (12 pts.)
 
 ```{r}
-# the PCA operates row wise, so we need to create an ID column in both data sets that we can join by
+# the PCA operates row wise, so we can bind the columns since they have the same number of rows that are all paired up. Recall that the 'x' element of the PCA shows each individual sample score on each axis
 
-maples03 <- maples03 %>% 
-  mutate(ID = 1:nrow(.))
+maples03 <- bind_cols(maples03, maples03_pca$x)
 
-pc1 <- maples03_pca$x %>%
-  as_tibble() %>% 
-  select(PC1) %>% 
-  mutate(ID = 1:nrow(.))
-
-maples03 <- left_join(maples03, pc1, by = "ID")
 ```

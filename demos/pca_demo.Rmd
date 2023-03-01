@@ -9,6 +9,14 @@ data("pie_crab")
 ```
 
 
+Check correlations:
+```{r}
+ pie_crab %>%
+  #reduce to quant variables
+  select(latitude, air_temp:water_temp_sd) %>% 
+  cor()
+```
+
 ```{r}
 crab_pca <- pie_crab %>%
   #reduce to quant variables
@@ -30,18 +38,39 @@ screeplot(crab_pca)
 ```
 
 
-Make a screeplot with ggplot showing proportion of variance explained
 
 ```{r}
 biplot(crab_pca)
 ```
 
 
-
-Make this look better with ggfortify (and more customization)
+Make this look better with ggfortify (and more customization) then put in ggplotly()
 
 ```{r}
 autoplot(crab_pca, loadings = TRUE, loadings.label = TRUE)+
   theme_minimal()
 ```
+
+Add the two PC Axes to original dataset (each axis is orthogonal/opposite which is why we often use the first 2)
+PCA used in regression as a method of getting rid of collinearity
+show them cor(crab_pac$x)
+
+```{r}
+bind_cols(pic_crab, crab_pca$x)
+
+```
+
+Lets do a multiple linear regression w/ these two new axes
+
+```{r}
+model <- lm(size ~ PC1 + PC2, data = pie_crab)
+
+summary(model)
+```
+
+Look back at the loadings to see which ones most strongly define each axis
+```{r}
+crab_pca$rotation
+```
+
 
