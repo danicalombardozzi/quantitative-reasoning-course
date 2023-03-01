@@ -23,7 +23,7 @@
 <meta name="author" content="Caitlin C. Mothes, PhD" />
 
 
-<meta name="date" content="2023-02-27" />
+<meta name="date" content="2023-03-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -235,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="pca-and-r-markdown-intro" class="section level1 hasAnchor" number="7">
 <h1><span class="header-section-number"> 7</span> PCA and R Markdown Intro<a href="pca-and-r-markdown-intro.html#pca-and-r-markdown-intro" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Before we get started with conducing a Principal Component Analysis (PCA), we are going to carry out this lesson in an R Markdown document and see how it can be used to 1) organize workflows with text, code, and figures/results and 2) render a nicely formatted report, which is what you will submit for this week’s assignment.</p>
+<p>Before we get started with conducing a Principal Component Analysis (PCA), we are going to carry out this lesson in an R Markdown document and see how it can be used to <strong>1)</strong> organize workflows with text, code, and figures/results and <strong>2)</strong> render a nicely formatted report, which is what you will submit for this week’s assignment.</p>
 <div id="intro-to-r-markdown" class="section level2 hasAnchor" number="7.1">
 <h2><span class="header-section-number">7.1</span> Intro to R Markdown<a href="pca-and-r-markdown-intro.html#intro-to-r-markdown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>R Markdown is a notebook style interface integrating text and code, allowing you to create fully reproducible documents and render them to various elegantly formatted static or dynamic outputs.</p>
@@ -304,7 +304,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="pca-and-r-markdown-intro.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(maples03_pca)</span></code></pre></div>
 <p>We can also view these results visually using a plot called a screeplot.</p>
 <div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="pca-and-r-markdown-intro.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">screeplot</span>(maples03_pca)</span></code></pre></div>
-<p>Looks like the first 2 axes explain nearly all the variance of the data space (&gt;80%, which is often the desired outcome).</p>
+<p>Looks like the first 2 axes explain nearly all the variance of the data space (&gt;80%, which is often the desired outcome). Notice that this function plots ‘Variances’ on the y-axis i.e., the <strong>Eigenvalues</strong> which reflect the <em>total</em> amount of variance explained by that axis instead of the proportion. The proportions are still interpretable from the size of the bar plots however.</p>
 </div>
 <div id="variable-loadings" class="section level2 hasAnchor" number="7.4">
 <h2><span class="header-section-number">7.4</span> Variable loadings<a href="pca-and-r-markdown-intro.html#variable-loadings" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -329,9 +329,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">7.6</span> Exercises<a href="pca-and-r-markdown-intro.html#exercises-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To complete the assignment this week, you will write your entire workflow (i.e., the entire PCA lesson above) in an R Markdown document. At the bottom of your R Markdown document (after carrying out the PCA) please add an ‘Exercises’ section, write (or paste) questions 1-3 below and write your responses directly below them, and finally <strong>knit your completed R Markdown file as a Word document</strong>. For the assignment you will only need to submit the rendered Word document, which should contain all the code you ran AND your responses to the questions below (some of which also include code!).</p>
 <ol style="list-style-type: decimal">
-<li><p>Looking at the biplot, interpret the variable loadings based on vector angles. Which variable are positively, negatively, and uncorrelated with each other?</p></li>
-<li><p>Make a biplot (using the <code>autoplot</code> function) and color samples by elevation. Include the static plot (i.e., do not use <code>ggplotly</code>). Do you notice any clustering?</p></li>
-<li><p>We notice that there seems to be a visual separation among watershed treatment along our PC1 axis. Since we now have a single quantitative variable (PC1) and a categorical predictor (watershed), we can perform a t-test between watershed treatment to see if this difference in seedling traits is significantly different. Run the following line of code to add (‘join’) the PC1 variable to the original <code>maples03</code> data. Then perform a t-test and report your findings. Include all the code you ran (remember how to test for t-test assumptions and properly address them if needed) and format your interpretation as you would in a scientific paper/report.</p></li>
+<li><p>Looking at the biplot, interpret the variable loadings based on vector angles. Which variable are positively, negatively, and uncorrelated with each other? (5 pts.)</p></li>
+<li><p>Make a biplot (using the <code>autoplot</code> function) and color samples by elevation. Include the static plot (i.e., do not use <code>ggplotly</code>). Do you notice any clustering? (8 pts.)</p></li>
+<li><p>We notice that there seems to be a visual separation among watershed treatment along our PC1 axis (which represents the entire set of seedling traits). Since we now have a single quantitative variable (PC1) and a categorical predictor (watershed), we can perform a t-test between watershed treatment to see if this difference in seedling traits is significant. Run the following chunk of code to add the PC1 variable to the original <code>maples03</code> data. Then perform a t-test and report your findings. Include all the code you ran (remember how to test for t-test assumptions and properly address them if needed) and format your interpretation as you would in a scientific paper/report. (12 pts.)</p></li>
 </ol>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="pca-and-r-markdown-intro.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the PCA operates row wise, so we need to create an ID column in both data sets that we can join by</span></span>
 <span id="cb103-2"><a href="pca-and-r-markdown-intro.html#cb103-2" aria-hidden="true" tabindex="-1"></a></span>
