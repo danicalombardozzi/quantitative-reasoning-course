@@ -135,7 +135,7 @@ We can next view the individual loadings of each variable (i.e., how much each v
 maples03_pca$rotation
 ```
 
-Note that when we look at these individual loadings, when variables have opposite +/- values that means those variables are negatively correlated. From this we see that on the first axis PC1 (which explains the vast majority of the variance in the data set) all these variables are positively correlated. On PC2 we see a few negatively correlated, such as stem length stem dry mass.
+Note that when we look at these individual loadings, when variables have opposite +/- values that means those variables are negatively correlated. From this we see that on the first axis PC1 (which explains the vast majority of the variance in the data set) all these variables are positively correlated. On PC2 we see a few negatively correlated, such as stem length and leaf dry mass.
 
 ## Visualize patterns
 

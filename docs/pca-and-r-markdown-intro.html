@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title> 7 PCA and R Markdown Intro | Quantitative Reasoning for Ecosystem Science</title>
   <meta name="description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
-  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content=" 7 PCA and R Markdown Intro | Quantitative Reasoning for Ecosystem Science" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Caitlin C. Mothes, PhD" />
 
 
-<meta name="date" content="2023-03-01" />
+<meta name="date" content="2023-03-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -311,7 +311,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">7.4</span> Variable loadings<a href="pca-and-r-markdown-intro.html#variable-loadings" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We can next view the individual loadings of each variable (i.e., how much each variable contributes to each axis), by indexing the <code>rotation</code> element of the PCA object with the <code>$</code> operator.</p>
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="pca-and-r-markdown-intro.html#cb98-1" aria-hidden="true" tabindex="-1"></a>maples03_pca<span class="sc">$</span>rotation</span></code></pre></div>
-<p>Note that when we look at these individual loadings, when variables have opposite +/- values that means those variables are negatively correlated. From this we see that on the first axis PC1 (which explains the vast majority of the variance in the data set) all these variables are positively correlated. On PC2 we see a few negatively correlated, such as stem length stem dry mass.</p>
+<p>Note that when we look at these individual loadings, when variables have opposite +/- values that means those variables are negatively correlated. From this we see that on the first axis PC1 (which explains the vast majority of the variance in the data set) all these variables are positively correlated. On PC2 we see a few negatively correlated, such as stem length and leaf dry mass.</p>
 </div>
 <div id="visualize-patterns" class="section level2 hasAnchor" number="7.5">
 <h2><span class="header-section-number">7.5</span> Visualize patterns<a href="pca-and-r-markdown-intro.html#visualize-patterns" class="anchor-section" aria-label="Anchor link to header"></a></h2>
