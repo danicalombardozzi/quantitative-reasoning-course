@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title> 8 Introduction to Spatial Data in R | Quantitative Reasoning for Ecosystem Science</title>
+  <meta name="description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
+
+  <meta property="og:title" content=" 8 Introduction to Spatial Data in R | Quantitative Reasoning for Ecosystem Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
+  <meta name="github-repo" content="ccmothes/quantitative-reasoning-course" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content=" 8 Introduction to Spatial Data in R | Quantitative Reasoning for Ecosystem Science" />
+  
+  <meta name="twitter:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
+  
+
+<meta name="author" content="Caitlin C. Mothes, PhD" />
+
+
+<meta name="date" content="2023-03-06" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="pca-and-r-markdown-intro.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Quantitative Reasoning for Ecosystem Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#set-up-instructions"><i class="fa fa-check"></i>Set up Instructions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#navigating-this-site"><i class="fa fa-check"></i>Navigating this site</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="setup-instructions.html"><a href="setup-instructions.html"><i class="fa fa-check"></i><b>2</b> Setup Instructions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="setup-instructions.html"><a href="setup-instructions.html#install-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> Install R and RStudio</a></li>
+<li class="chapter" data-level="2.2" data-path="setup-instructions.html"><a href="setup-instructions.html#package-installation"><i class="fa fa-check"></i><b>2.2</b> Package Installation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html"><i class="fa fa-check"></i><b>3</b> Introduction to R and RStudio</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#getting-to-know-rstudio"><i class="fa fa-check"></i><b>3.1</b> Getting to know RStudio</a></li>
+<li class="chapter" data-level="3.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#r-projects"><i class="fa fa-check"></i><b>3.2</b> R Projects</a></li>
+<li class="chapter" data-level="3.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#write-your-first-script"><i class="fa fa-check"></i><b>3.3</b> Write your first script</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#commenting-code"><i class="fa fa-check"></i><b>3.3.1</b> Commenting code</a></li>
+<li class="chapter" data-level="3.3.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#executing-code"><i class="fa fa-check"></i><b>3.3.2</b> Executing code</a></li>
+<li class="chapter" data-level="3.3.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#getting-help-with-code"><i class="fa fa-check"></i><b>3.3.3</b> Getting help with code</a></li>
+<li class="chapter" data-level="3.3.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#functions"><i class="fa fa-check"></i><b>3.3.4</b> Functions</a></li>
+<li class="chapter" data-level="3.3.5" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#data-types"><i class="fa fa-check"></i><b>3.3.5</b> Data Types</a></li>
+<li class="chapter" data-level="3.3.6" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#indexing"><i class="fa fa-check"></i><b>3.3.6</b> Indexing</a></li>
+<li class="chapter" data-level="3.3.7" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#read-and-write-data"><i class="fa fa-check"></i><b>3.3.7</b> Read and Write Data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#exercises"><i class="fa fa-check"></i><b>3.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-wrangling"><i class="fa fa-check"></i><b>4.1</b> Data wrangling</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#the-dplyr-package"><i class="fa fa-check"></i><b>4.1.1</b> The <code>dplyr</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#visualization"><i class="fa fa-check"></i><b>4.2</b> Visualization</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#exercises-1"><i class="fa fa-check"></i><b>4.2.1</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html"><i class="fa fa-check"></i><b>5</b> Introduction to Statistics</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#explore-the-dataset"><i class="fa fa-check"></i><b>5.1</b> Explore the dataset</a></li>
+<li class="chapter" data-level="5.2" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#chi-square---categorical-analysis"><i class="fa fa-check"></i><b>5.2</b> Chi-square - Categorical Analysis</a></li>
+<li class="chapter" data-level="5.3" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#t-test---compare-two-means"><i class="fa fa-check"></i><b>5.3</b> t-test - Compare two means</a></li>
+<li class="chapter" data-level="5.4" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#correlation---assess-relationships"><i class="fa fa-check"></i><b>5.4</b> Correlation - Assess relationships</a></li>
+<li class="chapter" data-level="5.5" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#exercises-2"><i class="fa fa-check"></i><b>5.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#acknowledgements"><i class="fa fa-check"></i><b>5.5.1</b> Acknowledgements</a></li>
+<li class="chapter" data-level="5.5.2" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#citations"><i class="fa fa-check"></i><b>5.5.2</b> Citations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html"><i class="fa fa-check"></i><b>6</b> Multivariate Statistics</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#explore-the-data-set"><i class="fa fa-check"></i><b>6.1</b> Explore the Data set</a></li>
+<li class="chapter" data-level="6.2" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#anova"><i class="fa fa-check"></i><b>6.2</b> ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#assumptions"><i class="fa fa-check"></i><b>6.2.1</b> Assumptions</a></li>
+<li class="chapter" data-level="6.2.2" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#post-hoc-tukeys-hsd-test"><i class="fa fa-check"></i><b>6.2.2</b> Post-hoc Tukey’s HSD test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#simple-linear-regression"><i class="fa fa-check"></i><b>6.3</b> Simple Linear Regression</a></li>
+<li class="chapter" data-level="6.4" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#multiple-linear-regression"><i class="fa fa-check"></i><b>6.4</b> Multiple Linear Regression</a></li>
+<li class="chapter" data-level="6.5" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#exercises-3"><i class="fa fa-check"></i><b>6.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#acknowledgements-1"><i class="fa fa-check"></i><b>6.5.1</b> Acknowledgements</a></li>
+<li class="chapter" data-level="6.5.2" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#citations-1"><i class="fa fa-check"></i><b>6.5.2</b> Citations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html"><i class="fa fa-check"></i><b>7</b> PCA and R Markdown Intro</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#intro-to-r-markdown"><i class="fa fa-check"></i><b>7.1</b> Intro to R Markdown</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#getting-started-with-r-markdown"><i class="fa fa-check"></i><b>7.1.1</b> Getting started with R Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#principal-component-analysis-pca"><i class="fa fa-check"></i><b>7.2</b> Principal Component Analysis (PCA)</a></li>
+<li class="chapter" data-level="7.3" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#variance-explained"><i class="fa fa-check"></i><b>7.3</b> Variance explained</a></li>
+<li class="chapter" data-level="7.4" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#variable-loadings"><i class="fa fa-check"></i><b>7.4</b> Variable loadings</a></li>
+<li class="chapter" data-level="7.5" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#visualize-patterns"><i class="fa fa-check"></i><b>7.5</b> Visualize patterns</a></li>
+<li class="chapter" data-level="7.6" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#a-note-on-rendering"><i class="fa fa-check"></i><b>7.6</b> A Note on Rendering:</a></li>
+<li class="chapter" data-level="7.7" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#exercises-4"><i class="fa fa-check"></i><b>7.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html"><i class="fa fa-check"></i><b>8</b> Introduction to Spatial Data in R</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#spatial-data-formats"><i class="fa fa-check"></i><b>8.1</b> Spatial Data Formats</a></li>
+<li class="chapter" data-level="8.2" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#import-and-manipulate-spatial-data"><i class="fa fa-check"></i><b>8.2</b> Import and manipulate spatial data</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#set-up"><i class="fa fa-check"></i><b>8.2.1</b> Set Up</a></li>
+<li class="chapter" data-level="8.2.2" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#vector-data"><i class="fa fa-check"></i><b>8.2.2</b> Vector Data</a></li>
+<li class="chapter" data-level="8.2.3" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#tigris"><i class="fa fa-check"></i><b>8.2.3</b> <code>tigris</code></a></li>
+<li class="chapter" data-level="8.2.4" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#polygons"><i class="fa fa-check"></i><b>8.2.4</b> <strong>Polygons</strong></a></li>
+<li class="chapter" data-level="8.2.5" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#lines"><i class="fa fa-check"></i><b>8.2.5</b> <strong>Lines</strong></a></li>
+<li class="chapter" data-level="8.2.6" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#tmap"><i class="fa fa-check"></i><b>8.2.6</b> <code>tmap</code></a></li>
+<li class="chapter" data-level="8.2.7" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#sf"><i class="fa fa-check"></i><b>8.2.7</b> <code>sf</code></a></li>
+<li class="chapter" data-level="8.2.8" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#points"><i class="fa fa-check"></i><b>8.2.8</b> Points</a></li>
+<li class="chapter" data-level="8.2.9" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#coordinate-reference-systems"><i class="fa fa-check"></i><b>8.2.9</b> Coordinate Reference Systems</a></li>
+<li class="chapter" data-level="8.2.10" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#raster-data"><i class="fa fa-check"></i><b>8.2.10</b> Raster Data</a></li>
+<li class="chapter" data-level="8.2.11" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#elevatr"><i class="fa fa-check"></i><b>8.2.11</b> <code>elevatr</code></a></li>
+<li class="chapter" data-level="8.2.12" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#terra"><i class="fa fa-check"></i><b>8.2.12</b> <code>terra</code></a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#reading-and-writing-spatial-data"><i class="fa fa-check"></i><b>8.3</b> Reading and Writing Spatial Data</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#writing-spatial-data"><i class="fa fa-check"></i><b>8.3.1</b> Writing spatial data</a></li>
+<li class="chapter" data-level="8.3.2" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#rdata-files"><i class="fa fa-check"></i><b>8.3.2</b> .RData Files</a></li>
+<li class="chapter" data-level="8.3.3" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#reading-spatial-data"><i class="fa fa-check"></i><b>8.3.3</b> Reading Spatial Data</a></li>
+<li class="chapter" data-level="8.3.4" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#exercises-5"><i class="fa fa-check"></i><b>8.3.4</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Quantitative Reasoning for Ecosystem Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction-to-spatial-data-in-r" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number"> 8</span> Introduction to Spatial Data in R<a href="introduction-to-spatial-data-in-r.html#introduction-to-spatial-data-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="spatial-data-formats" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Spatial Data Formats<a href="introduction-to-spatial-data-in-r.html#spatial-data-formats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Vector Data</strong></p>
+<ul>
+<li><p>Locations (points)</p>
+<ul>
+<li>Coordinates, address, country, city</li>
+</ul></li>
+<li><p>Shapes (lines or polygons)</p>
+<ul>
+<li>Political boundaries, roads, building footprints, water bodies</li>
+</ul></li>
+</ul>
+<p><strong>Raster Data</strong></p>
+<ul>
+<li><p>Images (matrix of cells organized by rows and columns)</p>
+<ul>
+<li><p>Satellite imagery, climate, landcover, elevation</p>
+<p><img src="images/spatial_formats.png" /></p></li>
+</ul></li>
+</ul>
+</div>
+<div id="import-and-manipulate-spatial-data" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Import and manipulate spatial data<a href="introduction-to-spatial-data-in-r.html#import-and-manipulate-spatial-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="set-up" class="section level3 hasAnchor" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> Set Up<a href="introduction-to-spatial-data-in-r.html#set-up" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You will need to install a couple new R packages to import and work with spatial data. The two main packages for working with spatial data are <code>sf</code> (for vector data) and <code>terra</code> (for spatial data). We will also be using <code>tmap</code> to visualize spatial data and make quick maps, along with the <code>tigris</code> package to import some vector data.</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="introduction-to-spatial-data-in-r.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;sf&quot;</span>)</span>
+<span id="cb104-2"><a href="introduction-to-spatial-data-in-r.html#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;terra&quot;</span>)</span>
+<span id="cb104-3"><a href="introduction-to-spatial-data-in-r.html#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tmap&quot;</span>)</span>
+<span id="cb104-4"><a href="introduction-to-spatial-data-in-r.html#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tigris&quot;</span>)</span></code></pre></div>
+<p>Second, you will need to download a couple spatial datasets to carry out this lesson. If you haven’t already, in the R project you have been using in this class, create a <code>data/</code> folder. This is where you should put all of the spatial data files.</p>
+</div>
+<div id="vector-data" class="section level3 hasAnchor" number="8.2.2">
+<h3><span class="header-section-number">8.2.2</span> Vector Data<a href="introduction-to-spatial-data-in-r.html#vector-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="tigris" class="section level3 hasAnchor" number="8.2.3">
+<h3><span class="header-section-number">8.2.3</span> <a href="https://github.com/walkerke/tigris"><code>tigris</code></a><a href="introduction-to-spatial-data-in-r.html#tigris" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="polygons" class="section level3 hasAnchor" number="8.2.4">
+<h3><span class="header-section-number">8.2.4</span> <strong>Polygons</strong><a href="introduction-to-spatial-data-in-r.html#polygons" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>All the data we are working with in this lesson is confined to the state of Colorado. Let’s start by pulling in political boundaries for Colorado counties with the <code>tigris</code> package, which returns a shapefile consisting of polygons for each county.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="introduction-to-spatial-data-in-r.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download county shapefile for the state of Colorado</span></span>
+<span id="cb105-2"><a href="introduction-to-spatial-data-in-r.html#cb105-2" aria-hidden="true" tabindex="-1"></a>counties <span class="ot">&lt;-</span> <span class="fu">counties</span>(<span class="at">state =</span> <span class="st">&quot;CO&quot;</span>)</span></code></pre></div>
+<p>The <code>tigris</code> package is one of many data retrieval R packages that uses API calls to pull in data from various online/open databases directly into your R session, without the need to separately download. When you close out your R session, these ‘temp’ files are erased, so it does not use up any of your local storage. At the end of this lesson you will learn how to save shapefiles to your computer if you do in fact want to store and use them in the future (e.g., you manipulated a data set quite a bit and don’t want to re-run the entire process every new R session).</p>
+</div>
+<div id="lines" class="section level3 hasAnchor" number="8.2.5">
+<h3><span class="header-section-number">8.2.5</span> <strong>Lines</strong><a href="introduction-to-spatial-data-in-r.html#lines" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>tigris</code> has many other data sets in addition to political boundaries. Today let’s work with another shapefile, importing roads for Larimer county, which returns a polyline dataset for all roads in Larimer County.</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="introduction-to-spatial-data-in-r.html#cb106-1" aria-hidden="true" tabindex="-1"></a>roads <span class="ot">&lt;-</span> <span class="fu">roads</span>(<span class="at">state =</span> <span class="st">&quot;CO&quot;</span>, <span class="at">county =</span> <span class="st">&quot;Larimer&quot;</span>)</span></code></pre></div>
+</div>
+<div id="tmap" class="section level3 hasAnchor" number="8.2.6">
+<h3><span class="header-section-number">8.2.6</span> <a href="https://r-tmap.github.io/tmap/"><code>tmap</code></a><a href="introduction-to-spatial-data-in-r.html#tmap" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Throughout this lesson we will be using the <code>tmap</code> package to produce quick static or interactive maps. It should be included in your setup script, but if not be sure to add it now.</p>
+<p><code>tmap</code> allows for both static (“plot” mode) and interactive (“view” mode) mapping options, which you can set using the function <code>tmap_mode()</code> . For today we will be making quick interactive plots. Once you set the mode with <code>tmap_mode()</code>, every plot call to <code>tmap</code> after that produces a plot in that mode.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="introduction-to-spatial-data-in-r.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;view&quot;</span>)</span></code></pre></div>
+<p>Lets view our Colorado counties and Larimer County roads shapefiles. To make a “quick thematic map” in <code>tmap</code> you can use the <code>qtm()</code> function. You can also use <code>tm_shape()</code> plus the type of spatial layer (e.g., <code>tm_polygons()</code>) to add your layers to the map if you want to customize the map a little more.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="introduction-to-spatial-data-in-r.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Using qtm</span></span>
+<span id="cb108-2"><a href="introduction-to-spatial-data-in-r.html#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qtm</span>(counties)<span class="sc">+</span></span>
+<span id="cb108-3"><a href="introduction-to-spatial-data-in-r.html#cb108-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">qtm</span>(roads)</span>
+<span id="cb108-4"><a href="introduction-to-spatial-data-in-r.html#cb108-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-5"><a href="introduction-to-spatial-data-in-r.html#cb108-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Using tm_shape</span></span>
+<span id="cb108-6"><a href="introduction-to-spatial-data-in-r.html#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(counties)<span class="sc">+</span></span>
+<span id="cb108-7"><a href="introduction-to-spatial-data-in-r.html#cb108-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>()<span class="sc">+</span></span>
+<span id="cb108-8"><a href="introduction-to-spatial-data-in-r.html#cb108-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(roads)<span class="sc">+</span></span>
+<span id="cb108-9"><a href="introduction-to-spatial-data-in-r.html#cb108-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>()</span></code></pre></div>
+<p>Rendering the map may take a little while due to relatively large size of the <code>roads</code> object.</p>
+<p>Mess around with this map a little bit. See that you can change the basemap, turn layers on and off, and click on features to see their attributes.</p>
+<p>Let’s inspect the spatial data sets a little more. What do you see when you run <code>class(counties)</code> ?</p>
+</div>
+<div id="sf" class="section level3 hasAnchor" number="8.2.7">
+<h3><span class="header-section-number">8.2.7</span> <a href="https://r-spatial.github.io/sf/"><code>sf</code></a><a href="introduction-to-spatial-data-in-r.html#sf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>By default, the <code>tigris</code> package imports spatial data in <code>sf</code> format, which stands for ‘simple features’. The <code>sf</code> package provides an easy and efficient way to work with vector data, and represents spatial features as a <code>data.frame</code> or <code>tibble</code> with a geometry column, and therefore also works well with <code>tidyverse</code> packages to perform manipulations like you would a data frame.</p>
+<p>For example, we are going to do an exercise for the Poudre Canyon Highway, so we want to filter out the roads data set to only those features. Using your investigative geography skills, find the highway on your map, find out what the exact ‘FULLNAME’ attribute is, and use that to <code>filter()</code> the data set.</p>
+<details>
+<summary>
+Show Answer
+</summary>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="introduction-to-spatial-data-in-r.html#cb109-1" aria-hidden="true" tabindex="-1"></a>poudre_hwy <span class="ot">&lt;-</span> roads <span class="sc">%&gt;%</span> </span>
+<span id="cb109-2"><a href="introduction-to-spatial-data-in-r.html#cb109-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FULLNAME <span class="sc">==</span> <span class="st">&quot;Poudre Canyon Hwy&quot;</span>)</span>
+<span id="cb109-3"><a href="introduction-to-spatial-data-in-r.html#cb109-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-4"><a href="introduction-to-spatial-data-in-r.html#cb109-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qtm</span>(poudre_hwy)</span></code></pre></div>
+</details>
+</div>
+<div id="points" class="section level3 hasAnchor" number="8.2.8">
+<h3><span class="header-section-number">8.2.8</span> Points<a href="introduction-to-spatial-data-in-r.html#points" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Most often when you are working with points, you start with an excel file or something similar that consists of the raw latitude and longitude. When you have spatial data that is not explicitly spatial yet or not in the <code>sf</code> format, you use the <code>st_as_sf()</code> function to transform it.</p>
+<p>Lets work with a couple locations along the Poudre highway, making a small data frame of their coordinates:</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="introduction-to-spatial-data-in-r.html#cb110-1" aria-hidden="true" tabindex="-1"></a>poudre_points <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">name =</span> <span class="fu">c</span>(<span class="st">&quot;Mishawaka&quot;</span>, <span class="st">&quot;Rustic&quot;</span>, <span class="st">&quot;Blue Lake Trailhead&quot;</span>),</span>
+<span id="cb110-2"><a href="introduction-to-spatial-data-in-r.html#cb110-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">long =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">105.35634</span>, <span class="sc">-</span><span class="fl">105.58159</span>, <span class="sc">-</span><span class="fl">105.85563</span>),</span>
+<span id="cb110-3"><a href="introduction-to-spatial-data-in-r.html#cb110-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">lat =</span> <span class="fu">c</span>(<span class="fl">40.68752</span>, <span class="fl">40.69687</span>, <span class="fl">40.57960</span>))</span></code></pre></div>
+<p>Now convert it to an <code>sf</code> object, specifying the longitude and latitude columns and the CRS (Coordinate Reference System). Note that ‘x’ (longitude) always goes first followed by ‘y’ (latitude).</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="introduction-to-spatial-data-in-r.html#cb111-1" aria-hidden="true" tabindex="-1"></a>poudre_points_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(poudre_points, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;long&quot;</span>, <span class="st">&quot;lat&quot;</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb111-2"><a href="introduction-to-spatial-data-in-r.html#cb111-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-3"><a href="introduction-to-spatial-data-in-r.html#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qtm</span>(poudre_hwy)<span class="sc">+</span></span>
+<span id="cb111-4"><a href="introduction-to-spatial-data-in-r.html#cb111-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">qtm</span>(poudre_points_sf)</span></code></pre></div>
+</div>
+<div id="coordinate-reference-systems" class="section level3 hasAnchor" number="8.2.9">
+<h3><span class="header-section-number">8.2.9</span> Coordinate Reference Systems<a href="introduction-to-spatial-data-in-r.html#coordinate-reference-systems" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Probably the most important part of working with spatial data is the coordinate reference system (CRS) that is used. In order to analyze spatial data, all objects should be in the exact same CRS.</p>
+<p>We can check a spatial object’s CRS by printing it to the console, which will return a bunch of metadata about the object. You can specifically return the CRS for <code>sf</code> objects with <code>st_crs()</code>.</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="introduction-to-spatial-data-in-r.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="co"># see the CRS in the header metadata:</span></span>
+<span id="cb112-2"><a href="introduction-to-spatial-data-in-r.html#cb112-2" aria-hidden="true" tabindex="-1"></a>counties</span>
+<span id="cb112-3"><a href="introduction-to-spatial-data-in-r.html#cb112-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-4"><a href="introduction-to-spatial-data-in-r.html#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="co">#return just the CRS (more detailed)</span></span>
+<span id="cb112-5"><a href="introduction-to-spatial-data-in-r.html#cb112-5" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(counties)</span></code></pre></div>
+<p>You can check if two objects have the same CRS like this:</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="introduction-to-spatial-data-in-r.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(counties) <span class="sc">==</span> <span class="fu">st_crs</span>(poudre_points_sf)</span></code></pre></div>
+<p>Uh oh, the CRS of our points and lines doesn’t match. While <code>tmap</code> performs some on-the-fly transformations to map the two layers together, in order to do any analyses with these objects you’ll need to re-project one of them. You can project one object’s CRS to that of another with <code>st_transform</code> like this:</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="introduction-to-spatial-data-in-r.html#cb114-1" aria-hidden="true" tabindex="-1"></a>poudre_points_prj <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(poudre_points_sf, <span class="fu">st_crs</span>(counties))</span>
+<span id="cb114-2"><a href="introduction-to-spatial-data-in-r.html#cb114-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-3"><a href="introduction-to-spatial-data-in-r.html#cb114-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Now check that they match</span></span>
+<span id="cb114-4"><a href="introduction-to-spatial-data-in-r.html#cb114-4" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(poudre_points_prj) <span class="sc">==</span> <span class="fu">st_crs</span>(counties)</span></code></pre></div>
+</div>
+<div id="raster-data" class="section level3 hasAnchor" number="8.2.10">
+<h3><span class="header-section-number">8.2.10</span> Raster Data<a href="introduction-to-spatial-data-in-r.html#raster-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="elevatr" class="section level3 hasAnchor" number="8.2.11">
+<h3><span class="header-section-number">8.2.11</span> <a href="https://github.com/jhollist/elevatr/"><code>elevatr</code></a><a href="introduction-to-spatial-data-in-r.html#elevatr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Lets import some elevation data using the <code>elevatr</code> package. The function <code>get_elev_raster()</code> returns a raster digital elevation model (DEM) from the AWS Open Data Terrain Tiles. For this function you must supply a spatial object specifying the extent of the returned elevation raster and the resolution (specified by the zoom level <code>z</code>). We are importing elevation at ~ 1km resolution (more like 900 m), and we can use our <code>counties</code> object as the extent we want to download to, which will return elevation tiles for the state of Colorado.</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="introduction-to-spatial-data-in-r.html#cb115-1" aria-hidden="true" tabindex="-1"></a>elevation <span class="ot">&lt;-</span> <span class="fu">get_elev_raster</span>(counties, <span class="at">z =</span> <span class="dv">7</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="introduction-to-spatial-data-in-r.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qtm</span>(elevation)</span></code></pre></div>
+<p>By default, <code>tmap</code> uses a categorical symbology to color the cells by elevation. You can change that to a continuous palette like this:</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="introduction-to-spatial-data-in-r.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(elevation)<span class="sc">+</span></span>
+<span id="cb117-2"><a href="introduction-to-spatial-data-in-r.html#cb117-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">style =</span> <span class="st">&quot;cont&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Elevation (m)&quot;</span>)</span></code></pre></div>
+<p>When we see this on a map, we see that it actually extends beyond Colorado due to how the Terrain Tiles are spatially organized.</p>
+<p>Let’s inspect this raster layer a little. By printing the object name to the console we see a bunch of metadata like resolution (cell size), extent, CRS, and file name.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="introduction-to-spatial-data-in-r.html#cb118-1" aria-hidden="true" tabindex="-1"></a>elevation</span></code></pre></div>
+</div>
+<div id="terra" class="section level3 hasAnchor" number="8.2.12">
+<h3><span class="header-section-number">8.2.12</span> <code>terra</code><a href="introduction-to-spatial-data-in-r.html#terra" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can use the <code>terra</code> package to work with raster data. For example, we only want to see elevation along the Poudre highway. We can use <code>crop</code> to crop the raster to the extent of our <code>roads</code> shapefile (to get all of Larimer County), using the <code>ext()</code> function to get the extent of that spatial object.</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="introduction-to-spatial-data-in-r.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If we try this, we get an error</span></span>
+<span id="cb119-2"><a href="introduction-to-spatial-data-in-r.html#cb119-2" aria-hidden="true" tabindex="-1"></a>elevation_crop <span class="ot">&lt;-</span> <span class="fu">crop</span>(elevation, <span class="fu">ext</span>(poudre_hwy))</span></code></pre></div>
+<p>This doesn’t work because our <code>elevation</code> object is actually not in the proper format to work with the <code>terra</code> package. The <code>elevatr</code> package still uses the <code>raster</code> package to work with raster data, however this package is outdated and we want to stick with <code>terra</code> for this course and any future work you do with raster data (note that the <code>elevatr</code> package maintainer says these dependencies will be updated in 2023).</p>
+<p>Converting a RasterLayer object to a <code>terra</code> SpatRaster object is quick using the <code>rast()</code> function. Lets also give this layer a more informative name in the process.</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="introduction-to-spatial-data-in-r.html#cb120-1" aria-hidden="true" tabindex="-1"></a>elevation <span class="ot">&lt;-</span> <span class="fu">rast</span>(elevation)</span>
+<span id="cb120-2"><a href="introduction-to-spatial-data-in-r.html#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(elevation) <span class="ot">&lt;-</span> <span class="st">&quot;Elevation&quot;</span></span></code></pre></div>
+<p>Now we can use <code>terra</code> functions</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="introduction-to-spatial-data-in-r.html#cb121-1" aria-hidden="true" tabindex="-1"></a>elevation_crop <span class="ot">&lt;-</span> <span class="fu">crop</span>(elevation, <span class="fu">ext</span>(roads))</span>
+<span id="cb121-2"><a href="introduction-to-spatial-data-in-r.html#cb121-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-3"><a href="introduction-to-spatial-data-in-r.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(elevation_crop)<span class="sc">+</span></span>
+<span id="cb121-4"><a href="introduction-to-spatial-data-in-r.html#cb121-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">style =</span> <span class="st">&quot;cont&quot;</span>)</span></code></pre></div>
+<p>Lets make a final map with all the spatial data we created</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="introduction-to-spatial-data-in-r.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(elevation, <span class="at">bbox =</span> <span class="fu">st_bbox</span>(poudre_hwy))<span class="sc">+</span></span>
+<span id="cb122-2"><a href="introduction-to-spatial-data-in-r.html#cb122-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">style =</span> <span class="st">&quot;cont&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Elevation (m)&quot;</span>)<span class="sc">+</span></span>
+<span id="cb122-3"><a href="introduction-to-spatial-data-in-r.html#cb122-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(poudre_hwy)<span class="sc">+</span></span>
+<span id="cb122-4"><a href="introduction-to-spatial-data-in-r.html#cb122-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>()<span class="sc">+</span></span>
+<span id="cb122-5"><a href="introduction-to-spatial-data-in-r.html#cb122-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(poudre_points_prj)<span class="sc">+</span></span>
+<span id="cb122-6"><a href="introduction-to-spatial-data-in-r.html#cb122-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(<span class="at">size =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="reading-and-writing-spatial-data" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Reading and Writing Spatial Data<a href="introduction-to-spatial-data-in-r.html#reading-and-writing-spatial-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="writing-spatial-data" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> Writing spatial data<a href="introduction-to-spatial-data-in-r.html#writing-spatial-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>All of the spatial data we’ve worked with are only saved as objects in our environment. To save the data to disk, the <code>sf</code> and <code>terra</code> packages have functions to do so. You are not required to save these files, but if you want to follow along with these functions save the data to the ‘data/’ folder you created at the beginning of this lesson.</p>
+<p>To save vector data with <code>sf</code>, use <code>write_sf()</code></p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="introduction-to-spatial-data-in-r.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_sf</span>(poudre_hwy, <span class="st">&quot;data/poudre_hwy.shp&quot;</span>)</span>
+<span id="cb123-2"><a href="introduction-to-spatial-data-in-r.html#cb123-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-3"><a href="introduction-to-spatial-data-in-r.html#cb123-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write_sf</span>(poudre_points_prj, <span class="st">&quot;data/poudre_points.shp&quot;</span>)</span></code></pre></div>
+<p>While you can give the file any name you want, note that you must put ‘.shp’ as the extension of the file.</p>
+<p>To save raster data with <code>terra</code> use <code>writeRaster()</code></p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="introduction-to-spatial-data-in-r.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(elevation_crop, <span class="st">&quot;data/elevation_larimer.tif&quot;</span>)</span></code></pre></div>
+<p>Same as with the vector data, when saving raster data you must add the ‘.tif’ file extension to the name. There are various formats raster data can be stored as (e.g., ASCII, ESRI Grid) but GeoTiffs are the most common and generally easiest to deal with in R.</p>
+</div>
+<div id="rdata-files" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> .RData Files<a href="introduction-to-spatial-data-in-r.html#rdata-files" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Another way you can store data is saving your environmental variables as R Data objects. You may have already seen ‘.RData’ files in your folders before if you ever click ‘yes’ when closing out of RStudio asks you to save your workspace. What this does is save everything in your environment to a file with a ‘.RData’ extension in your project directory, and then every time you open your project it reloads everything that was in the environment. This however is often poor practice, as it prevents you from writing reproducible code and all those variables start racking up storage space on your computer. We recommend changing this setting by going to Global Options and under ‘Workspace’ set ‘Save workspace to .RData on exit’ to ‘<strong>Never</strong>’.</p>
+<p>However, there are times you may want to save your variables as R files, such as when you have a set of variables you want to quickly re-load at the beginning of your session, or some files that are pretty large in size (R object files are much smaller). You can save single or multiple variables to an .RData file, or single variables to an .RDS file.</p>
+<p>Since the <code>poudre_hwy</code> and <code>poudre_points_prj</code> were objects you created in this session, to avoid the need to recreate them you can save them to an .RData file:</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="introduction-to-spatial-data-in-r.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(poudre_hwy, poudre_points_prj, <span class="at">file =</span> <span class="st">&quot;data/spatial_objects.RData&quot;</span>)</span></code></pre></div>
+<p>Note that you must add the ‘file =’ to your second argument.</p>
+<p>Now to test out how .RData files work, remove them from your environment with <code>rm()</code> (<em>be careful with this function though, it is permanent!</em>) and load them back in with <code>load()</code></p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="introduction-to-spatial-data-in-r.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(poudre_hwy, poudre_points_prj)</span></code></pre></div>
+<p>See they are no longer in your Environment pane, but after you load the .RData file back in, it loads in those two objects with the same environmental names they were given when you saved them.</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="introduction-to-spatial-data-in-r.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/spatial_objects.RData&quot;</span>)</span></code></pre></div>
+<p>Note that <code>terra</code> objects don’t properly save to .RData files, but there is a work around if you save a single <code>terra</code> object as an .RDS file. Here is that workflow, there is just a second step to ‘unpack’ the loaded .RDS object with <code>rast()</code>.</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="introduction-to-spatial-data-in-r.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(elevation_crop, <span class="st">&quot;data/elevation_crop.RDS&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="introduction-to-spatial-data-in-r.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">readRDS</span>(<span class="st">&quot;data/elevation_crop.RDS&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">rast</span>()</span></code></pre></div>
+<p>Note that with .RDS files you must assign the loaded file to a new environmental variable (unlike with .RData that returns the objects with the exact names they had before).</p>
+</div>
+<div id="reading-spatial-data" class="section level3 hasAnchor" number="8.3.3">
+<h3><span class="header-section-number">8.3.3</span> Reading Spatial Data<a href="introduction-to-spatial-data-in-r.html#reading-spatial-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To read in shapefiles, you use <code>read_sf()</code></p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="introduction-to-spatial-data-in-r.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_sf</span>(<span class="st">&quot;data/poudre_hwy.shp&quot;</span>)</span></code></pre></div>
+<p>See that when you saved the shapefiles, there were many other auxiliary files saved with it. It is VERY important that whenever you share shapefiles, all the auxiliary files are saved with it, so often shapefiles are transferred via .zip folders. However, when reading shapefiles into R you only specify the file with the ‘.shp’ extension. As long as all the other auxiliary files are saved in that same folder, it will read in the shapefile correctly.</p>
+<p>To read in raster files you use the <code>rast()</code> function and file path with the appropriate file extension</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="introduction-to-spatial-data-in-r.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rast</span>(<span class="st">&quot;data/elevation_larimer.tif&quot;</span>)</span></code></pre></div>
+<p>Remember when reading in files you will want to assign them to a new variable name with <code>&lt;-</code> to keep them in your environment.</p>
+</div>
+<div id="exercises-5" class="section level3 hasAnchor" number="8.3.4">
+<h3><span class="header-section-number">8.3.4</span> Exercises<a href="introduction-to-spatial-data-in-r.html#exercises-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><p>Filter out the <code>counties</code> data set to only include Larimer, Denver, and Pueblo counties.</p></li>
+<li><p>Make a map of the <code>counties</code> data colored by county area. Make a second map of counties colored by their total area of water.</p></li>
+<li><p>Make a barplot comparing the elevation of your 3 points in the Poudre Canyon (note: explore the <code>extract()</code> function in the <code>terra</code> package).</p></li>
+</ol>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="pca-and-r-markdown-intro.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/07-spatial.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["quantitative-reasoning.pdf", "quantitative-reasoning.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
