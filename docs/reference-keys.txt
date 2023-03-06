@@ -50,9 +50,11 @@ visualize-patterns
 a-note-on-rendering
 exercises-4
 introduction-to-spatial-data-in-r
+set-up
+package-installation-1
+data-download
 spatial-data-formats
 import-and-manipulate-spatial-data
-set-up
 vector-data
 tigris
 polygons
@@ -62,10 +64,9 @@ sf
 points
 coordinate-reference-systems
 raster-data
-elevatr
 terra
 reading-and-writing-spatial-data
 writing-spatial-data
-rdata-files
 reading-spatial-data
+before-rendering
 exercises-5
