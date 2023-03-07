@@ -39,7 +39,7 @@ library(tigris)
 
 Second, you will need to download an elevation raster file to carry out this lesson. If you haven't already, in the R Project you have been using in this class, create a `data/` folder. Then, click the download button below, and save the file (elevation.tif) in the `data/` folder.
 
-::: {.callout-note appearance="minimal"}
+::: callout-note
 <i class="bi bi-download"></i> [Download elevation raster](data/elevation.tif){download="elevation.tif"}
 :::
 
@@ -67,9 +67,9 @@ Second, you will need to download an elevation raster file to carry out this les
 
 ### Vector Data
 
-#### [`tigris`](https://github.com/walkerke/tigris)
+[**`tigris`**](https://github.com/walkerke/tigris)
 
-#### **Polygons**
+**Polygons**
 
 All the data we are working with in this lesson is confined to the state of Colorado. Let's start by pulling in political boundaries for Colorado counties with the `tigris` package, which returns a shapefile consisting of polygons for each county.
 
@@ -80,7 +80,7 @@ counties <- counties(state = "CO")
 
 The `tigris` package is one of many data retrieval R packages that uses API calls to pull in data from various online/open databases directly into your R session, without the need to separately download. When you close out your R session, these 'temp' files are erased, so it does not use up any of your local storage. At the end of this lesson you will learn how to save shapefiles to your computer if you do in fact want to store and use them in the future (e.g., you manipulated a data set quite a bit and don't want to re-run the entire process every new R session).
 
-#### **Lines**
+**Lines**
 
 `tigris` has many other data sets in addition to political boundaries. Today let's work with another shapefile, importing roads for Larimer county, which returns a polyline dataset for all roads in Larimer County.
 
@@ -88,21 +88,24 @@ The `tigris` package is one of many data retrieval R packages that uses API call
 roads <- roads(state = "CO", county = "Larimer")
 ```
 
-#### [`tmap`](https://r-tmap.github.io/tmap/)
+[**`tmap`**](https://r-tmap.github.io/tmap/)
 
-Throughout this lesson we will be using the `tmap` package to produce quick static or interactive maps. It should be included in your setup script, but if not be sure to add it now.
+Throughout this lesson we will be using the `tmap` package to produce quick static or interactive maps.
 
-`tmap` allows for both static ("plot" mode) and interactive ("view" mode) mapping options, which you can set using the function `tmap_mode()` . For today we will be making quick interactive plots. **Once you set the mode with `tmap_mode()`, every plot call to `tmap` after that produces a plot in that mode.**
+`tmap` allows for both static ("plot" mode) and interactive ("view" mode) mapping options, which you can set using the function `tmap_mode()` . Lets start with making quick interactive plots. **Once you set the mode with `tmap_mode()`, every plot call to `tmap` after that produces a plot in that mode.**
+
+> Note: When you render this document to Word it will throw errors if you are trying to create interactive maps. *Before rendering* change "view" to "plot" in this code chunk.
 
 ```{r}
 tmap_mode("view")
 ```
 
-Lets view our Colorado counties and Larimer County roads shapefiles. To make a "quick thematic map" in `tmap` you can use the `qtm()` function. You can also use `tm_shape()` plus the type of spatial layer (e.g., `tm_polygons()`) to add your layers to the map if you want to customize the map a little more. Notice how the two following chunks of code produce the same map, but `qtm()` is much more concise (but limited on customization abilities).
+Lets view our Colorado counties and Larimer County roads shapefiles. To make a "quick thematic map" in `tmap` you can use the `qtm()` function. You can also use `tm_shape()` plus the type of spatial layer (e.g., `tm_polygons()`) to add your layers to the map if you want to customize the map a little more. Notice how the two following chunks of code produce the same map, but `qtm()` is much more concise (but limited on customization abilities). Note that to add map elements we use `+`, similar to `ggplot` objects.
 
 ```{r eval = FALSE}
 #Using qtm
-qtm(counties)
+qtm(counties)+
+  qtm(roads)
 
 ```
 
@@ -137,9 +140,9 @@ poudre_hwy <- roads %>%
 qtm(poudre_hwy)
 ```
 
-#### Points
+**Points**
 
-Most often when you are working with points, you start with an excel file or something similar that consists of the raw latitude and longitude. When you have spatial data that is not explicitly spatial yet or not in the `sf` format, you use the `st_as_sf()` function to transform it.
+Most often when you are working with points, you start with an excel file or something similar that consists of the raw geographic coordinates. When you have spatial data that is not explicitly spatial yet or not in the `sf` format, you use the `st_as_sf()` function to transform it.
 
 Lets work with a couple locations along the Poudre highway, making a small data frame of their coordinates:
 
@@ -149,7 +152,7 @@ poudre_points <- data.frame(name = c("Mishawaka", "Rustic", "Blue Lake Trailhead
                             lat = c(40.68752, 40.69687, 40.57960))
 ```
 
-Now convert it to an `sf` object, specifying the longitude and latitude columns and the CRS (Coordinate Reference System). **Note that 'x' (longitude) always goes first followed by 'y' (latitude).** We use the WGS84 CRS (EPSG code = 4326).
+Now convert it to an `sf` object, specifying the longitude and latitude column names and the CRS (Coordinate Reference System). **Note that 'x' (longitude) always goes first followed by 'y' (latitude) in the `coords =`** argument. We use the WGS84 CRS (EPSG code = 4326) here because I know the source CRS I retrieved the coordinates from, and also the GPS system often used to collect coordinates uses WGS84.
 
 ```{r}
 poudre_points_sf <- st_as_sf(poudre_points, coords = c("long", "lat"), crs = 4326)
@@ -172,16 +175,27 @@ counties
 st_crs(counties)
 ```
 
-You can check if two objects have the same CRS like this:
+You can check if two `sf` objects have the same CRS like this:
 
 ```{r}
 st_crs(counties) == st_crs(poudre_points_sf)
 ```
 
-Uh oh, the CRS of our points and lines doesn't match. While `tmap` performs some on-the-fly transformations to map the two layers together, in order to do any analyses with these objects you'll need to re-project one of them. You can project one object's CRS to that of another with `st_transform` like this:
+Uh oh, the CRS of our points and lines doesn't match. While `tmap` performs some on-the-fly transformations to map the two layers together, in order to do any analyses with these objects you'll need to re-project one of them. You can project an `sf` object's CRS to that of another with `st_transform` like this:
 
 ```{r}
 poudre_points_prj <- st_transform(poudre_points_sf, crs = st_crs(counties))
+
+#Now check that they match
+st_crs(poudre_points_prj) == st_crs(counties)
+```
+
+You can also project an `sf` object's CRS by specifying the EPSG code. [epsg.io](https://epsg.io/) can help you find the appropriate EPSG code for your coordinate system.
+
+For example, we know that `counties` is in NAD83 when we inspected the CRS above. The EPSG code for NAD83 is 4269, so we could also transform our points like this:
+
+```{r}
+poudre_points_prj <- st_transform(poudre_points_sf, crs = 4269)
 
 #Now check that they match
 st_crs(poudre_points_prj) == st_crs(counties)
@@ -214,12 +228,16 @@ Let's inspect this raster layer a little. By printing the object name to the con
 elevation
 ```
 
+We see that the CRS (`coord. ref.`) is in NAD83. Since this matches the CRS of our vector data we can carry on with analysis without re-projecting. However, if you did want to transform a raster object to a different CRS you would use the `project()` function from the `terra` package.
+
 ### `terra`
 
-We can use the `terra` package to work with raster data. For example, say we only want to see elevation along the Poudre highway. We can use `crop` to crop the raster to the extent of our `roads` shapefile (to get all of Larimer County), using the `ext()` function to get the extent of that spatial object.
+We can use the `terra` package to work with raster data. For example, say we only want to see elevation along the Poudre highway. We can use `crop` to crop the raster to the extent of our `poudre_hwy` object using the `ext()` function to get the extent of that spatial object.
+
+> Note that 'extent' refers to the bounding box around a spatial object.
 
 ```{r}
-# If we try this, we get an error
+
 elevation_crop <- crop(elevation, ext(poudre_hwy))
 
 ```
@@ -253,14 +271,14 @@ After saving the above files, check your `data/` folder and notice the other aux
 To save raster data with `terra` use `writeRaster()`
 
 ```{r eval = FALSE}
-writeRaster(elevation_crop, "data/elevation_larimer.tif")
+writeRaster(elevation_crop, "data/elevation_crop.tif")
 ```
 
 Same as with the vector data, when saving raster data you must add the '.tif' file extension to the name. There are various formats raster data can be stored as (e.g., ASCII, ESRI Grid) but GeoTiffs are the most common and generally easiest to deal with in R.
 
 ### Reading Spatial Data
 
-To read in shapefiles, you use `read_sf()` . *Note that this line of code will only run if you've saved your poudre_hwy object above with `write_sf`.*
+To read in shapefiles, you use `read_sf()` . *Note that this line of code will only run if you've saved your poudre_hwy object above with `write_sf()`.*
 
 ```{r eval = FALSE}
 poudre_hwy <- read_sf("data/poudre_hwy.shp")
@@ -268,19 +286,13 @@ poudre_hwy <- read_sf("data/poudre_hwy.shp")
 
 ## Before Rendering!
 
-Before rendering this assignment to a Word document, remember Word does not work with any interactive visualizations. Therefore, go back to the beginning of your workflow where you set `tmap_mode()`, and instead change it to static plotting with the following line of code:
-
-```{r eval = FALSE}
-tmap_mode("plot")
-```
-
-Alternatively, you can set any code chunk with `qtm()` in it (if you are still setting `tmap_mode("view)`, to `eval = FALSE`.
+Before rendering this assignment to a Word document, remember Word does not work with any interactive visualizations. Therefore, go back to the beginning of your workflow where you set `tmap_mode()`, and instead change it to static plotting with `tmap_mode("plot")` OR comment out `tmap_mode("view")` as the default is "plot" mode.
 
 ## Exercises
 
-Answer the following questions in you R Markdown document (also paste the questions above each answer). When your R Markdown document is complete, render it to a Word document and upload that to Canvas.
+Answer the following questions in your R Markdown document (also paste the questions above each answer). When your R Markdown document is complete, render it to a Word document and upload that to Canvas.
 
-**1.** Filter out the `counties` data set to only include Larimer, Denver, and Pueblo counties.
+**1.** Filter out the `counties` data set to only include Larimer, Denver, and Pueblo counties. (6 pts.)
 
 **2.** Lets look at the attributes for each county in our `counties` dataset:
 
@@ -294,14 +306,14 @@ We have one variable in here `AWATER` that is the total area of surface water ea
 ?qtm
 ```
 
-There is an argument `fill =`, where we can specify a variable in the dataset to color the polygons by. Use `qtm()` to make a map of `counties` that is colored by `AWATER`. Which county has the largest area of surface water?
+There is an argument `fill =`, where we can specify a variable in the dataset to color the polygons by. Use `qtm()` to make a map of `counties` that is colored by `AWATER`. Which county has the largest area of surface water? (7 pts.)
 
-**3.** Write two lines of code to retrieve the CRS from 1) `counties` and 2) `elevation`.
+**3.** Write two lines of code to retrieve the CRS from 1) `poudre_hwy` and 2) `elevation`. (5 pts.)
 
-**4.** `extract()` is a function in the `terra` package to extract raster values at specified spatial features (e.g., points, summarize within polygons). Run the following line of code, which add a new column to `poudre_points_prj` called `elevation` that is the extracted elevation at each site.
+**4.** `extract()` is a function in the `terra` package to extract raster values at specified spatial features. Run the following line of code, which will add a new column to `poudre_points_prj` called `elevation` that is the extracted elevation at each site.
 
 ```{r}
 poudre_points_prj$elevation <-  extract(elevation, poudre_points_prj)[,2]
 ```
 
-Make a barplot that compares the elevation at each of the 3 sites. Hint : use `geom_col()` with `ggplot()`. Which site has the highest elevation?
+Then, make a barplot that compares the elevation at each of the 3 sites. *Hint : use `geom_col()`*. Which site has the highest elevation? (7 pts).
