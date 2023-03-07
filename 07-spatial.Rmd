@@ -316,4 +316,4 @@ There is an argument `fill =`, where we can specify a variable in the dataset to
 poudre_points_prj$elevation <-  extract(elevation, poudre_points_prj)[,2]
 ```
 
-Then, make a barplot that compares the elevation at each of the 3 sites. *Hint : use `geom_col()`*. Which site has the highest elevation? (7 pts).
+Then, make a barplot that compares the elevation at each of the 3 sites. *Hint : look into the use of `geom_col()`* *as opposed to `geom_bar()`.* Which site has the highest elevation? (7 pts).

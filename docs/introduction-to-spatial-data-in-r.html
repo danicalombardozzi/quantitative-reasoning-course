@@ -451,7 +451,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>3.</strong> Write two lines of code to retrieve the CRS from 1) <code>poudre_hwy</code> and 2) <code>elevation</code>. (5 pts.)</p>
 <p><strong>4.</strong> <code>extract()</code> is a function in the <code>terra</code> package to extract raster values at specified spatial features. Run the following line of code, which will add a new column to <code>poudre_points_prj</code> called <code>elevation</code> that is the extracted elevation at each site.</p>
 <div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="introduction-to-spatial-data-in-r.html#cb130-1" aria-hidden="true" tabindex="-1"></a>poudre_points_prj<span class="sc">$</span>elevation <span class="ot">&lt;-</span>  <span class="fu">extract</span>(elevation, poudre_points_prj)[,<span class="dv">2</span>]</span></code></pre></div>
-<p>Then, make a barplot that compares the elevation at each of the 3 sites. <em>Hint : use <code>geom_col()</code></em>. Which site has the highest elevation? (7 pts).</p>
+<p>Then, make a barplot that compares the elevation at each of the 3 sites. <em>Hint : look into the use of <code>geom_col()</code></em> <em>as opposed to <code>geom_bar()</code>.</em> Which site has the highest elevation? (7 pts).</p>
 
 </div>
 </div>
