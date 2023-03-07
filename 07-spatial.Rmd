@@ -127,7 +127,7 @@ Let's inspect the spatial data sets a little more. What do you see when you run 
 class(counties)
 ```
 
-### [`sf`](https://r-spatial.github.io/sf/)
+[**`sf`**](https://r-spatial.github.io/sf/)
 
 By default, the `tigris` package imports spatial data in `sf` format, which stands for 'simple features'. The `sf` package provides an easy and efficient way to work with vector data, and represents spatial features as a `data.frame` or `tibble` with a geometry column, and therefore also works well with `tidyverse` packages to perform manipulations like you would a data frame.
 
@@ -228,9 +228,15 @@ Let's inspect this raster layer a little. By printing the object name to the con
 elevation
 ```
 
-We see that the CRS (`coord. ref.`) is in NAD83. Since this matches the CRS of our vector data we can carry on with analysis without re-projecting. However, if you did want to transform a raster object to a different CRS you would use the `project()` function from the `terra` package.
+We see that the CRS (`coord. ref.`) is in NAD83. We can also retrieve the CRS of raster objects with `crs()`.
 
-### `terra`
+```{r}
+crs(elevation)
+```
+
+Since this matches the CRS of our vector data we can carry on with analysis without re-projecting. However, if you did want to transform a raster object to a different CRS you would use the `project()` function from the `terra` package.
+
+**`terra`**
 
 We can use the `terra` package to work with raster data. For example, say we only want to see elevation along the Poudre highway. We can use `crop` to crop the raster to the extent of our `poudre_hwy` object using the `ext()` function to get the extent of that spatial object.
 
