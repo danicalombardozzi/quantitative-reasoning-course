@@ -1,0 +1,34 @@
+# Data Visualization in R
+
+This lesson will go a little deeper into data visualization and how to customize figures and tables and make them 'publication ready'.
+
+First start by reading in the packages for this lesson:
+
+```{r}
+library(tidyverse) #which includes ggplot2
+library(plotly) # for interactive plots
+library(tmap) # interactive and static maps
+library(sf) # to manage spatial data to make maps
+```
+
+We will also be learning how to include tables in your rendered documents, and will need a new package called `gt` to do so.
+
+Run the following line of code in the console OR comment it out in your workflow after executing it:
+
+```{r eval = FALSE}
+install.packages("gt")
+```
+
+Then after successful installation, call the `gt` package in to your session:
+
+```{r}
+library(gt)
+```
+
+## Publication Ready Figures with `ggplot2`
+
+## Interactive charts with `plotly`
+
+## (maybe) Publication Ready Maps with `tmap`
+
+## Publication Ready Tables with `gt`
