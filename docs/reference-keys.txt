@@ -56,15 +56,8 @@ data-download
 spatial-data-formats
 import-and-manipulate-spatial-data
 vector-data
-tigris
-polygons
-lines
-tmap
-sf
-points
 coordinate-reference-systems
 raster-data
-terra
 reading-and-writing-spatial-data
 writing-spatial-data
 reading-spatial-data
