@@ -9,26 +9,60 @@ library(tidyverse) #which includes ggplot2
 library(plotly) # for interactive plots
 library(tmap) # interactive and static maps
 library(sf) # to manage spatial data to make maps
+library(tigris) # to import census tract spatial data
 ```
 
-We will also be learning how to include tables in your rendered documents, and will need a new package called `gt` to do so.
+We will also be learning how to include tables in your rendered documents, and will need a new package called `flextable` to do so.
 
 Run the following line of code in the console OR comment it out in your workflow after executing it:
 
 ```{r eval = FALSE}
-install.packages("gt")
+install.packages("flextable")
 ```
 
-Then after successful installation, call the `gt` package in to your session:
+Then after successful installation, call the `flextable` package in to your session:
 
 ```{r}
-library(gt)
+library(flextable)
 ```
+
+### Data Preparation
+
+For today's lesson we are going to be working with some census data for Larimer County, CO. This data can be found on Canvas in .csv format titled `larimer_census.csv`. Download that file and put it in your `data/` folder in the R Project you will be using for this lesson.
+
+After that, read the .csv into your R session:
+
+```{r}
+census_data <- read_csv("data/larimer_census.csv")
+```
+
+Inspect `census_data` and the structure of the data frame. This data contains information on median income, median age, and race and ethnicity for each census tract in Larimer County.
+
+::: {.alert .alert-info}
+Note: This census data for Larimer county was retrieved entirely in R using the `tidycensus` package. If you are interested in how I did this, I've uploaded the script to do so on Canvas titled 'getCensusData.R'. Note that you will need to retrieve your own census API key and paste it at the top of the script to run it (API keys are free and easy to get [here](https://api.census.gov/data/key_signup.html)). To learn more about `tidycensus`, check out [Analyzing U.S. Census Data](https://walker-data.com/census-r/index.html) by Kyle Walker.
+:::
+
+In the second half of this lesson we will be making maps, so we will need to retrieve spatial data in the form of census tract polygons for Larimer County. We can use the `tigris` package you used in the [Introduction to Spatial Data lesson](07-spatial.Rmd) to import a Larimer County census tract shapefile. We also want to just keep the `GEOID` column, as it will make our data join later on cleaner (i.e., we only need to keep the spatial data and an ID column).
+
+```{r}
+larimer_tracts <- tracts(state = "CO", county = "Larimer") %>% 
+  select(GEOID)
+```
+
+Now in order to visualize our census tract attributes spatially, we need to join the `census_data` to `larimer_tracts`. We use the function `full_join()`, specify the two variables we want to join, and specify the name of the column in each that we want to join by (i.e., the column that is consistent between the two). In this case we want to use the column `GEOID`, which is a unique number given to each census tract in the US.
+
+We want to create a new variable that will become an `sf` object we can map with `tmap` later.
+
+```{r}
+census_spatial <- full_join(larimer_tracts, census_data, by = ("GEOID"))
+```
+
+When you inspect this output, you can see that it is a spatial `sf` multipolygon object, where the data is exactly the same as our `census_data` data frame but now there is a geometry column/attribute tied to it.
 
 ## Publication Ready Figures with `ggplot2`
 
 ## Interactive charts with `plotly`
 
-## (maybe) Publication Ready Maps with `tmap`
+## Publication Ready Maps with `tmap`
 
-## Publication Ready Tables with `gt`
+## Publication Ready Tables with `flextable`
