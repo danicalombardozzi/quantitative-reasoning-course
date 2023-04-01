@@ -65,3 +65,7 @@ larimer_race <- larimer_race_percent %>%
 #join all together to get census data for Larimer and save for data viz exercise
 larimer_census <- full_join(larimer_income, larimer_race, by = c("GEOID", "NAME"))
 
+
+
+#save as csv
+write_csv(larimer_census, file = "data/larimer_census.csv")
