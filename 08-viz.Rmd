@@ -1,5 +1,10 @@
 # Data Visualization in R
 
+```{r incldue = FALSE}
+knitr::opts_chunk(eval = TRUE)
+
+```
+
 This lesson will go a little deeper into data visualization and how to customize figures and tables and make them 'publication ready'.
 
 First start by reading in the packages for this lesson:
@@ -60,6 +65,268 @@ census_spatial <- full_join(larimer_tracts, census_data, by = ("GEOID"))
 When you inspect this output, you can see that it is a spatial `sf` multipolygon object, where the data is exactly the same as our `census_data` data frame but now there is a geometry column/attribute tied to it.
 
 ## Publication Ready Figures with `ggplot2`
+
+For this exercise you will learn how to spruce up your `ggplot2` figures with theme customization, annotation, color palettes, and more.
+
+To demonstrate some of these advanced visualization techniques , we will be analyzing the relationships among some census data for Larimer county.
+
+Let's start with this basic plot, and then go through the advanced elements of `ggplot2` to spice it up.
+
+```{r}
+census_data %>% 
+  ggplot(aes(x = median_age, y = non_white_percent))+
+  geom_point()
+```
+
+### General Appearance
+
+#### Customize points within `geom_point()`
+
+-   color or size points by a variable or specific color/number
+
+-   change the transparency with `alpha` (ranges from 0-1)
+
+-   change the outline with `stroke`
+
+```{r}
+#specific color and size value
+census_data %>% 
+  ggplot(aes(x = median_age, y = non_white_percent))+
+  geom_point(color = "red", size = 4, alpha = 0.5)
+```
+
+When sizing or coloring points by a variable in the dataset, it goes within `aes():`
+
+```{r}
+# size by a variable
+census_data %>% 
+  ggplot(aes(x = median_age, y = non_white_percent))+
+  geom_point(aes(size = median_income), color = "red")
+```
+
+```{r}
+# color by a variable
+census_data %>% 
+  ggplot(aes(x = median_age, y = non_white_percent))+
+  geom_point(aes(color = median_income), size = 4)
+```
+
+#### Titles and limits
+
+-   add title with `ggtitle`
+
+-   edit axis labels with `xlab()` and `ylab()`
+
+-   change axis limits with `xlim()` and `ylim()`
+
+```{r}
+census_data %>% 
+  ggplot(aes(x = median_age, y = non_white_percent))+
+  geom_point(aes(size = median_income))+
+  ggtitle("Census Tract socioeconomic data for Larimer County")+
+  xlab("Median Age")+
+  ylab("People of Color (%)")+
+  xlim(c(20, 70))+
+  ylim(c(0, 35))
+```
+
+Be cautious of setting the axis limits however, as you notice it omits the full dataset which could lead to dangerous misinterpretations of the data.
+
+#### Chart components with `theme()`
+
+All `ggplot2` components can be customized within the `theme()` function. The full list of editable components (there's a lot!) can be found [here](https://ggplot2.tidyverse.org/reference/theme.html). Note that the functions used within `theme()` depend on the type of components, such as `element_text()` for text, `element_line()` for lines, etc.
+
+Customize text:
+
+```{r}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)") +
+  theme(
+    #edit plot title
+    plot.title = element_text(size = 16, color = "blue"),
+    # edit axes
+    axis.title.x = element_text(face = "italic", color = "orange"),
+    # edit grid lines
+    panel.grid.major = element_line(color = "black"),
+    # edit axis labels
+    axis.text.y = element_text(face = "bold")
+  )
+```
+
+Another change you may want to make is the value breaks in the axis labels (i.e., what values are shown on the axis). To customize that for a continuous variable you can use `scale_x_continuous()` / `scale_y_continuous` (for discrete variables use `scale_x_discrete` ). In this example we will also add `anlge =` to our axis text to able the labels so they are not too jumbled:
+
+```{r}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)") +
+  scale_x_continuous(breaks = seq(15, 90, 5))+
+  theme(
+    # angle axis labels
+    axis.text.x = element_text(angle = 45)
+  )
+```
+
+All these customizations aren't necessarily *pretty*, we are just demonstrating how you would edit specific components of your charts. To edit overall aesthetics of your plots you can change the theme.
+
+#### Themes
+
+`ggplot2` comes with many built in theme options (see the complete list [here](https://r-graph-gallery.com/192-ggplot-themes)).
+
+For example, see what `theme_minimal()` and `theme_classic()` look like:
+
+```{r}
+# bw theme
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  theme_minimal()
+```
+
+```{r}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  theme_classic()
+```
+
+You can also import many different themes by installing certain packages. A population one is `ggthemes`. A complete list of themes with this package can be seen here
+
+To run this example, first install the `ggthemes` package:
+
+```{r eval = FALSE}
+install.packages("ggthemes")
+```
+
+Now explore a few themes, such as `theme_wsj`, which uses the Wall Street Journal theme, and `theme_economist` and `theme_economist_white` to use themes used by the Economist,
+
+```{r}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  ggthemes::theme_wsj()
+```
+
+This one looks quite messy out of the box, but you can apply any elements from `theme()` afterwards. For example, change the legend position:
+
+```{r}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  ggthemes::theme_wsj()+
+  theme(
+    legend.position = "bottom"
+  )
+```
+
+::: {.alert .alert-info}
+Note you may need to click 'Zoom' in the Plot window to view the figure better.
+:::
+
+```{r}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  ggthemes::theme_economist()
+```
+
+### Color, Size and Legends
+
+#### Color
+
+Color is one of the most important things about data visualization.
+
+To specify a single color, the most common way is to specify the name (e.g., `"red"`) or the Hex code (e.g., `"#69b3a2"`).
+
+You can also specify an entire color palette. Some of the most common packages to work with color palettes in R are `RColorBrewer` and [`viridis`](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html). Viridis is designed to be color-blind friendly and is great for continuous scales, and RColorBrewer has a [web application](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) where you can explore your data requirements and preview various palettes.
+
+Lets also color our points by `median_income`.
+
+First, if you want to run these examples install the `RColorBrewer` and `viridis` packages:
+
+```{r eval = FALSE}
+install.packages("RColorBrewer")
+install.packages("viridis")
+
+```
+
+Now, lets color our points using the palettes in `viridis`. To customize continuous color scales with `viridis` we use `scale_color_viridis()`.
+
+```{r}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income, color = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  viridis::scale_colour_viridis()
+```
+
+```{r}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income, color = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  scale_color_distiller(palette = "Greens", direction = 1)
+```
+
+#### Size
+
+Change the range of the point radius with `scale_radius`
+
+```{r}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income, color = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  scale_color_distiller(palette = "Greens", direction = 1)+
+  scale_radius(range = c(0.5, 6))
+  
+```
+
+#### Legends
+
+```{r}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income, color = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  scale_color_distiller(palette = "BlGn", direction = 1)+
+  scale_radius(range = c(2, 6))+
+  theme_minimal()+
+  #customize legend
+  guides(color= guide_legend(title = "Median Income"), size=guide_legend(title = "Median Income"))+
+  theme_wsj()
+```
+
+### Annotation
 
 ## Interactive charts with `plotly`
 
