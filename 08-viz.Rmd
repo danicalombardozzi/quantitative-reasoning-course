@@ -701,7 +701,11 @@ In addition to cleaning and formatting your data with `dplyr` functions before c
 
 ## The Assignment
 
-This week's assignment is to use anything you've learned today (or
+This week's assignment is to use anything you've learned today and additional resources (if you want) to make two maps. One 'bad map' and one 'good map'. For the bad map you must specify two things that are wrong with it (e.g., not color-blind friendly, jumbled labels, wrong plot for the job, poor legend or axis descriptions, etc.) Be as 'poorly' creative as you want! Then, improve it to so that it follows the general data visualization elements you've learned so far and just looks 'better'.
+
+You can create these plots with any data (e.g., the census data from today, any datasets we've used in past lessons, or new ones!), the visualization just has to be something we have not made in class before.
+
+To submit the assignment, create an R Markdown document that includes reading in of the data and libraries, and the code to make the bad figure and the good figure. You will render your assignment to Word (and make sure both code and plots are shown in the output), and don't forget to add the two reasons (minimum) your bad figure is 'bad'. You will then submit this rendered Word document on Canvas.
 
 <hr>
 
