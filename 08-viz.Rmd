@@ -36,7 +36,7 @@ Note: This census data for Larimer county was retrieved entirely in R using the 
 In the second half of this lesson we will be making maps, so we will need to retrieve spatial data in the form of census tract polygons for Larimer County. We can use the `tigris` package you used in the [Introduction to Spatial Data lesson](07-spatial.Rmd) to import a Larimer County census tract shapefile. We also want to just keep the `GEOID` column, as it will make our data join later on cleaner (i.e., we only need to keep the spatial data and an ID column).
 
 ```{r eval = TRUE, message = FALSE}
-larimer_tracts <- tracts(state = "CO", county = "Larimer") %>% 
+larimer_tracts <- tracts(state = "CO", county = "Larimer", progress_bar = FALSE) %>% 
   select(GEOID)
 ```
 
