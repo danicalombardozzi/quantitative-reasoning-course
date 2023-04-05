@@ -23,7 +23,7 @@ For today's lesson we are going to be working with some census data for Larimer 
 
 After that, read the .csv into your R session:
 
-```{r eval = TRUE}
+```{r eval = TRUE, message = FALSE}
 census_data <- read_csv("data/larimer_census.csv")
 ```
 
@@ -111,7 +111,7 @@ census_data %>%
 
 -   change axis limits with `xlim()` and `ylim()`
 
-```{r eval = TRUE, message=FALSE}
+```{r eval = TRUE, warning=FALSE}
 census_data %>% 
   ggplot(aes(x = median_age, y = non_white_percent))+
   geom_point(aes(size = median_income), color = "black")+
@@ -126,7 +126,7 @@ Be cautious of setting the axis limits however, as you notice it omits the full 
 
 You can also put multiple label arguments within `labs()` like this:
 
-```{r eval = TRUE, message=FALSE}
+```{r eval = TRUE, warning=FALSE}
 census_data %>% 
   ggplot(aes(x = median_age, y = non_white_percent))+
   geom_point(aes(size = median_income), color = "black")+
@@ -567,7 +567,7 @@ You used `tmap` in the [Introduction to Spatial Data lesson](07-spatial.Rmd). Le
 
 To run these examples, make sure you have created the `census_spatial` object at the beginning of this lesson in the 'Data Preparation' section.
 
-```{r}
+```{r message=FALSE}
 #set the tmap mode to static
 tmap_mode("plot")
 ```
