@@ -1,6 +1,6 @@
 # Data Visualization in R
 
-```{r incldue=FALSE}
+```{r include=FALSE}
 knitr::opts_chunk$set(eval = TRUE)
 
 ```
