@@ -1,7 +1,7 @@
 # Data Visualization in R
 
-```{r incldue = FALSE}
-knitr::opts_chunk(eval = TRUE)
+```{r incldue=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
 
 ```
 
@@ -705,7 +705,7 @@ This week's assignment is to use anything you've learned today and additional re
 
 You can create these plots with any data (e.g., the census data from today, any datasets we've used in past lessons, or new ones!), the visualization just has to be something we have not made in class before.
 
-To submit the assignment, create an R Markdown document that includes reading in of the data and libraries, and the code to make the bad figure and the good figure. You will render your assignment to Word (and make sure both code and plots are shown in the output), and don't forget to add the two reasons (minimum) your bad figure is 'bad'. You will then submit this rendered Word document on Canvas.
+To submit the assignment, create an R Markdown document that includes reading in of the data and libraries, and the code to make the bad figure and the good figure. You will render your assignment to Word (and make sure both code and plots are shown in the output), and don't forget to add the two reasons (minimum) your bad figure is 'bad'. You will then submit this rendered Word document on Canvas. (25 pts. total)
 
 <hr>
 
