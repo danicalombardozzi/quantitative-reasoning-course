@@ -514,7 +514,7 @@ census_data %>%
 
 You can save your plot in the "Plots" pane by clicking "Export", or you can also do it programmatically with `ggsave()`, which also lets you customize the output file a little more. Note that you can give the argument a variable name of a ggplot object, or **by default it will save the last plot in the "Plots" pane**.
 
-```{r}
+```{r eval = FALSE}
 #specify the file path and name, and height/width (if necessary)
 ggsave(filename = "data/census_plot.png", width = 6, height = 5, units = "in")
 ```
@@ -567,8 +567,106 @@ To run these examples, make sure you have created the `census_spatial` object at
 tmap_mode("plot")
 ```
 
+#### Color polygons
+
+Within `tm_polygons()` we can color by a variable in the data, specify the quantiles to group values by, and add a title:
+
 ```{r}
-qtm(census_spatial, fill = "median_income")
+tm_shape(census_spatial)+
+  tm_polygons(col = "median_income",
+              style = "quantile",
+              title = "Median Income")
+```
+
+#### Edit the layout
+
+Within `tm_layout()`, there are many ways to customize the map layout and elements. For example, let's remove the border around the map and move the legend:
+
+```{r}
+tm_shape(census_spatial)+
+  tm_polygons(col = "median_income",
+              style = "quantile",
+              title = "Median Income")+
+  tm_layout(frame = FALSE,
+            legend.outside = TRUE)
+```
+
+You can also add other things like a scale bar, compass, and map credit:
+
+```{r}
+tm_shape(census_spatial)+
+  tm_polygons(col = "median_income",
+              style = "quantile",
+              title = "Median Income")+
+  tm_layout(frame = FALSE,
+            legend.outside = TRUE)+
+  tm_scale_bar(position = c("left", "bottom")) +
+  tm_compass(position = c("right", "top")) +
+  tm_credits("Map credit goes here", position = c("left", "bottom"))
+```
+
+#### Faceting
+
+Want to compare across multiple variables? We can quickly do that with `tm_facets()` and supplying a string of column names for each variable we want to create a map for.
+
+Also, lets focus on the Fort Collins area. To change the extent of the map `tmap` has a cool feature that you can supply a city name to `bbox =` within `tm_shape()` and it will use Open Street Map to locate that city and crop your map to it!
+
+```{r}
+tm_shape(census_spatial, bbox = "Fort Collins") +
+  tm_polygons(
+    c("median_income", "median_age", "non_white_percent"),
+    title = c("Median Income", "Median Age", "People of Color (%)"),
+    style = "quantile",
+    n = 5
+  ) +
+  tm_facets(ncol = 3) +
+  tm_layout(frame = FALSE,
+            legend.position = c("left", "bottom"),
+            legend.width = 0.5)
+```
+
+#### Color and Themes
+
+A few ways you can edit the aesthetics are shown below. You can supply any `RColorBrewer` or `viridis` palette to `palette =`, control border colors by separating `tm_polygons()` into `tm_borders()` and `tm_fill()`, and explore the different styles of `tm_style()` by running `?tm_style()`
+
+```{r}
+tm_shape(census_spatial, bbox = "Fort Collins") +
+  tm_borders(col = "lightgray")+
+  tm_fill(
+    col = "non_white_percent",
+    title = "People of Color (%)",
+    style = "quantile",
+    n = 6,
+    palette = "PuBu",
+    legend.hist = TRUE #adds a histogram of the data to the map
+  ) +
+  tm_style("classic")+
+  tm_layout(frame = FALSE,
+            legend.outside = TRUE,
+            legend.hist.width = 5)
+```
+
+#### Saving your maps
+
+You can save your maps within the "Plots" pane, or use `tmap_save()`.
+
+```{r eval = FALSE}
+map <- tm_shape(census_spatial, bbox = "Fort Collins") +
+  tm_borders(col = "lightgray")+
+  tm_fill(
+    col = "non_white_percent",
+    title = "People of Color (%)",
+    style = "quantile",
+    n = 6,
+    palette = "PuBu",
+    legend.hist = TRUE
+  ) +
+  tm_style("classic")+
+  tm_layout(frame = FALSE,
+            legend.outside = TRUE,
+            legend.hist.width = 5)
+
+tmap_save(map, filename = "data/census_map.png")
 ```
 
 ## Publication Ready Tables with [`flextable`](https://ardata-fr.github.io/flextable-book/)
@@ -602,6 +700,8 @@ In addition to cleaning and formatting your data with `dplyr` functions before c
 <hr>
 
 ## The Assignment
+
+This week's assignment is to use anything you've learned today (or
 
 <hr>
 
