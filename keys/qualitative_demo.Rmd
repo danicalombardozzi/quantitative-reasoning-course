@@ -1,0 +1,149 @@
+# Working with Qualitative Data in R
+
+```{r}
+library(tidyverse)
+library(tidytext)
+```
+
+```{r}
+dat <- readxl::read_excel("keys/Qual_Methods_Survey_20230406.xlsx", 
+    sheet = "Form1")
+
+```
+
+Let's analyze one question at a time.
+
+The first one was a short, 'Yes' or 'No' in response to the question 'Do you think science is objective?'.
+
+We can make a quick plot to summarize your responses:
+
+```{r}
+dat %>% 
+  ggplot(aes(x = `Do you think science is objective?`))+
+  geom_bar()+
+  #adds the actual count value to the chart
+  geom_text(aes(label = after_stat(count)), stat = "count", vjust = 1.5, size = 12, color = "white")
+```
+
+Note that since we have spaces in our column headers, we must put the title within \` \` or " ".
+
+Now the next question was an open ended follow up, "Why or Why Not?"
+
+Before we conduct thet text analysis, lets split our data in two, those that said 'yes' and those that said 'no'.
+
+```{r}
+yes <- dat %>% 
+  filter(`Do you think science is objective?` == "Yes")
+
+
+no <- dat %>% 
+  filter(`Do you think science is objective?` == "No")
+```
+
+Let's analyze the 'Yes' responses first.
+
+First, we always set up the text analysis by using the `tidytext` function `unnest_tokens()` which will tokenize the text for us, meaning taking the full sentence responses and separating each word out into its own row becoming a unique observation.
+
+There is a second step we want to add to this process, which is to remove 'stop words', removing noise in the data. `tidytext` has a built in data frame of these stop words in English called `stop_words`.
+
+```{r}
+stop_words
+```
+
+We remove these stop words from our data frame with the `anti_join()` function, which keeps all the words that are NOT found in `stop_words`. To easily `anti_join()`, we want to also name the new text column `word`.
+
+So, to prepare our data set for text analysis the code looks like this:
+
+```{r}
+yes_why <- yes %>%
+  #keep just our column of interest
+  select(`Why or why not?`) %>% 
+  unnest_tokens(output = word, #the new column name to put the text in
+                input = `Why or why not?`)  %>%
+  anti_join(stop_words)
+```
+
+```{r}
+yes_why
+```
+
+Let's do some summary stats of these responses:
+
+```{r}
+yes_why %>% 
+  count(word) %>% 
+  arrange(-n)
+```
+
+We see a few most common words stand out. Let's visualize this, and since we still have 96 words lets visualize the words the come up more than once:
+
+```{r}
+yes_why %>% 
+  count(word) %>% 
+  filter(n >1) %>% 
+  ggplot(aes(x = reorder(word,n), y = n))+ #reorder makes the bars go in order high to low
+  geom_col()+
+  theme(axis.text.x = element_text(angle = 45))
+```
+
+Now lets do the same for the "No" responses and compare:
+
+```{r}
+no_why <- no %>% 
+  select(`Why or why not?`) %>% 
+  unnest_tokens(output = word, #the new column name to put the text in
+                input = `Why or why not?`)  %>%
+  anti_join(stop_words)
+  
+```
+
+Snapshot of the word summary:
+
+```{r}
+no_why %>% 
+  count(word) %>% 
+  arrange(-n)
+```
+
+```{r}
+no_why %>% 
+  count(word) %>% 
+  filter(n >1) %>% 
+  ggplot(aes(x = reorder(word,n), y = n))+ #reorder makes the bars go in order high to low
+  geom_col()+
+  scale_y_continuous(expand = c(0,0))+
+  theme(axis.text.x = element_text(angle = 45, color = "red"))
+```
+
+Let's compare the top 5 words in "Yes" vs. "No" by binding our dataframes and faceting:
+
+```{r}
+yes_summary <- yes_why %>% 
+  count(word) %>% 
+  arrange(-n) %>% 
+  # take the top 5
+  top_n(5) %>% 
+  # create a new variable we can facet by later
+  mutate(answer = "Yes")
+
+
+# do the same for No
+no_summary <- no_why %>% 
+  count(word) %>% 
+  arrange(-n) %>% 
+  # take the top 5
+  top_n(5) %>% 
+  # create a new variable we can facet by later
+  mutate(answer = "No")
+  
+```
+
+Now bind these into one dataframe and compare the answers
+
+```{r}
+bind_rows(yes_summary, no_summary) %>% 
+  ggplot(aes(x = reorder(word,n), y = n))+
+  geom_col()+
+  facet_wrap(~answer)+
+  theme(axis.text.x = element_text(angle = 45))
+```
