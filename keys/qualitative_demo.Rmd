@@ -6,12 +6,14 @@ library(tidytext)
 ```
 
 ```{r}
-dat <- readxl::read_excel("keys/Qual_Methods_Survey_20230406.xlsx", 
+data <- readxl::read_excel("keys/Qual Methods Survey.xlsx", 
     sheet = "Form1")
 
 ```
 
 Let's analyze one question at a time.
+
+### Is Science Objective?
 
 The first one was a short, 'Yes' or 'No' in response to the question 'Do you think science is objective?'.
 
@@ -71,8 +73,7 @@ Let's do some summary stats of these responses:
 
 ```{r}
 yes_why %>% 
-  count(word) %>% 
-  arrange(-n)
+  count(word, sort = TRUE)
 ```
 
 We see a few most common words stand out. Let's visualize this, and since we still have 96 words lets visualize the words the come up more than once:
@@ -101,8 +102,7 @@ Snapshot of the word summary:
 
 ```{r}
 no_why %>% 
-  count(word) %>% 
-  arrange(-n)
+  count(word, sort = TRUE)
 ```
 
 ```{r}
@@ -112,7 +112,7 @@ no_why %>%
   ggplot(aes(x = reorder(word,n), y = n))+ #reorder makes the bars go in order high to low
   geom_col()+
   scale_y_continuous(expand = c(0,0))+
-  theme(axis.text.x = element_text(angle = 45, color = "red"))
+  theme(axis.text.x = element_text(angle = 45))
 ```
 
 Let's compare the top 5 words in "Yes" vs. "No" by binding our dataframes and faceting:
@@ -120,7 +120,6 @@ Let's compare the top 5 words in "Yes" vs. "No" by binding our dataframes and fa
 ```{r}
 yes_summary <- yes_why %>% 
   count(word) %>% 
-  arrange(-n) %>% 
   # take the top 5
   top_n(5) %>% 
   # create a new variable we can facet by later
@@ -130,7 +129,6 @@ yes_summary <- yes_why %>%
 # do the same for No
 no_summary <- no_why %>% 
   count(word) %>% 
-  arrange(-n) %>% 
   # take the top 5
   top_n(5) %>% 
   # create a new variable we can facet by later
@@ -146,4 +144,84 @@ bind_rows(yes_summary, no_summary) %>%
   geom_col()+
   facet_wrap(~answer)+
   theme(axis.text.x = element_text(angle = 45))
+```
+
+Another way to compare the answers is to calculate the proportion of each word in the dataset and create a correlation plot
+
+```{r}
+bind_rows(mutate(yes_why, answer = "yes"),
+          mutate(no_why, answer = "no"))%>% 
+  group_by(answer) %>% 
+  count(word) %>% 
+  mutate(proportion = n / sum(n)) %>% 
+  select(-n) %>% 
+  pivot_wider(names_from = answer, values_from = proportion) %>% 
+  ggplot(aes(x = no, y = yes))+
+  geom_jitter()+
+  geom_text(aes(label = word), check_overlap = TRUE, vjust = 1)
+```
+
+### What are the pros and cons of open science?
+
+Next, let's analyze the responses describing the pros and cons to open science.
+
+For this example let's compare the responses using n-grams, which looks at adjacent words instead of just single words, so we can detect common phrases and word associations. The process is similar as before, using the `unnest_tokens()` function, but this time we add the argument `token = "ngrams"`. We also specify `n` for how many consecutive words to examine, starting with an `n = 2` argument which is often called a 'bigram'.
+
+Let's start analyzing the *pros* of open science:
+
+```{r}
+pros_bigrams <- data %>% 
+  select(ID, text = `What do you think are the pros of open science?`) %>% 
+  unnest_tokens(bigram, text, token = "ngrams", n = 2)
+```
+
+Examine the most common pairs of words:
+
+```{r}
+pros_bigrams %>% 
+  count(bigram, sort = TRUE)
+```
+
+Lets remove any stop words
+
+```{r}
+pros_bigrams %>% 
+  separate(bigram, into = c("word1", "word2"), sep = " ") %>% 
+  filter(!word1 %in% stop_words$word) %>% 
+  filter(!word2 %in% stop_words$word) %>% 
+  count(word1, word2, sort = TRUE)
+```
+
+Lets do the same for the cons of open science
+
+```{r}
+cons_biograms <- data %>% 
+  select(ID, text = `What do you think are the cons of open science?`) %>% 
+  unnest_tokens(bigram, text, token = "ngrams", n = 2)
+```
+
+Now clean and summarize:
+
+```{r}
+cons_biograms %>% 
+  separate(bigram, into = c("word1", "word2"), sep = " ") %>% 
+  filter(!word1 %in% stop_words$word) %>% 
+  filter(!word2 %in% stop_words$word) %>% 
+  count(word1, word2, sort = TRUE) %>% 
+  filter(n>1)
+```
+
+### Contribute to Equity and Environmental Justice
+
+Lastly, let's work with the survey question 'In what ways do you believe you can contribute to equity and environmental justice?'
+
+```{r}
+data %>% 
+  select(ID, text = `In what ways do you believe you (in any aspect of your life or career) can contribute to equity and environmental justice?`) %>% 
+  unnest_tokens(bigram, text, token = "ngrams", n = 3) %>% 
+  separate(bigram, into = c("word1", "word2", "word3"), sep = " ") %>% 
+  filter(!word1 %in% stop_words$word) %>% 
+  filter(!word2 %in% stop_words$word) %>% 
+  filter(!word3 %in% stop_words$word) %>% 
+  count(word1, word2, word3, sort = TRUE)
 ```
