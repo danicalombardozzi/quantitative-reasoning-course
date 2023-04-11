@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title> 10 Working with Qualitative Data in R | Quantitative Reasoning for Ecosystem Science</title>
+  <meta name="description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+
+  <meta property="og:title" content=" 10 Working with Qualitative Data in R | Quantitative Reasoning for Ecosystem Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
+  <meta name="github-repo" content="ccmothes/quantitative-reasoning-course" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content=" 10 Working with Qualitative Data in R | Quantitative Reasoning for Ecosystem Science" />
+  
+  <meta name="twitter:description" content="This site hosts the course lab content for ESS 330 at Colorado State University." />
+  
+
+<meta name="author" content="Caitlin C. Mothes, PhD" />
+
+
+<meta name="date" content="2023-04-11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data-visualization-in-r.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Quantitative Reasoning for Ecosystem Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#set-up-instructions"><i class="fa fa-check"></i>Set up Instructions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#navigating-this-site"><i class="fa fa-check"></i>Navigating this site</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="setup-instructions.html"><a href="setup-instructions.html"><i class="fa fa-check"></i><b>2</b> Setup Instructions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="setup-instructions.html"><a href="setup-instructions.html#install-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> Install R and RStudio</a></li>
+<li class="chapter" data-level="2.2" data-path="setup-instructions.html"><a href="setup-instructions.html#package-installation"><i class="fa fa-check"></i><b>2.2</b> Package Installation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html"><i class="fa fa-check"></i><b>3</b> Introduction to R and RStudio</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#getting-to-know-rstudio"><i class="fa fa-check"></i><b>3.1</b> Getting to know RStudio</a></li>
+<li class="chapter" data-level="3.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#r-projects"><i class="fa fa-check"></i><b>3.2</b> R Projects</a></li>
+<li class="chapter" data-level="3.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#write-your-first-script"><i class="fa fa-check"></i><b>3.3</b> Write your first script</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#commenting-code"><i class="fa fa-check"></i><b>3.3.1</b> Commenting code</a></li>
+<li class="chapter" data-level="3.3.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#executing-code"><i class="fa fa-check"></i><b>3.3.2</b> Executing code</a></li>
+<li class="chapter" data-level="3.3.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#getting-help-with-code"><i class="fa fa-check"></i><b>3.3.3</b> Getting help with code</a></li>
+<li class="chapter" data-level="3.3.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#functions"><i class="fa fa-check"></i><b>3.3.4</b> Functions</a></li>
+<li class="chapter" data-level="3.3.5" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#data-types"><i class="fa fa-check"></i><b>3.3.5</b> Data Types</a></li>
+<li class="chapter" data-level="3.3.6" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#indexing"><i class="fa fa-check"></i><b>3.3.6</b> Indexing</a></li>
+<li class="chapter" data-level="3.3.7" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#read-and-write-data"><i class="fa fa-check"></i><b>3.3.7</b> Read and Write Data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#exercises"><i class="fa fa-check"></i><b>3.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-wrangling"><i class="fa fa-check"></i><b>4.1</b> Data wrangling</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#the-dplyr-package"><i class="fa fa-check"></i><b>4.1.1</b> The <code>dplyr</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#visualization"><i class="fa fa-check"></i><b>4.2</b> Visualization</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#exercises-1"><i class="fa fa-check"></i><b>4.2.1</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html"><i class="fa fa-check"></i><b>5</b> Introduction to Statistics</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#explore-the-dataset"><i class="fa fa-check"></i><b>5.1</b> Explore the dataset</a></li>
+<li class="chapter" data-level="5.2" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#chi-square---categorical-analysis"><i class="fa fa-check"></i><b>5.2</b> Chi-square - Categorical Analysis</a></li>
+<li class="chapter" data-level="5.3" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#t-test---compare-two-means"><i class="fa fa-check"></i><b>5.3</b> t-test - Compare two means</a></li>
+<li class="chapter" data-level="5.4" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#correlation---assess-relationships"><i class="fa fa-check"></i><b>5.4</b> Correlation - Assess relationships</a></li>
+<li class="chapter" data-level="5.5" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#exercises-2"><i class="fa fa-check"></i><b>5.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#acknowledgements"><i class="fa fa-check"></i><b>5.5.1</b> Acknowledgements</a></li>
+<li class="chapter" data-level="5.5.2" data-path="introduction-to-statistics.html"><a href="introduction-to-statistics.html#citations"><i class="fa fa-check"></i><b>5.5.2</b> Citations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html"><i class="fa fa-check"></i><b>6</b> Multivariate Statistics</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#explore-the-data-set"><i class="fa fa-check"></i><b>6.1</b> Explore the Data set</a></li>
+<li class="chapter" data-level="6.2" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#anova"><i class="fa fa-check"></i><b>6.2</b> ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#assumptions"><i class="fa fa-check"></i><b>6.2.1</b> Assumptions</a></li>
+<li class="chapter" data-level="6.2.2" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#post-hoc-tukeys-hsd-test"><i class="fa fa-check"></i><b>6.2.2</b> Post-hoc Tukey’s HSD test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#simple-linear-regression"><i class="fa fa-check"></i><b>6.3</b> Simple Linear Regression</a></li>
+<li class="chapter" data-level="6.4" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#multiple-linear-regression"><i class="fa fa-check"></i><b>6.4</b> Multiple Linear Regression</a></li>
+<li class="chapter" data-level="6.5" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#exercises-3"><i class="fa fa-check"></i><b>6.5</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#acknowledgements-1"><i class="fa fa-check"></i><b>6.5.1</b> Acknowledgements</a></li>
+<li class="chapter" data-level="6.5.2" data-path="multivariate-statistics.html"><a href="multivariate-statistics.html#citations-1"><i class="fa fa-check"></i><b>6.5.2</b> Citations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html"><i class="fa fa-check"></i><b>7</b> PCA and R Markdown Intro</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#intro-to-r-markdown"><i class="fa fa-check"></i><b>7.1</b> Intro to R Markdown</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#getting-started-with-r-markdown"><i class="fa fa-check"></i><b>7.1.1</b> Getting started with R Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#principal-component-analysis-pca"><i class="fa fa-check"></i><b>7.2</b> Principal Component Analysis (PCA)</a></li>
+<li class="chapter" data-level="7.3" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#variance-explained"><i class="fa fa-check"></i><b>7.3</b> Variance explained</a></li>
+<li class="chapter" data-level="7.4" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#variable-loadings"><i class="fa fa-check"></i><b>7.4</b> Variable loadings</a></li>
+<li class="chapter" data-level="7.5" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#visualize-patterns"><i class="fa fa-check"></i><b>7.5</b> Visualize patterns</a></li>
+<li class="chapter" data-level="7.6" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#a-note-on-rendering"><i class="fa fa-check"></i><b>7.6</b> A Note on Rendering:</a></li>
+<li class="chapter" data-level="7.7" data-path="pca-and-r-markdown-intro.html"><a href="pca-and-r-markdown-intro.html#exercises-4"><i class="fa fa-check"></i><b>7.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html"><i class="fa fa-check"></i><b>8</b> Introduction to Spatial Data in R</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#set-up"><i class="fa fa-check"></i><b>8.1</b> Set Up</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#package-installation-1"><i class="fa fa-check"></i><b>8.1.1</b> Package Installation</a></li>
+<li class="chapter" data-level="8.1.2" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#data-download"><i class="fa fa-check"></i><b>8.1.2</b> Data download</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#spatial-data-formats"><i class="fa fa-check"></i><b>8.2</b> Spatial Data Formats</a></li>
+<li class="chapter" data-level="8.3" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#import-and-manipulate-spatial-data"><i class="fa fa-check"></i><b>8.3</b> Import and manipulate spatial data</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#vector-data"><i class="fa fa-check"></i><b>8.3.1</b> Vector Data</a></li>
+<li class="chapter" data-level="8.3.2" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#coordinate-reference-systems"><i class="fa fa-check"></i><b>8.3.2</b> Coordinate Reference Systems</a></li>
+<li class="chapter" data-level="8.3.3" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#raster-data"><i class="fa fa-check"></i><b>8.3.3</b> Raster Data</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#reading-and-writing-spatial-data"><i class="fa fa-check"></i><b>8.4</b> Reading and Writing Spatial Data</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#writing-spatial-data"><i class="fa fa-check"></i><b>8.4.1</b> Writing spatial data</a></li>
+<li class="chapter" data-level="8.4.2" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#reading-spatial-data"><i class="fa fa-check"></i><b>8.4.2</b> Reading Spatial Data</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#before-rendering"><i class="fa fa-check"></i><b>8.5</b> Before Rendering!</a></li>
+<li class="chapter" data-level="8.6" data-path="introduction-to-spatial-data-in-r.html"><a href="introduction-to-spatial-data-in-r.html#exercises-5"><i class="fa fa-check"></i><b>8.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="data-visualization-in-r.html"><a href="data-visualization-in-r.html"><i class="fa fa-check"></i><b>9</b> Data Visualization in R</a>
+<ul>
+<li class="chapter" data-level="9.0.1" data-path="data-visualization-in-r.html"><a href="data-visualization-in-r.html#data-preparation"><i class="fa fa-check"></i><b>9.0.1</b> Data Preparation</a></li>
+<li class="chapter" data-level="9.1" data-path="data-visualization-in-r.html"><a href="data-visualization-in-r.html#publication-ready-figures-with-ggplot2"><i class="fa fa-check"></i><b>9.1</b> Publication Ready Figures with <code>ggplot2</code></a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="data-visualization-in-r.html"><a href="data-visualization-in-r.html#general-appearance"><i class="fa fa-check"></i><b>9.1.1</b> General Appearance</a></li>
+<li class="chapter" data-level="9.1.2" data-path="data-visualization-in-r.html"><a href="data-visualization-in-r.html#color-size-and-legends"><i class="fa fa-check"></i><b>9.1.2</b> Color, Size and Legends</a></li>
+<li class="chapter" data-level="9.1.3" data-path="data-visualization-in-r.html"><a href="data-visualization-in-r.html#annotation"><i class="fa fa-check"></i><b>9.1.3</b> Annotation</a></li>
+<li class="chapter" data-level="9.1.4" data-path="data-visualization-in-r.html"><a href="data-visualization-in-r.html#finalize-and-save"><i class="fa fa-check"></i><b>9.1.4</b> Finalize and save</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="data-visualization-in-r.html"><a href="data-visualization-in-r.html#publication-ready-maps-with-tmap"><i class="fa fa-check"></i><b>9.2</b> Publication Ready Maps with <code>tmap</code></a></li>
+<li class="chapter" data-level="9.3" data-path="data-visualization-in-r.html"><a href="data-visualization-in-r.html#publication-ready-tables-with-flextable"><i class="fa fa-check"></i><b>9.3</b> Publication Ready Tables with <code>flextable</code></a></li>
+<li class="chapter" data-level="9.4" data-path="data-visualization-in-r.html"><a href="data-visualization-in-r.html#the-assignment"><i class="fa fa-check"></i><b>9.4</b> The Assignment</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="data-visualization-in-r.html"><a href="data-visualization-in-r.html#acknowledgements-and-resources"><i class="fa fa-check"></i><b>9.4.1</b> Acknowledgements and Resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="working-with-qualitative-data-in-r.html"><a href="working-with-qualitative-data-in-r.html"><i class="fa fa-check"></i><b>10</b> Working with Qualitative Data in R</a>
+<ul>
+<li class="chapter" data-level="10.0.1" data-path="working-with-qualitative-data-in-r.html"><a href="working-with-qualitative-data-in-r.html#is-science-objective"><i class="fa fa-check"></i><b>10.0.1</b> Is Science Objective?</a></li>
+<li class="chapter" data-level="10.0.2" data-path="working-with-qualitative-data-in-r.html"><a href="working-with-qualitative-data-in-r.html#what-are-the-pros-and-cons-of-open-science"><i class="fa fa-check"></i><b>10.0.2</b> What are the pros and cons of open science?</a></li>
+<li class="chapter" data-level="10.0.3" data-path="working-with-qualitative-data-in-r.html"><a href="working-with-qualitative-data-in-r.html#contribute-to-equity-and-environmental-justice"><i class="fa fa-check"></i><b>10.0.3</b> Contribute to Equity and Environmental Justice</a></li>
+<li class="chapter" data-level="10.1" data-path="working-with-qualitative-data-in-r.html"><a href="working-with-qualitative-data-in-r.html#more-resources"><i class="fa fa-check"></i><b>10.1</b> More Resources</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Quantitative Reasoning for Ecosystem Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="working-with-qualitative-data-in-r" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number"> 10</span> Working with Qualitative Data in R<a href="working-with-qualitative-data-in-r.html#working-with-qualitative-data-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The main package we use to analyze qualitative (i.e, non-numeric) data in R is <a href="https://juliasilge.github.io/tidytext/"><code>tidytext</code></a>, which by the name you may have already guessed is designed to work with <code>tidyverse</code> packages and tidy data principles.</p>
+<p>Before starting make sure to <code>install.packages("tidytext")</code>. Also, if you want to make a word cloud visualization later in this tutorial, also install the <code>wordcloud</code> package. Then, read in the libraries:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="working-with-qualitative-data-in-r.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="working-with-qualitative-data-in-r.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb1-3"><a href="working-with-qualitative-data-in-r.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span></code></pre></div>
+<p>You should download the <code>Qual Methods Survey.xlsx</code> file from Canvas and put it in the <code>data/</code> folder you’ve been using throughout class (within an R Project). Then run the following chunk of code, which uses <code>readxl</code> (which should already be installed with RStudio) to read in an Excel file. We also have to specify which sheet of the excel file to read in.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="working-with-qualitative-data-in-r.html#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&quot;data/Qual Methods Survey.xlsx&quot;</span>, </span>
+<span id="cb2-2"><a href="working-with-qualitative-data-in-r.html#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">sheet =</span> <span class="st">&quot;Form1&quot;</span>)</span></code></pre></div>
+<p>Now, let’s analyze one question at a time.</p>
+<div id="is-science-objective" class="section level3 hasAnchor" number="10.0.1">
+<h3><span class="header-section-number">10.0.1</span> Is Science Objective?<a href="working-with-qualitative-data-in-r.html#is-science-objective" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The first one was a short, ‘Yes’ or ‘No’ in response to the question ‘Do you think science is objective?’.</p>
+<p>We can make a quick plot to summarize the responses:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="working-with-qualitative-data-in-r.html#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="working-with-qualitative-data-in-r.html#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Do you think science is objective?</span><span class="st">`</span>))<span class="sc">+</span></span>
+<span id="cb3-3"><a href="working-with-qualitative-data-in-r.html#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()<span class="sc">+</span></span>
+<span id="cb3-4"><a href="working-with-qualitative-data-in-r.html#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#adds the actual count value to the chart</span></span>
+<span id="cb3-5"><a href="working-with-qualitative-data-in-r.html#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">after_stat</span>(count)), <span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>)</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><strong>Note that since we have spaces in our column headers, we must put the title within ` ` or ” “.</strong></p>
+<p>Now the next question was an open ended follow up, “Why or Why Not?”</p>
+<p>Before we conduct the text analysis, lets split our data in two, those that said ‘yes’ and those that said ‘no’.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="working-with-qualitative-data-in-r.html#cb4-1" aria-hidden="true" tabindex="-1"></a>yes <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="working-with-qualitative-data-in-r.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Do you think science is objective?</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&quot;Yes&quot;</span>)</span>
+<span id="cb4-3"><a href="working-with-qualitative-data-in-r.html#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="working-with-qualitative-data-in-r.html#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="working-with-qualitative-data-in-r.html#cb4-5" aria-hidden="true" tabindex="-1"></a>no <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb4-6"><a href="working-with-qualitative-data-in-r.html#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Do you think science is objective?</span><span class="st">`</span> <span class="sc">==</span> <span class="st">&quot;No&quot;</span>)</span></code></pre></div>
+<p>Let’s analyze the ‘Yes’ responses first.</p>
+<p>First, we always set up the text analysis by using the <code>tidytext</code> function <code>unnest_tokens()</code> which will tokenize the text for us, meaning taking the full responses and separating each word out into its own row becoming a unique observation. You can also separate responses by consecutive words (i.e., ngrams), sentences, and more by changing the <code>token =</code>argument, which we will do later.</p>
+<p>There is a second step we want to add to this process, which is to remove ‘stop words’, removing noise in the data. <code>tidytext</code> has a built in data frame of these stop words in English called <code>stop_words</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="working-with-qualitative-data-in-r.html#cb5-1" aria-hidden="true" tabindex="-1"></a>stop_words</span></code></pre></div>
+<pre><code>## # A tibble: 1,149 × 2
+##    word        lexicon
+##    &lt;chr&gt;       &lt;chr&gt;  
+##  1 a           SMART  
+##  2 a&#39;s         SMART  
+##  3 able        SMART  
+##  4 about       SMART  
+##  5 above       SMART  
+##  6 according   SMART  
+##  7 accordingly SMART  
+##  8 across      SMART  
+##  9 actually    SMART  
+## 10 after       SMART  
+## # … with 1,139 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+<p>We remove these stop words from our data frame with the <code>anti_join()</code> function, which keeps all the words that are NOT found in <code>stop_words</code>. To easily <code>anti_join()</code>, we want to also name the new text column we create from <code>unnest_tokens()</code> <code>word</code>.</p>
+<p>So, to prepare our data set for text analysis the code looks like this:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="working-with-qualitative-data-in-r.html#cb7-1" aria-hidden="true" tabindex="-1"></a>yes_why <span class="ot">&lt;-</span> yes <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="working-with-qualitative-data-in-r.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#keep just our column of interest</span></span>
+<span id="cb7-3"><a href="working-with-qualitative-data-in-r.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Why or why not?</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="working-with-qualitative-data-in-r.html#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(<span class="at">output =</span> word, <span class="co">#the new column name to put the text in</span></span>
+<span id="cb7-5"><a href="working-with-qualitative-data-in-r.html#cb7-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">input =</span> <span class="st">`</span><span class="at">Why or why not?</span><span class="st">`</span>)  <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="working-with-qualitative-data-in-r.html#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">&quot;word&quot;</span>) <span class="co"># remove any stop words</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="working-with-qualitative-data-in-r.html#cb8-1" aria-hidden="true" tabindex="-1"></a>yes_why</span></code></pre></div>
+<pre><code>## # A tibble: 150 × 1
+##    word      
+##    &lt;chr&gt;     
+##  1 based     
+##  2 evidential
+##  3 reasoning 
+##  4 science   
+##  5 deals     
+##  6 finding   
+##  7 truths    
+##  8 universe  
+##  9 interpret 
+## 10 wrong     
+## # … with 140 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+<p>Let’s do some summary stats of these responses:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="working-with-qualitative-data-in-r.html#cb10-1" aria-hidden="true" tabindex="-1"></a>yes_why <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="working-with-qualitative-data-in-r.html#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 96 × 2
+##    word           n
+##    &lt;chr&gt;      &lt;int&gt;
+##  1 science       21
+##  2 objective      9
+##  3 based          6
+##  4 data           4
+##  5 bias           3
+##  6 people         3
+##  7 results        3
+##  8 scientific     3
+##  9 biases         2
+## 10 desired        2
+## # … with 86 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+<p>We see a few most common words stand out. Let’s visualize this, and since we still have 96 words lets visualize the words the come up more than once:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="working-with-qualitative-data-in-r.html#cb12-1" aria-hidden="true" tabindex="-1"></a>yes_why <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="working-with-qualitative-data-in-r.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="working-with-qualitative-data-in-r.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-4"><a href="working-with-qualitative-data-in-r.html#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(word,n), <span class="at">y =</span> n))<span class="sc">+</span> <span class="co">#reorder makes the bars go in order low to high by a variable</span></span>
+<span id="cb12-5"><a href="working-with-qualitative-data-in-r.html#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()<span class="sc">+</span></span>
+<span id="cb12-6"><a href="working-with-qualitative-data-in-r.html#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>))</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Now lets do the same for the “No” responses and compare:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="working-with-qualitative-data-in-r.html#cb13-1" aria-hidden="true" tabindex="-1"></a>no_why <span class="ot">&lt;-</span> no <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="working-with-qualitative-data-in-r.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Why or why not?</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="working-with-qualitative-data-in-r.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(<span class="at">output =</span> word, <span class="co">#the new column name to put the text in</span></span>
+<span id="cb13-4"><a href="working-with-qualitative-data-in-r.html#cb13-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">input =</span> <span class="st">`</span><span class="at">Why or why not?</span><span class="st">`</span>)  <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="working-with-qualitative-data-in-r.html#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">&quot;word&quot;</span>)</span></code></pre></div>
+<p>Snapshot of the word summary:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="working-with-qualitative-data-in-r.html#cb14-1" aria-hidden="true" tabindex="-1"></a>no_why <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="working-with-qualitative-data-in-r.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 211 × 2
+##    word            n
+##    &lt;chr&gt;       &lt;int&gt;
+##  1 science        21
+##  2 objective      15
+##  3 research       11
+##  4 subjective     10
+##  5 results         8
+##  6 data            6
+##  7 bias            5
+##  8 biases          5
+##  9 humans          5
+## 10 objectivity     5
+## # … with 201 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="working-with-qualitative-data-in-r.html#cb16-1" aria-hidden="true" tabindex="-1"></a>no_why <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="working-with-qualitative-data-in-r.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="working-with-qualitative-data-in-r.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href="working-with-qualitative-data-in-r.html#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(word,n), <span class="at">y =</span> n))<span class="sc">+</span> <span class="co">#reorder makes the bars go in order high to low</span></span>
+<span id="cb16-5"><a href="working-with-qualitative-data-in-r.html#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()<span class="sc">+</span></span>
+<span id="cb16-6"><a href="working-with-qualitative-data-in-r.html#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))<span class="sc">+</span></span>
+<span id="cb16-7"><a href="working-with-qualitative-data-in-r.html#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>))</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Let’s compare the top 5 words in “Yes” vs. “No” by binding our dataframes and faceting:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="working-with-qualitative-data-in-r.html#cb17-1" aria-hidden="true" tabindex="-1"></a>yes_summary <span class="ot">&lt;-</span> yes_why <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="working-with-qualitative-data-in-r.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="working-with-qualitative-data-in-r.html#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># take the top 5</span></span>
+<span id="cb17-4"><a href="working-with-qualitative-data-in-r.html#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-5"><a href="working-with-qualitative-data-in-r.html#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create a new variable we can facet by later</span></span>
+<span id="cb17-6"><a href="working-with-qualitative-data-in-r.html#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">answer =</span> <span class="st">&quot;Yes&quot;</span>)</span>
+<span id="cb17-7"><a href="working-with-qualitative-data-in-r.html#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="working-with-qualitative-data-in-r.html#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="working-with-qualitative-data-in-r.html#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># do the same for No</span></span>
+<span id="cb17-10"><a href="working-with-qualitative-data-in-r.html#cb17-10" aria-hidden="true" tabindex="-1"></a>no_summary <span class="ot">&lt;-</span> no_why <span class="sc">%&gt;%</span> </span>
+<span id="cb17-11"><a href="working-with-qualitative-data-in-r.html#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-12"><a href="working-with-qualitative-data-in-r.html#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># take the top 5</span></span>
+<span id="cb17-13"><a href="working-with-qualitative-data-in-r.html#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-14"><a href="working-with-qualitative-data-in-r.html#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create a new variable we can facet by later</span></span>
+<span id="cb17-15"><a href="working-with-qualitative-data-in-r.html#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">answer =</span> <span class="st">&quot;No&quot;</span>)</span></code></pre></div>
+<p>Now bind these into one data frame and compare the answers</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="working-with-qualitative-data-in-r.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(yes_summary, no_summary) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="working-with-qualitative-data-in-r.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(word,n), <span class="at">y =</span> n))<span class="sc">+</span></span>
+<span id="cb18-3"><a href="working-with-qualitative-data-in-r.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()<span class="sc">+</span></span>
+<span id="cb18-4"><a href="working-with-qualitative-data-in-r.html#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>answer)<span class="sc">+</span></span>
+<span id="cb18-5"><a href="working-with-qualitative-data-in-r.html#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>))</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Another way to compare the answers is to calculate the proportion of each word in the dataset and create a correlation plot</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="working-with-qualitative-data-in-r.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(<span class="fu">mutate</span>(yes_why, <span class="at">answer =</span> <span class="st">&quot;yes&quot;</span>),</span>
+<span id="cb19-2"><a href="working-with-qualitative-data-in-r.html#cb19-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">mutate</span>(no_why, <span class="at">answer =</span> <span class="st">&quot;no&quot;</span>))<span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="working-with-qualitative-data-in-r.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(answer) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="working-with-qualitative-data-in-r.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href="working-with-qualitative-data-in-r.html#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">proportion =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-6"><a href="working-with-qualitative-data-in-r.html#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>n) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-7"><a href="working-with-qualitative-data-in-r.html#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> answer, <span class="at">values_from =</span> proportion) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-8"><a href="working-with-qualitative-data-in-r.html#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> no, <span class="at">y =</span> yes))<span class="sc">+</span></span>
+<span id="cb19-9"><a href="working-with-qualitative-data-in-r.html#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>)<span class="sc">+</span></span>
+<span id="cb19-10"><a href="working-with-qualitative-data-in-r.html#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> word), <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">check_overlap =</span> <span class="cn">TRUE</span>, <span class="at">vjust =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+</div>
+<div id="what-are-the-pros-and-cons-of-open-science" class="section level3 hasAnchor" number="10.0.2">
+<h3><span class="header-section-number">10.0.2</span> What are the pros and cons of open science?<a href="working-with-qualitative-data-in-r.html#what-are-the-pros-and-cons-of-open-science" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Next, let’s analyze the responses describing the pros and cons to open science.</p>
+<p>For this example let’s compare the responses using n-grams, which looks at adjacent words instead of just single words, so we can detect common phrases and word associations. The process is similar as before, using the <code>unnest_tokens()</code> function, but this time we add the argument <code>token = "ngrams"</code>. We also specify <code>n</code> for how many consecutive words to examine, starting with an <code>n = 2</code> argument which is often called a ‘bigram’.</p>
+<p>Let’s start analyzing the <em>pros</em> of open science:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="working-with-qualitative-data-in-r.html#cb20-1" aria-hidden="true" tabindex="-1"></a>pros_bigrams <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="working-with-qualitative-data-in-r.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ID, <span class="at">text =</span> <span class="st">`</span><span class="at">What do you think are the pros of open science?</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="working-with-qualitative-data-in-r.html#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(bigram, text, <span class="at">token =</span> <span class="st">&quot;ngrams&quot;</span>, <span class="at">n =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p>Examine the most common pairs of words:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="working-with-qualitative-data-in-r.html#cb21-1" aria-hidden="true" tabindex="-1"></a>pros_bigrams <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="working-with-qualitative-data-in-r.html#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigram, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 709 × 2
+##    bigram           n
+##    &lt;chr&gt;        &lt;int&gt;
+##  1 open science    18
+##  2 of open          8
+##  3 access to        7
+##  4 can be           7
+##  5 pros of          7
+##  6 able to          6
+##  7 allows for       6
+##  8 i think          5
+##  9 more people      5
+## 10 are able         4
+## # … with 699 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+<p>Let’s clean this us by removing stop words. Since we now have a column with two word strings instead of one, we have to clean this a little differently. First, we use <code>separate()</code> to convert our single column into two, and specify that the empty space is our separator. Then we filter out stop words from both columns.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="working-with-qualitative-data-in-r.html#cb23-1" aria-hidden="true" tabindex="-1"></a>pros_bigrams <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="working-with-qualitative-data-in-r.html#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(bigram, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;word1&quot;</span>, <span class="st">&quot;word2&quot;</span>), <span class="at">sep =</span> <span class="st">&quot; &quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="working-with-qualitative-data-in-r.html#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word1 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-4"><a href="working-with-qualitative-data-in-r.html#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word2 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-5"><a href="working-with-qualitative-data-in-r.html#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word1, word2, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 92 × 3
+##    word1     word2             n
+##    &lt;chr&gt;     &lt;chr&gt;         &lt;int&gt;
+##  1 community collaboration     2
+##  2 makes     science           2
+##  3 saves     time              2
+##  4 science   community         2
+##  5 science   makes             2
+##  6 share     knowledge         2
+##  7 access    articles          1
+##  8 access    information       1
+##  9 access    knowledge         1
+## 10 allowing  people            1
+## # … with 82 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+<p>Now we can see the most common pairs of words in the responses that don’t contain noise/stop words. Lets do the same for the cons of open science:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="working-with-qualitative-data-in-r.html#cb25-1" aria-hidden="true" tabindex="-1"></a>cons_biograms <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="working-with-qualitative-data-in-r.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ID, <span class="at">text =</span> <span class="st">`</span><span class="at">What do you think are the cons of open science?</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="working-with-qualitative-data-in-r.html#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(bigram, text, <span class="at">token =</span> <span class="st">&quot;ngrams&quot;</span>, <span class="at">n =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p>Now clean and summarize:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="working-with-qualitative-data-in-r.html#cb26-1" aria-hidden="true" tabindex="-1"></a>cons_biograms <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="working-with-qualitative-data-in-r.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(bigram, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;word1&quot;</span>, <span class="st">&quot;word2&quot;</span>), <span class="at">sep =</span> <span class="st">&quot; &quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="working-with-qualitative-data-in-r.html#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word1 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-4"><a href="working-with-qualitative-data-in-r.html#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word2 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-5"><a href="working-with-qualitative-data-in-r.html#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word1, word2, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 89 × 3
+##    word1        word2           n
+##    &lt;chr&gt;        &lt;chr&gt;       &lt;int&gt;
+##  1 sensitive    information     3
+##  2 data         privacy         2
+##  3 false        data            2
+##  4 intellectual property        2
+##  5 sensitive    data            2
+##  6 access       articles        1
+##  7 access       fees            1
+##  8 acquired     data            1
+##  9 actual       researchers     1
+## 10 applicable   due             1
+## # … with 79 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+<div id="contribute-to-equity-and-environmental-justice" class="section level3 hasAnchor" number="10.0.3">
+<h3><span class="header-section-number">10.0.3</span> Contribute to Equity and Environmental Justice<a href="working-with-qualitative-data-in-r.html#contribute-to-equity-and-environmental-justice" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Lastly, let’s work with the survey question ‘In what ways do you believe you can contribute to equity and environmental justice?’</p>
+<p>Let’s first analyze the most common words in the data set, and make a word cloud using the <code>wordcloud</code> package.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="working-with-qualitative-data-in-r.html#cb28-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="working-with-qualitative-data-in-r.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">In what ways do you believe you (in any aspect of your life or career) can contribute to equity and environmental justice?</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-3"><a href="working-with-qualitative-data-in-r.html#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(<span class="at">output =</span> word, <span class="co">#the new column name to put the text in</span></span>
+<span id="cb28-4"><a href="working-with-qualitative-data-in-r.html#cb28-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">input =</span> <span class="st">`</span><span class="at">In what ways do you believe you (in any aspect of your life or career) can contribute to equity and environmental justice?</span><span class="st">`</span>)  <span class="sc">%&gt;%</span></span>
+<span id="cb28-5"><a href="working-with-qualitative-data-in-r.html#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">&quot;word&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-6"><a href="working-with-qualitative-data-in-r.html#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-7"><a href="working-with-qualitative-data-in-r.html#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># make the wordcloud</span></span>
+<span id="cb28-8"><a href="working-with-qualitative-data-in-r.html#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">wordcloud</span>(</span>
+<span id="cb28-9"><a href="working-with-qualitative-data-in-r.html#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">words =</span> word,</span>
+<span id="cb28-10"><a href="working-with-qualitative-data-in-r.html#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">freq =</span> n,</span>
+<span id="cb28-11"><a href="working-with-qualitative-data-in-r.html#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">random.order =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb28-12"><a href="working-with-qualitative-data-in-r.html#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">scale =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="fl">0.5</span>),</span>
+<span id="cb28-13"><a href="working-with-qualitative-data-in-r.html#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">min.freq =</span> <span class="dv">2</span>,</span>
+<span id="cb28-14"><a href="working-with-qualitative-data-in-r.html#cb28-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">max.words =</span> <span class="dv">100</span>,</span>
+<span id="cb28-15"><a href="working-with-qualitative-data-in-r.html#cb28-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">&quot;#6FA8F5&quot;</span>,</span>
+<span id="cb28-16"><a href="working-with-qualitative-data-in-r.html#cb28-16" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;#FF4D45&quot;</span>,</span>
+<span id="cb28-17"><a href="working-with-qualitative-data-in-r.html#cb28-17" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;#FFC85E&quot;</span>)</span>
+<span id="cb28-18"><a href="working-with-qualitative-data-in-r.html#cb28-18" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<p><img src="quantitative-reasoning_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>Looks like the most common words are pretty repetitive of those in the original question. Lets look at the ngrams for these responses, and try looking at phrases by pulling three consecutive words at a time.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="working-with-qualitative-data-in-r.html#cb29-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="working-with-qualitative-data-in-r.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ID, <span class="at">text =</span> <span class="st">`</span><span class="at">In what ways do you believe you (in any aspect of your life or career) can contribute to equity and environmental justice?</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="working-with-qualitative-data-in-r.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(bigram, text, <span class="at">token =</span> <span class="st">&quot;ngrams&quot;</span>, <span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-4"><a href="working-with-qualitative-data-in-r.html#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(bigram, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;word1&quot;</span>, <span class="st">&quot;word2&quot;</span>, <span class="st">&quot;word3&quot;</span>), <span class="at">sep =</span> <span class="st">&quot; &quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-5"><a href="working-with-qualitative-data-in-r.html#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word1 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-6"><a href="working-with-qualitative-data-in-r.html#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word2 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-7"><a href="working-with-qualitative-data-in-r.html#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word3 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-8"><a href="working-with-qualitative-data-in-r.html#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word1, word2, word3, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 41 × 4
+##    word1              word2         word3               n
+##    &lt;chr&gt;              &lt;chr&gt;         &lt;chr&gt;           &lt;int&gt;
+##  1 environmental      justice       issues              4
+##  2 activism           giving        donations           1
+##  3 address            environmental injustices          1
+##  4 addressing         environmental justice             1
+##  5 change             policy        implementations     1
+##  6 collecting         environmental data                1
+##  7 conducting         research      related             1
+##  8 disproportionately affect        minority            1
+##  9 donations          volunteering  conducting          1
+## 10 ecosystem          management    planning            1
+## # … with 31 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+<div id="more-resources" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> More Resources<a href="working-with-qualitative-data-in-r.html#more-resources" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There’s a lot more you can do with qualitative data in R. I recommend checking out the <code>tidytext</code> <a href="https://juliasilge.github.io/tidytext/index.html">website</a> and <a href="https://www.tidytextmining.com/">book</a> for more things you can do with the package, such as sentiment analysis (identifying positive and negative words in a quantitative way), topic modeling, and more.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-visualization-in-r.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/09-qual.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["quantitative-reasoning.pdf", "quantitative-reasoning.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

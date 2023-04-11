@@ -4,7 +4,7 @@ The main package we use to analyze qualitative (i.e, non-numeric) data in R is [
 
 Before starting make sure to `install.packages("tidytext")`. Also, if you want to make a word cloud visualization later in this tutorial, also install the `wordcloud` package. Then, read in the libraries:
 
-```{r}
+```{r eval =TRUE, warning=FALSE}
 library(tidyverse)
 library(tidytext)
 library(wordcloud)
@@ -12,7 +12,7 @@ library(wordcloud)
 
 You should download the `Qual Methods Survey.xlsx` file from Canvas and put it in the `data/` folder you've been using throughout class (within an R Project). Then run the following chunk of code, which uses `readxl` (which should already be installed with RStudio) to read in an Excel file. We also have to specify which sheet of the excel file to read in.
 
-```{r}
+```{r eval = TRUE}
 data <- readxl::read_excel("data/Qual Methods Survey.xlsx", 
     sheet = "Form1")
 
@@ -26,7 +26,7 @@ The first one was a short, 'Yes' or 'No' in response to the question 'Do you thi
 
 We can make a quick plot to summarize the responses:
 
-```{r}
+```{r eval = TRUE}
 data %>% 
   ggplot(aes(x = `Do you think science is objective?`))+
   geom_bar()+
@@ -40,7 +40,7 @@ Now the next question was an open ended follow up, "Why or Why Not?"
 
 Before we conduct the text analysis, lets split our data in two, those that said 'yes' and those that said 'no'.
 
-```{r}
+```{r eval = TRUE}
 yes <- data %>% 
   filter(`Do you think science is objective?` == "Yes")
 
@@ -55,7 +55,7 @@ First, we always set up the text analysis by using the `tidytext` function `unne
 
 There is a second step we want to add to this process, which is to remove 'stop words', removing noise in the data. `tidytext` has a built in data frame of these stop words in English called `stop_words`.
 
-```{r}
+```{r eval = TRUE}
 stop_words
 ```
 
@@ -63,13 +63,13 @@ We remove these stop words from our data frame with the `anti_join()` function, 
 
 So, to prepare our data set for text analysis the code looks like this:
 
-```{r}
+```{r eval = TRUE}
 yes_why <- yes %>%
   #keep just our column of interest
   select(`Why or why not?`) %>% 
   unnest_tokens(output = word, #the new column name to put the text in
                 input = `Why or why not?`)  %>%
-  anti_join(stop_words) # remove any stop words
+  anti_join(stop_words, by = "word") # remove any stop words
 ```
 
 ```{r}
@@ -78,14 +78,14 @@ yes_why
 
 Let's do some summary stats of these responses:
 
-```{r}
+```{r eval = TRUE}
 yes_why %>% 
   count(word, sort = TRUE)
 ```
 
 We see a few most common words stand out. Let's visualize this, and since we still have 96 words lets visualize the words the come up more than once:
 
-```{r}
+```{r eval = TRUE}
 yes_why %>% 
   count(word) %>% 
   filter(n >1) %>% 
@@ -96,23 +96,23 @@ yes_why %>%
 
 Now lets do the same for the "No" responses and compare:
 
-```{r}
+```{r eval = TRUE}
 no_why <- no %>% 
   select(`Why or why not?`) %>% 
   unnest_tokens(output = word, #the new column name to put the text in
                 input = `Why or why not?`)  %>%
-  anti_join(stop_words)
+  anti_join(stop_words, by = "word")
   
 ```
 
 Snapshot of the word summary:
 
-```{r}
+```{r eval = TRUE}
 no_why %>% 
   count(word, sort = TRUE)
 ```
 
-```{r}
+```{r eval = TRUE}
 no_why %>% 
   count(word) %>% 
   filter(n >1) %>% 
@@ -124,7 +124,7 @@ no_why %>%
 
 Let's compare the top 5 words in "Yes" vs. "No" by binding our dataframes and faceting:
 
-```{r}
+```{r eval = TRUE, message=FALSE}
 yes_summary <- yes_why %>% 
   count(word) %>% 
   # take the top 5
@@ -145,7 +145,7 @@ no_summary <- no_why %>%
 
 Now bind these into one data frame and compare the answers
 
-```{r}
+```{r eval = TRUE}
 bind_rows(yes_summary, no_summary) %>% 
   ggplot(aes(x = reorder(word,n), y = n))+
   geom_col()+
@@ -155,7 +155,7 @@ bind_rows(yes_summary, no_summary) %>%
 
 Another way to compare the answers is to calculate the proportion of each word in the dataset and create a correlation plot
 
-```{r}
+```{r eval=TRUE, warning=FALSE}
 bind_rows(mutate(yes_why, answer = "yes"),
           mutate(no_why, answer = "no"))%>% 
   group_by(answer) %>% 
@@ -164,8 +164,8 @@ bind_rows(mutate(yes_why, answer = "yes"),
   select(-n) %>% 
   pivot_wider(names_from = answer, values_from = proportion) %>% 
   ggplot(aes(x = no, y = yes))+
-  geom_jitter()+
-  geom_text(aes(label = word), check_overlap = TRUE, vjust = 1)
+  geom_jitter(color = "black")+
+  geom_text(aes(label = word), color = "black", check_overlap = TRUE, vjust = 1)
 ```
 
 ### What are the pros and cons of open science?
@@ -176,7 +176,7 @@ For this example let's compare the responses using n-grams, which looks at adjac
 
 Let's start analyzing the *pros* of open science:
 
-```{r}
+```{r eval=TRUE}
 pros_bigrams <- data %>% 
   select(ID, text = `What do you think are the pros of open science?`) %>% 
   unnest_tokens(bigram, text, token = "ngrams", n = 2)
@@ -184,14 +184,14 @@ pros_bigrams <- data %>%
 
 Examine the most common pairs of words:
 
-```{r}
+```{r eval=TRUE}
 pros_bigrams %>% 
   count(bigram, sort = TRUE)
 ```
 
 Let's clean this us by removing stop words. Since we now have a column with two word strings instead of one, we have to clean this a little differently. First, we use `separate()` to convert our single column into two, and specify that the empty space is our separator. Then we filter out stop words from both columns.
 
-```{r}
+```{r eval=TRUE}
 pros_bigrams %>% 
   separate(bigram, into = c("word1", "word2"), sep = " ") %>% 
   filter(!word1 %in% stop_words$word) %>% 
@@ -201,7 +201,7 @@ pros_bigrams %>%
 
 Now we can see the most common pairs of words in the responses that don't contain noise/stop words. Lets do the same for the cons of open science:
 
-```{r}
+```{r eval =TRUE}
 cons_biograms <- data %>% 
   select(ID, text = `What do you think are the cons of open science?`) %>% 
   unnest_tokens(bigram, text, token = "ngrams", n = 2)
@@ -209,7 +209,7 @@ cons_biograms <- data %>%
 
 Now clean and summarize:
 
-```{r}
+```{r eval=TRUE}
 cons_biograms %>% 
   separate(bigram, into = c("word1", "word2"), sep = " ") %>% 
   filter(!word1 %in% stop_words$word) %>% 
@@ -223,12 +223,12 @@ Lastly, let's work with the survey question 'In what ways do you believe you can
 
 Let's first analyze the most common words in the data set, and make a word cloud using the `wordcloud` package.
 
-```{r}
+```{r eval=TRUE}
 data %>% 
   select(`In what ways do you believe you (in any aspect of your life or career) can contribute to equity and environmental justice?`) %>% 
   unnest_tokens(output = word, #the new column name to put the text in
                 input = `In what ways do you believe you (in any aspect of your life or career) can contribute to equity and environmental justice?`)  %>%
-  anti_join(stop_words) %>% 
+  anti_join(stop_words, by = "word") %>% 
   count(word) %>% 
   # make the wordcloud
   with(wordcloud(
@@ -246,7 +246,7 @@ data %>%
 
 Looks like the most common words are pretty repetitive of those in the original question. Lets look at the ngrams for these responses, and try looking at phrases by pulling three consecutive words at a time.
 
-```{r}
+```{r eval=TRUE}
 data %>% 
   select(ID, text = `In what ways do you believe you (in any aspect of your life or career) can contribute to equity and environmental justice?`) %>% 
   unnest_tokens(bigram, text, token = "ngrams", n = 3) %>% 

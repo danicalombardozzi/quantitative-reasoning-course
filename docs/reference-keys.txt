@@ -87,3 +87,8 @@ saving-your-maps
 publication-ready-tables-with-flextable
 the-assignment
 acknowledgements-and-resources
+working-with-qualitative-data-in-r
+is-science-objective
+what-are-the-pros-and-cons-of-open-science
+contribute-to-equity-and-environmental-justice
+more-resources
