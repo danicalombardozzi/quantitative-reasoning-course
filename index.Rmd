@@ -1,16 +1,16 @@
 ---
 title: "Quantitative Reasoning for Ecosystem Science"
-author: "Caitlin C. Mothes, PhD"
+author: "Danica Lombardozzi, PhD; Caitlin C. Mothes, PhD"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
-url: https://ccmothes.github.io/quantitative-reasoning-course/
+url: 
 # cover-image: path to the social sharing image like images/cover.jpg
 description: |
   This site hosts the course lab content for ESS 330 at Colorado State University.
 link-citations: yes
-github-repo: ccmothes/quantitative-reasoning-course
+github-repo: danicalombardozzi/quantitative-reasoning-course
 ---
 
 # Introduction
