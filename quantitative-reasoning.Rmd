@@ -1,0 +1,2685 @@
+---
+title: "Quantitative Reasoning for Ecosystem Science"
+author: "Danica Lombardozzi, PhD and Caitlin C. Mothes, PhD"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+url: 
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This site hosts the course lab content for ESS 330 at Colorado State University.
+link-citations: yes
+github-repo: danicalombardozzi/quantitative-reasoning-course
+---
+
+# Introduction
+
+This site hosts the lab curriculum for Colorado State University's **ESS 330** course: *Quantitative Reasoning for Ecosystem Science*
+
+## Set up Instructions {.unnumbered}
+
+Before getting started with the first lesson, please follow the instructions on the [R Setup][Setup Instructions] to make sure you have all the necessary software installed on your computer.
+
+## Navigating this site {.unnumbered}
+
+The table of contents on the left allows you to navigate to the lesson for each week of the course. Each lesson will walk you through working through the topic, analysis, etc. for that week with exercises at the end of the lesson that will be that week's homework assignment.
+
+Homework will be submitted through Canvas and exercise questions (including any code, figures, etc.) must be submitted in Word or PDF format. The Intro to R lesson will walk through how to create R Markdown documents in R, which you will use to write your code/answers to the exercises and then render to either Word or PDF report which is what you will submit through Canvas.
+
+<!--chapter:end:index.Rmd-->
+
+# Setup Instructions
+
+This tutorial walks you through all the **required** setup instructions to use R and RStudio for this course. If you have any issues, please email your TA or attend office hours for assistance.
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = FALSE)
+```
+
+## Install R and RStudio
+
+**R** is a free and open source language and software environment for statistical analysis and graphics (plus so much more!). 
+
+**RStudio** is a (also free) R Integrated Development Environment (IDE) that provides a built-in editor and other advantages such as version control and project management. 
+
+**You can install R and RStudio Desktop here: <https://posit.co/download/rstudio-desktop/>.**
+
+*Note: If you already have R installed, you **must have at least version 4.0.0. or greater**, but it is best to have the most recent version installed (4.2.2)*
+
+To Install R and RStudio:
+-   Under **Step 1** (install R), click the download link based on your operating system (OS). Then, for Mac users, install the latest release based on your macOS. For Windows users, click the 'install R for the first time' link.
+-   Under **Step 2** (install RStudio), click the download RStudio Desktop button.
+
+## Package Installation
+
+While the R software comes with many pre-loaded functions (referred to as 'base R' functions) to perform various operations in R, there are thousands of R packages that provide additional reusable R functions. In order to use these functions you need to first install the package to your local machine using the `install.packages()` function. Once a package is installed on your computer you don't need to install it again (but you may have to update it). Anytime you want to use the package in a new R session you can load it with the `library()` function.
+
+We will be working in RStudio this entire course, so after you have installed both R and RStudio, **open a new session of RStudio.**
+
+You will learn more about the ins and outs of RStudio in lab, but for set up purposes you will just be running code in the Console. Normally you want to save the code you write, but since package installation is only needed once (unless you are working on a new machine or need to update any packages) you can execute this directly in the console.
+
+Run the following three lines of code (one at a time) in the console. *You can click the copy button in the upper right corner when you hover over the code chunk, then paste that after the `>` in the Console. Spelling is important!*
+
+**Install the `tidyverse` package.** The Tidyverse is actually a collection of multiple R packages designed for data manipulation, exploration, and visualization that you are likely to use in every day data analysis. When you install the Tidyverse, it installs all of these packages, and you can later load all of them in your R session with `library(tidyverse).` Since you are installing multiple packages here this may take a little while.
+
+```{r}
+install.packages("tidyverse")
+```
+
+**Install the `palmerpenguins` package.** This is a data package that installs a couple of spreadsheets you can load and work with in R.
+
+```{r}
+install.packages("palmerpenguins")
+```
+
+**Install the `rmarkdown` package**. Later on in the course and for your final projects you will be working in and rendering R Markdown files and reports. R Markdown is a notebook style interface integrating text and code, allowing you to create fully reproducible documents and render them to various elegantly formatted static or dynamic outputs.
+
+You can learn more about R Markdown at their website, which has really informative lessons on their [Getting Started](https://rmarkdown.rstudio.com/lesson-1.html) page, and see the range of outputs you can create at their [Gallery](https://rmarkdown.rstudio.com/gallery.html) page.
+
+```{r}
+install.packages("rmarkdown")
+```
+
+To see if you successfully installed all three packages, use the `library()` function to load the packages into your session. You should either see nothing printed to the console after running `library()`, or in the case of the `tidyverse` you may see some messages printed. As long as there are no `error` messages, you should be all set! If you do get any error messages, please email you TA or attend office hours for assistance.
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+library(palmerpenguins)
+```
+
+```{r}
+library(rmarkdown)
+```
+
+<!--chapter:end:01-R-setup.Rmd-->
+
+# Introduction to R and RStudio
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+## Getting to know RStudio
+
+When you first open RStudio, it is split into 3 panels:
+
+-   **The Console** (left), where you can directly type and run code (by hitting Enter)
+-   **The Environment/History pane** (upper-right), where you can view the objects you currently have stored in your environment and a history of the code you've run
+-   **The Files/Plots/Packages/Help pane** (lower-right), where you can search for files, view and save your plots, view and manage what packages are loaded in your library and session, and get R help
+
+![Image Credit: Software Carpentry](https://swcarpentry.github.io/r-novice-gapminder/fig/01-rstudio.png){alt="Image Credit: Software Carpentry" width="100%"}
+
+<br>
+
+To write and save code you use **scripts**. You can open a new script with File -\> New File -\> R Script or by clicking the icon with the green plus sign in the upper left corner under 'File'. When you open a script, RStudio then opens a fourth **'Source' panel** in the upper-left to write and save your code. You can also send code from a script directly to the console to execute it by highlighting the **entire** code line/chunk (or place your cursor at the very end of the code chunk) and hit CTRL+ENTER on a PC or CMD+ENTER on a Mac.
+
+![Image Credit: Software Carpentry](https://swcarpentry.github.io/r-novice-gapminder/fig/01-rstudio-script.png){alt="Image Credit: Software Carpentry"}
+
+It is good practice to add comments/notes throughout your scripts to document what the code is doing. To do this start your text with a `#`. R knows to ignore everything after a `#`, so you can write whatever you want there. Note that R reads line by line, so if you want your comments to carry over multiple lines you need a `#` at every line.
+
+## R Projects
+
+As a first step whenever you start a new project, workflow, analysis, etc., it is good practice to set up an R project. R Projects are RStudio's way of bundling together all your files for a specific project, such as data, scripts, results, figures. Your project directory also becomes your working directory, so everything is self-contained and easily portable.
+
+We recommend using a single R Project for this course, so lets create one now.
+
+You can start an R project in an existing directory or in a new one. To create a project go to File -\> New Project:
+
+![](images/project-start.png)
+
+Let's choose 'New Directory' then 'New Project'. Now choose a directory name, this will be both the folder name and the project name, so use proper spelling conventions (no spaces!). We recommend naming it something course specific, like 'ESS-330-2023'. Choose where on your local file system you want to save this new folder/project, then click 'Create Project'.
+
+Now you can see your RStudio session is working in the R project you just created. You can see the working directory printed at the top of your console is now the project directory, and in the 'Files' tab in RStudio you can see there is an .Rproj file with the same name as the R project, which will open up this R project in RStudio whenever you come back to it.
+
+**Test out how this .Rproj file works**. Close out of your R session, navigate to the project folder on your computer, and double-click the .Rproj file.
+
+::: {.alert .alert-info}
+***What is a working directory?*** A working directory is the default file path to a specific file location on your computer to read files from or save files to. Since everyone's computer is unique, everyone's full file paths will be different. This is an advantage of working in R Projects, you can use *relative* file paths, since the working directory defaults to wherever the .RProj file is saved on your computer you don't need to specify the full unique path to read and write files within the project directory.
+:::
+
+## Write your first script
+
+Let's start coding!
+
+The first thing you do in a fresh R session and at the beginning of a workfow is set up your environment, which mostly includes installing and loading necessary libraries and reading in required data sets. Let's open a fresh R script and save it in our root (project) directory. Call this script something like 'r-intro.R'.
+
+### Commenting code
+
+It is best practice to add comments throughout your code noting what you are doing at each step. This is helpful for both future you (say you forgot what a chunk of code is doing after returning to it months later) and for others you may share your code with.
+
+To comment out code you use a `#`. You can use as many `#`'s as you want, any thing you write on that line after at least one `#` will be read as a comment and R will know to ignore that and not try to execute it as code.
+
+At the top of your script, write some details about the script like a title, your name and date.
+
+```{r}
+# Introduction to R and RStudio
+# your name
+# date
+```
+
+Now for the rest of this lesson, write all the code in this script you just created. You can execute code from a script (i.e., send it from the script to the console) in various ways (see below). Think of these scripts as your code notes, you can write and execute code, add notes throughout, and then save it and come back to it whenever you want.
+
+### Executing code
+
+Almost always you will start a script by installing and/or loading all the libraries/packages you need for that workflow. Add the following lines of code to your script to import our R packages you should have already installed from the [R Setup](01-R-setup.Rmd) page.
+
+```{r}
+#load necessary libraries
+library(tidyverse)
+library(palmerpenguins)
+```
+
+To execute code you can either highlight the entire line(s) of code you want to run and click the 'Run' button in the upper-right of the Source pane or use the keyboard shortcut CTRL+Enter on Windows or CMD+Enter on Macs.
+
+You can also place your cursor at the very end of the line or chunk of code you want to run and hit CTRL+Enter or CMD+Enter.
+
+::: {.alert .alert-info}
+All functions and other code chunks must properly close all parentheses or brackets to execute. If you have an un-closed parentheses/bracket you will get stuck in a never ending loop and will keep seeing `+` printed in the console. To get out of this loop you can either close the parentheses or bracket, or hit ESC to start over. You want to make sure you see the `>` in the console and not the `+` to execute code.
+:::
+
+### Getting help with code
+
+Take advantage of the 'Help' pane in RStudio! There you can search packages and specific functions to see all the available and required arguments, along with the default argument settings and some code examples. You can also execute a help search from the console with a `?`. For example:
+
+```{r}
+?mean
+```
+
+### Functions
+
+R has many built in functions to perform various tasks. To run these functions you type the function name followed by parentheses. Within the parentheses you put in your specific arguments needed to run the function.
+
+Practice running these various functions and see what output is printed in the console.
+
+```{r}
+# mathematical functions with numbers
+log(10)
+
+# average a range of numbers
+mean(1:5)
+
+# nested functions for a string of numbers, using the concatenate function 'c'
+mean(c(1,2,3,4,5))
+
+
+# functions with characters
+print("Hello World")
+
+paste("Hello", "World", sep = "-")
+```
+
+#### Assignment operator
+
+Notice that when you ran the following functions above, the answers were printed to the console, but were not saved anywhere (i.e., you don't see them stored as variables in your environment). To save the output of some operation to your environment you use the assignment operator `<-`. For example, run the following line of code:
+
+```{r}
+x <- log(10)
+```
+
+And now you see the output, '2.3025...' saved as a variable named 'x'. You can now use this value in other functions
+
+```{r}
+x + 5
+```
+
+#### Base R vs. The Tidyverse
+
+You may hear the terms 'Base R' and 'Tidyverse' a lot throughout this course. Base R includes functions that are installed with the R software and do not require the installation of additional packages to use them. The Tidyverse is a collection of R packages designed for data manipulation, exploration, and visualization that you are likely to use in every day data analysis, and all use the same design philosophy, grammar, and data structures. When you install the Tidyverse, it installs all of these packages, and you can then load all of them in your R session with `library(tidyverse)`. Base R and Tidyverse have many similar functions, but many prefer the style, efficiency and functionality of the Tidyverse packages, and we will mostly be sticking to Tidyverse functions for this course.
+
+### Data Types
+
+For this intro lesson, we are going to use the Palmer Penguins data set (which is loaded with the `palmerpenguins` package you installed during setup). This data was collected and made available by [Dr. Kristen Gorman](https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php) and the [Palmer Station, Antarctica LTER](https://pallter.marine.rutgers.edu/), a member of the [Long Term Ecological Research Network](https://lternet.edu/).
+
+Load the `penguins` data set.
+
+```{r}
+data("penguins")
+```
+
+You now see it in the Environment pane. Print it to the console to see a snapshot of the data:
+
+```{r}
+penguins
+```
+
+This data is structured is a data frame, probably the most common data type and one you are most familiar with. These are like the spreadsheets you worked with in the first lesson, tabular data organized by rows and columns. However we see at the top this is called a `tibble` which is just a fancy kind of data frame specific to the `tidyvese`.
+
+At the top we can see the data type of each column. There are five main data types:
+
+-   **character**: `"a"`, `"swc"`
+
+-   **numeric**: `2`, `15.5`
+
+-   **integer**: `2L` (the `L` tells R to store this as an integer, otherwise integers can also be numeric data types)
+
+-   **logical**: `TRUE`, `FALSE`
+
+-   **complex**: `1+4i` (complex numbers with real and imaginary parts)
+
+Data types are combined to form data structures. R's basic data structures include
+
+-   atomic vector
+
+-   list
+
+-   matrix
+
+-   data frame
+
+-   factors
+
+You can see the data type or structure of an object using the `class()` function, and get more specific details using the `str()` function. (Note that 'tbl' stands for tibble).
+
+```{r}
+class(penguins)
+str(penguins)
+```
+
+```{r}
+class(penguins$species)
+str(penguins$species)
+```
+
+When we pull one column from a data frame, like we just did above with the `$` operator, that returns a vector. Vectors are 1-dimensional, and must contain data of a single data type (i.e., you cannot have a vector of both numbers and characters).
+
+If you want a 1-dimensional object that holds mixed data types and structures, that would be a list. You can put together pretty much anything in a list.
+
+```{r}
+myList <- list("apple", 1993, FALSE, penguins)
+str(myList)
+```
+
+You can even nest lists within lists
+
+```{r}
+list(myList, list("more stuff here", list("and more")))
+
+```
+
+You can use the `names()` function to retrieve or assign names to list and vector elements
+
+```{r}
+names(myList) <- c("fruit", "year", "logic", "data")
+names(myList)
+```
+
+### Indexing
+
+Indexing is an extremely important aspect to data exploration and manipulation. In fact you already started indexing when we looked at the data type of individual columns with `penguins$species`. How you index is dependent on the data structure.
+
+Index lists:
+
+```{r}
+# for lists we use double brackes [[]]
+myList[[1]]
+
+myList[["data"]]
+
+```
+
+Index vectors:
+
+```{r}
+# for vectors we use single brackets []
+myVector <- c("apple", "banana", "pear")
+myVector[2]
+```
+
+Index data frames:
+
+```{r}
+# dataframe[row(s), columns()]
+penguins[1:5, 2]
+
+penguins[1:5, "island"]
+
+penguins[1, 1:5]
+
+penguins[1:5, c("species","sex")]
+
+penguins[penguins$sex=='female',]
+
+# $ for a single column
+penguins$species
+```
+
+### Read and Write Data
+
+We used an R data package today to read in our data frame, but that probably isn't how you will normally read in your data. There are many ways to read and write data in R. To read in .csv files, you can use `read_csv()` which is included in the Tidyverse with the `readr` package, and to save csv files use `write_csv()`. The `readxl` package is great for reading in excel files, however it is not included in the Tidyverse and will need to be loaded separately.
+
+Find the .csv you created at the end of last week's lesson. Created a folder in your project directory called 'data/' and copy the .csv file there. You will store various data sets in this 'data/' folder throughout the course.
+
+Say your .csv is called 'survey_data_clean.csv'. This is how you would read it in to R, giving it the object name 'survey_data'
+
+```{r}
+survey_data <- read_csv("data/survey_data_clean.csv")
+```
+
+## Exercises
+
+*For each question you must also include the line(s) of code you used to arrive at the answer.*
+
+1.  Use `class()` and `str()` to inspect the .csv you created from last week's lesson that you just read into R. How many rows and columns does it have? What data type is each column? (4 pts)
+
+2.  Why don't the following lines of code work? Tweak each one so the code runs (6 pts)
+
+    ```{r}
+    myList[year]
+    ```
+
+    ```{r}
+    penguins$flipper_lenght_mm
+    ```
+
+    ```{r}
+    penguins[island=='Dream',]
+    ```
+
+3.  How many species are in the `penguins` dataset? What islands were the data collected for? (Note: the `unique()` function might help) (5 pts)
+
+4.  Use indexing to create a new data frame that has only 3 columns: species, island and flipper length columns, and subset all rows for just the 'Dream' island. (5 pts)
+
+5.  Use indexing and the `mean()` function to find the average flipper length for the *Adelie* species on Dream island. (5 pts)
+
+<!--chapter:end:02-intro-r.Rmd-->
+
+# Exploratory Data Analysis
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = FALSE)
+
+```
+
+For this lesson you will be working with the same `penguins` data from last week. Start a new script for this week, and add/execute the following lines of code to set up your session:
+
+```{r eval=TRUE}
+library(tidyverse)
+library(palmerpenguins)
+data("penguins")
+```
+
+When working with a new data set, often the first thing you do is perform some initial investigations on the data using various summary statistics and graphical representations. This is exploratory data analysis! Or for short, EDA. EDA is used to catch any potential errors, assess statistical assumptions, observe patterns and help form initial hypotheses of your data that you can then test with statistics.
+
+For our `penguins` data, we want to start by exploring things like sample size, variation and distribution of our variables, and make initital comparisons among species, islands, and sex.
+
+A new Base R function we have yet to use is `summary()`. This functions gives us a very quick snapshot of each variable in our dataset, where we can see things like sample size and summary statistics.
+
+```{r}
+summary(penguins)
+```
+
+For some more in depth EDA, the `tidyverse` packages provide many useful functions to summarize and visualize data. Today we are going to simultaneously learn about various functions of `tidyverse` packages while investigating and formulating hypotheses about our `penguins` data set.
+
+## Data wrangling
+
+### The `dplyr` package
+
+`dplyr` is a Tidyverse package to handle most of your data exploration and manipulation tasks. Now that you have learned indexing in the [Intro to R lesson][Introduction to R and RStudio], you may notice the first two `dplyr` functions we are going to learn, `filter()` and `select()` act as indexing functions, subsetting rows and columns based on specified names and/or conditions.
+
+**Subset rows with `filter()`**
+
+You can filter data in many ways using logical operators (`>`, `>=`, `<`, `<=`, `!=` (not equal), and `==` (equal)), AND (`&`), OR (`|`), and NOT (`!`) operators, and other operations such as `%in%`, which returns everything that matches at least one of the values in a given vector, and `is.na()` and `!is.na()` to return all missing or all non-missing data.
+
+```{r}
+# filter rows for just the Adelie species
+filter(penguins, species == "Adelie")
+
+# filter rows for all species EXCEPT Adelie
+filter(penguins, species != "Adelie")
+
+# filter islands Dream and Torgersen AND rows that DO NOT have  missing values for bill length
+filter(penguins, island %in% c("Dream", "Torgersen") & !is.na(bill_length_mm))
+```
+
+::: {.alert .alert-info}
+Note: Tidyverse package functions take in column names *without* quotations.
+:::
+
+Using `dplyr` functions will not manipulate the original data, so if you want to save the returned object you need to assign it to a new variable.
+
+```{r}
+body_mass_filtered <- filter(penguins, body_mass_g > 4750 | body_mass_g < 3550)
+```
+
+**Subset columns with [`select()`](https://dplyr.tidyverse.org/reference/select.html){style="font-size: 13pt;"}**
+
+`select()` has many helper functions you can use with it, such as `starts_with()`, `ends_with()`, `contains()` and many more that are very useful when dealing with large data sets. See `?select` for more details
+
+```{r}
+# Select two specific variables
+select(penguins, species, sex)
+
+# Select a range of variables
+select(penguins, species:flipper_length_mm)
+
+# Rename columns within select
+select(penguins, genus = species, island)
+
+# Select column variables that have 'mm' in their name
+select(penguins, contains("mm"))
+
+```
+
+**Create new variables with [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html){style="font-size: 13pt;"}**
+
+`mutate()` allows you to edit existing columns or create new columns in an existing data frame, and you can perform calculations on existing columns to return outputs in the new column. The syntax is the name of the new column you want to make (or the current column you want to edit) on the left of `=`, and then to the right is what you want to put in the new column. Note that `mutate()` works row wise on the data frame.
+
+```{r}
+# New variable that calculates bill length in cm
+mutate(penguins, bill_length_cm = bill_length_mm/10)
+
+# mutate based on conditional statements with if_else()
+mutate(penguins, species_sex = if_else(sex == 'male', paste0(species,"_m"), paste0(species, "_f")))
+```
+
+::: {.alert .alert-info}
+Notice the use of `paste0()` here, and when we briefly used a similar function `paste()` in previous lessons. Explore the difference between these two. They are both very useful functions for pasting strings together.
+:::
+
+[**`group_by()`**](https://dplyr.tidyverse.org/reference/group_by.html) **and [`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html)**
+
+All the above functions can all be used in conjunction with `group_by()`, which changes the scope of each function from operating on the entire data set to operating on it group-by-group. `group_by()` becomes even more powerful when used along with `summarise()` to calculate some specified summary statistic for each group. However, before we start using multiple operations in conjunction with one another, we need to talk about the pipe operator `%>%`.
+
+#### The pipe `%>%`
+
+The pipe, `%>%`, comes from the **magrittr** package by Stefan Milton Bache. Packages in the tidyverse load `%>%` for you automatically, so you don't usually load magrittr explicitly. Pipes are a powerful tool for clearly expressing a sequence of multiple operations.
+
+For example, the pipe operator can take this sequence of operations:
+
+```{r}
+df1 <- filter(penguins, island == "Dream")
+df2 <- mutate(df1, flipper_length_cm = flipper_length_mm/10)
+df3 <- select(df2, species, year, flipper_length_cm)
+
+print(df3)
+```
+
+And turn it into this, removing the need to create intermediate variables
+
+```{r}
+penguins %>% 
+  filter(island == "Dream") %>% 
+  mutate(flipper_length_cm = flipper_length_mm/10) %>% 
+  select(species, year, flipper_length_cm)
+```
+
+You can read it as a series of imperative statements: filter, then mutate, then select. A good way to pronounce `%>%` when reading code is "then". It takes the output of the operation to the left of `%>%` and feeds it into the next function as the input.
+
+So now back to `group_by()` and `summarize()`. Say you want to summarize data by some specified group, for example you want to find the average body mass for each species, this is how you could do that:
+
+```{r}
+penguins %>% 
+  group_by(species) %>% 
+  summarise(body_mass_avg = mean(body_mass_g, na.rm = TRUE))
+```
+
+You can also group by multiple variables. Say you want to calculate the sample size (i.e., count, which can be calculated with the `n()` function) for each species for each year of the study.
+
+```{r}
+penguins %>% 
+  group_by(species, year) %>% 
+  summarise(n_observations = n())
+```
+
+## Visualization
+
+An important part of data exploration includes visualizing the data to reveal patterns you can't necessarily see from viewing a data frame of numbers. Here we are going to walk through a very quick introduction to `ggplot2`, using some code examples from the `palmerpenguins` R package tutorial: <https://allisonhorst.github.io/palmerpenguins/articles/intro.html>.
+
+`ggplot2` is perhaps the most popular data visualization package in the R language, and is also a part of the Tidyverse. One big difference about `ggplot` though is that it does not use the pipe `%>%` operator like we just learned, but instead threads together arguments with `+` signs (but you can pipe a data frame into the first `ggplot()` argument).
+
+The general structure for ggplots follows the template below. Note that you can also specify the `aes()` parameters within `ggplot()` instead of your geom function, which you may see a lot of people do. The mappings include arguments such as the x and y variables from your data you want to use for the plot. The geom function is the type of plot you want to make, such as `geom_point()`, `geom_bar()`, etc, there are a lot to choose from.
+
+```{r}
+# general structure of ggplot functions
+ggplot(data = <DATA>) + 
+  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+```
+
+**Visualize variable distributions with `geom_historgram()`**
+
+If you plan on doing any statistical analysis on your data , one of the first things you are likely to do is explore the distribution of your variables. You can plot histograms with `geom_histogram()`
+
+```{r, eval=TRUE}
+ggplot(penguins) + 
+  geom_histogram(mapping = aes(x = flipper_length_mm))
+```
+
+This tells us there may be a lot of variation in flipper size among species. We can use the 'fill =' argument to color the bars by species, and `scale_fill_manual()` to specify the colors.
+
+```{r, eval=TRUE}
+# Histogram example: flipper length by species
+ggplot(penguins) +
+  geom_histogram(aes(x = flipper_length_mm, fill = species), alpha = 0.5, position = "identity") +
+  scale_fill_manual(values = c("darkorange","darkorchid","cyan4"))
+```
+
+Cool, now we can see there seems to be some pretty clear variation in flipper size among species. Another way to visualize across groups is with `facet_wrap()`, which will create a separate plot for each group, in this case species.
+
+```{r, eval=TRUE}
+ggplot(penguins) +
+  geom_histogram(aes(x = flipper_length_mm, fill = species), alpha = 0.5, position = "identity") +
+  scale_fill_manual(values = c("darkorange","darkorchid","cyan4")) +
+  facet_wrap(~species)
+```
+
+**Compare sample sizes with `geom_bar()`**
+
+We saw a quick snapshot of total sample size for each species with `summary()`. Let's use ggplot to see sample size for each species on each island.
+
+```{r, eval=TRUE}
+ggplot(penguins) +
+  geom_bar(mapping = aes(x = island, fill = species))
+  
+```
+
+As you may have already noticed, the beauty about `ggplot2` is there are a million ways you can customize your plots. This example builds on our simple bar plot:
+
+```{r, eval=TRUE}
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar(alpha = 0.8) +
+  scale_fill_manual(values = c("darkorange","purple","cyan4"), 
+                    guide = FALSE) +
+  theme_minimal() +
+  facet_wrap(~species, ncol = 1) +
+  coord_flip()
+```
+
+This is important information, since we know now that not all species were sampled on every island, which will have complications for any comparisons we may want to make among islands.
+
+**Visualize variable relationships with `geom_point()`**
+
+We can use `geom_point()` to view the relationship between two continuous variables by specifying the x and y axes. Say we want to visualize the relationship between penguin body mass and flipper length and color the points by species:
+
+```{r, eval=TRUE}
+ggplot(penguins) +
+  geom_point(mapping = aes(x = body_mass_g, y = flipper_length_mm, color = species))
+```
+
+### Exercises
+
+*For each exercise, please include the line(s) of code you used to answer the question.*
+
+1.  Reorder the variables in `penguins` so that `year` is the first column followed by the rest (Hint: look into the use of `everything()`). (5 pts.)
+
+2.  Create a new column called 'size_group' where individuals with body mass greater than the overall average are called 'large' and those smaller are called 'small'. (Note: this answer requires the additional use of both the `if_else()` and `mean()` functions. Remember how to deal with `NA` values in `mean()`). (5 pts.)
+
+3.  Which year had the largest average weight of all individuals according to body mass. (5 pts.)
+
+4.  You want to filter data for years that are *not* in a vector of given years, but this code doesn't work. Tweak it so that it does. (5 pts.)
+
+    ```{r}
+    penguins %>% 
+      filter(year !%in% c(2008, 2009))
+    ```
+
+5.  Using the visualization techniques you learned today, create a figure that allows you to visualize some comparison of your choice among the `penguins` data set. Along with embedding the figure you made, write a testable hypothesis about the data and the patterns you see from this figure. (5 pts.)
+
+<!--chapter:end:03-explore.Rmd-->
+
+# Introduction to Statistics
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE)
+```
+
+In this lesson you will be introduced to the process of conducting statistical tests in R, specifically chi-square, t-tests, and correlation tests.
+
+First, to access the dataset(s) you will be using today install the `remotes` package, and then install the `lterdatasampler` package (`remotes` is needed because `lterdatasampler` has to be installed from GitHub as opposed to CRAN).
+
+```{r eval=FALSE}
+install.packages("remotes")
+remotes::install_github("lter/lterdatasampler")
+```
+
+Now load in all libraries needed for this lesson:
+
+```{r}
+library(tidyverse)
+library(lterdatasampler)
+```
+
+Then run the following line of code to retrieve the `and_vertebrates` data set and bring it into your R session:
+
+```{r}
+data(and_vertebrates)
+```
+
+## Explore the dataset
+
+Do a little exploration of this data first to understand its structure, variables and data types:
+
+```{r}
+# View the data structure
+glimpse(and_vertebrates)
+
+# Explore the metadata in the Help pane
+?and_vertebrates
+```
+
+This data set contains length and weight observations for three aquatic species in clear cut and old growth coniferous forest sections of Mack Creek in HJ Andrews Experimental Forest in Oregon. The three species are **Cutthroat trout**, **Coastal giant salamander** and **Cascade torrent salamander**.
+
+## Chi-square - Categorical Analysis
+
+When you are working with two categorical variables, the statistical test you would use is a Chi-square test. This test can tell you if there is a relationship between your two categorical variables.
+
+For example, we have two categorical variables in the `and_vertebrates` data set:
+
+-   `section` = two forest sections, clear cut (CC) and old growth (OG)
+
+-   `unittype` = channel unit classification type (C = cascade, I = riffle, IP = isolated pool (not connected to channel), P = pool, R = rapid, S = step (small falls), SC = side channel, NA = not sampled by unit)
+
+Lets focus this question on Cutthroat trout. First explore the abundance of cutthroat trout in different channel types, using the `n()` function to return the total count/number of observations in each group.
+
+```{r}
+and_vertebrates %>% 
+  filter(species == "Cutthroat trout") %>% 
+  group_by(unittype) %>% 
+  summarise(abundance = n())
+```
+
+This output tells us that there are quite a few observations with the `NA` category, meaning channel type was unknown or not recroded. Let's edit the workflow above slightly, using two new functions: `drop_na()` and `count()`. `drop_na()` will remove any rows within a specified column (or columns) that have NA values, and we can use `count()` as an alternative to `group_by()` and `summarise()` when we just want number of observations for a single variable (in this case `unittype`).
+
+```{r}
+and_vertebrates %>% 
+  filter(species == "Cutthroat trout") %>% 
+  drop_na(unittype) %>% 
+  count(unittype)
+```
+
+This returns just about the same data frame as the first method, but now with the NA category removed because it dropped any observations that were `NA` for `unittype`.
+
+From this we also observe that the highest Cutthroat trout abundances are found in cascade (C), pool (P), and side channel (SC) habitats.
+
+Now, our question expands beyond this one categorical variable (channel type) and we want to know if abundance is affected by both channel and and forest type (`section`). Here, *our null hypothesis is that forest and channel type are independent*. To test this, we use the `chisq.test()` function to carry out a chi-square test, but first we have to reformat our data into a **contingency table**.
+
+A contingency table is in matrix format, where each cell is the frequency (in this case seen as abundance) of Cutthroat trout in each combination of categorical variables (forest type and channel unit). We can create a contingency table with the `table()` function. For this analysis, lets also filter out just the 3 most abundant unit types for Cutthroat trout (C, P and SC).
+
+```{r}
+# First clean the dataset to create the contingency table from
+trout_clean <- and_vertebrates %>% 
+  #filter Cutthroat trout
+  filter(species == "Cutthroat trout") %>% 
+  # lets test using just the 3 most abundant unittypes
+  filter(unittype %in% c("C", "P", "SC")) %>% 
+  # drop NAs for both unittype and section
+  drop_na(unittype, section)
+
+
+cont_table <- table(trout_clean$section, trout_clean$unittype)
+```
+
+To execute the Chi-square test does not take that much code, but it is important to note that by default, `chisq.test()` assumes the null hypothesis is that all frequencies have equal probability. If you have different pre-conceived frequency probabilities for your data you have to define those within the `chisq.test()` function.
+
+```{r}
+chisq.test(cont_table)
+
+```
+
+Looking at these results, we have an extremely small p-value. This tells us that there *is* a significant relationship between forest type and channel unit (i.e., we rejected our null hypothesis).
+
+Lets look at the abundance distribution visually:
+
+```{r}
+trout_clean %>% 
+  count(unittype, section) %>% 
+  ggplot(aes(x = unittype, y = n))+
+  geom_col(aes(fill = section))+
+  scale_fill_manual(values = c("orange", "darkgreen"))+
+  theme_minimal()
+```
+
+## t-test - Compare two means
+
+Previous work has shown that forest harvesting can impact aquatic vertebrate biomass (Kaylor & Warren 2017). With this `and_vertebrates` data set we can investigate this hypothesis, by comparing weight to forest type (clear cut or old growth). This therefore involves a test comparing the means (average weight) among two groups (clear cut and old growth forests), which then requires a t-test.
+
+Lets focus on conducting this test for just Cutthroat trout (to reduce species-level variances in weight), so we can use the same `trout_clean` data set we made earlier, but let's also drop all NAs in `weight_g`. Then, lets first visualize the differences in weight among forest type with a boxplot:
+
+```{r}
+trout_clean %>% 
+  drop_na(weight_g) %>% 
+  ggplot(aes(x = section, y = weight_g))+
+  geom_boxplot()
+```
+
+We don't see too much of a difference based on this visual, but lets conduct the statistical test to really verify if our hypothesis is supported.
+
+First however we need to check our test assumptions, which for t-tests assumes the variance of the groups is equal. We can test for equal variances with the function `var.test()`, where the *null* hypothesis is that the variances is equal. In this step we need two vectors of the weights in each separate forest section. You can use `pull()` to convert a single column of a data frame/tibble to a vector, and we want to do this for clear cut and old growth forests separately. We then put both of those vectors in the `var.test()` function to assess their equal variances.
+
+```{r}
+cc_weight <- trout_clean %>% 
+  filter(section == "CC") %>% 
+  pull(weight_g)
+
+og_weight <- trout_clean %>% 
+  filter(section == "OG") %>% 
+  pull(weight_g)
+
+var.test(cc_weight, og_weight)
+```
+
+Looks like our variances are not equal. We have two options now, we can either transform our weight variable or use the Welch t-test which does not assume equal variances.
+
+**Variable transformation**
+
+If we look at the distribution of weight (our continuous variable), it is pretty right skewed. Therefore, we'd likely want to do a log transformation on the data, which works well the data is skewed like this:
+
+```{r}
+hist(trout_clean$weight_g)
+```
+
+Lets perform the variances check like we did before, but on the log transformed values, which you can do with `log`
+
+```{r}
+var.test(log(cc_weight), log(og_weight))
+```
+
+Now we have a high p-value, indicating support for the null that the variances are equal. So. we can use the default `t.test()` test which assumes equal variances, but on a log transformed weight variable.
+
+The `t.test()` function in R takes in your dependent (in our case trout weight) and independent (forest type) variables as vectors (instead of just column names like you can do in the Tidyverse). Remember how we can index single columns of data frames with the `$` operator. The order of the variables in the `t.test()` function is {dependent variable} \~ {independent variable}. We use the `~` to specify a model, telling the test we want to know if weight *varies by* forest section.
+
+Remember we also want to log transform the weight values and then specify that our variances are equal since we confirmed that with `var.test()` above, so the final `t.test()` call would be this:
+
+```{r}
+
+t.test(log(trout_clean$weight_g) ~ trout_clean$section, var.equal = TRUE)
+```
+
+The output of this test gives us the test statistics, p-value, and the means for each of our forest groups. Given the p-value of 0.0043, we can conclude that we reject the null hypothesis that mean Cutthroat weight is the same in clear cut and old growth forest sections, and looking at our results (specifically the means) we can conclude that *Cutthroat trout weight was observed to be significantly higher in clear cut forests compared to old growth forests*. Remember though that now these mean weight values are log transformed, and not the raw weight in grams. The relationship can still be interpreted the same.
+
+How does this relate to your original hypothesis?
+
+**Welch Two Sample t-test**
+
+Alternatively, instead of transforming our variable we can actually change the default `t.test()` argument by specifying `var.equal = FALSE`, which will then conduct a Welch t-test, which does not assume equal variances among groups.
+
+```{r}
+t.test(trout_clean$weight_g ~ trout_clean$section, var.equal = FALSE)
+
+```
+
+While we used a slightly different method, our conclusions are still the same, finding that Cutthroat trout had significantly higher weights in clear cut forests than old growth.
+
+::: {.alert .alert-info}
+Note: In the `t.test()` function you can add `paired = TRUE` to conduct a paired t-test. These are for cases when the groups are 'paired' for each observation, meaning each group/treatment was applied to the same individual, such as before and after experiments.
+:::
+
+## Correlation - Assess relationships
+
+When you want to assess the relationship between two **continuous variables**, the test you would use is a correlation test. Correlation tests asses both the presence of a significant relationship along with the strength of that relationship (i.e., the correlation coefficient).
+
+For our `and_vertebrates` data set, we can test length-mass relationships for our species with our length and weight continuous variables. Lets test the hypothesis that body length is positively correlated with weight, such that longer individuals will also weigh more, specifically looking at the Coastal Giant salamander.
+
+First let's clean our data set to just include the Coastal giant salamander and remove missing values for length and weight. Let's focus on the variable 'length_2\_mm' for snout to tail length.
+
+```{r}
+sally_clean <- and_vertebrates %>% 
+  filter(species == "Coastal giant salamander") %>% 
+  drop_na(length_2_mm, weight_g)
+  
+```
+
+Now we can perform the correlation test with the `cor.test()` function. There are multiple correlation methods you can use with this function, by default it uses the Pearson correlation method. However this test assumes that your data is normally distributed and there is a linear relationship, so if that is not the case you can specify `spearman` for `method =` to use a Spearman Rank correlation test, a non-parametric test that is not sensitive to the variable distribution.
+
+Let's look at the distribution of these variables first:
+
+```{r}
+hist(sally_clean$length_2_mm)
+
+hist(sally_clean$weight_g)
+```
+
+They both look pretty skewed, therefore likely not normally distributed. We can statistically test if a variable fits a normal distribution with the `shapiro.test()` function. However note that this function only runs for 5000 observations or less, so lets test for normally of the first 5000 obs of our `sally_clean` data set:
+
+```{r}
+shapiro.test(sally_clean$length_2_mm[1:5000])
+
+shapiro.test(sally_clean$weight_g[1:5000])
+```
+
+The *null hypothesis of the Shapiro-Wilk normality test is that the variable is normally distributed*, so a significant p-value less than 0.05 (as we see for both of our variables here) tells use that our data does not fit a normal distribution.
+
+Therefore we have two options as we did with our t-test example: transform the variables or use the non-parametric test.
+
+**Variable transformation**
+
+Lets try the first option by log transforming our variables (since we saw they both had pretty skewed distributions), first viewing the new distribution and then performing the Pearson's correlation test (the default for `cor.test()`).
+
+```{r}
+hist(log(sally_clean$length_2_mm))
+
+hist(log(sally_clean$weight_g))
+```
+
+All we need to add to the `cor.test()` argument is the two variables of our `sally_clean` data set we want to test a relationship for, and let's keep them log-transformed since those distributions looked closer to a normal distribution (visually at least).
+
+```{r}
+cor.test(log(sally_clean$length_2_mm), log(sally_clean$weight_g))
+```
+
+Okay, from these results we see a very small p-value, meaning there is a significant association between the two, and a correlation coefficient of 0.98, representing a very strong, positive correlation.
+
+Let's look at this correlation visually:
+
+```{r}
+sally_clean %>% 
+  ggplot(aes(x = log(length_2_mm), y = log(weight_g)))+
+  geom_point()
+```
+
+We can use `geom_smooth()` to add a line of best fit using a linear model equation (which you will learn more about next week)
+
+```{r}
+sally_clean %>% 
+  ggplot(aes(x = log(length_2_mm), y = log(weight_g)))+
+  geom_point()+
+  geom_smooth(method = "lm")
+```
+
+**Spearman Correlation Test**
+
+Let's now perform the correlation test again but keeping our raw data and instead specifying `method = 'spearman'`, as the Spearman test is better for non-parametric and non-linear data sets.
+
+```{r}
+cor.test(sally_clean$length_2_mm, sally_clean$weight_g, method = "spearman")
+```
+
+These results also represent a significant, positive relationship between length and weight for the Coastal Giant salamander, with a very high correlation coefficient.
+
+## Exercises
+
+Each question requires you to carry out a statistical analysis to test some hypothesis related to the `and_vertebrates` data set. To answer each question fully:
+
+-   Include the code you used to clean the data and conduct the appropriate statistical test. (*Including the steps to assess and address your statistical test assumptions*).
+
+-   Report the findings of your test in proper scientific format (with the p-value in parentheses).
+
+<br>
+
+**1.** Conduct a chi-square test similar to the one we carried out earlier in this lesson plan, but test for a relationship between forest type (`section`) and channel unit (`unittype`) for *Coastal giant salamander* abundance. *Keep all unittypes* instead of filtering any like we did for the Cutthroat trout (9 pts.)
+
+<br>
+
+**2.** Test the hypothesis that there is a significant difference in species biomass between clear cut and old growth forest types for the *Coastal Giant salamander*. (8 pts.)
+
+<br>
+
+**3.** Test the correlation between body length (snout to fork length) and body mass for *Cutthroat trout*. (Hint: run `?and_vertebrates` to find which length variable represents snout to fork length) (8 pts.)
+
+<br> <br>
+
+### Acknowledgements
+
+Thanks to the developers of [`lterdatasampler`](https://lter.github.io/lterdatasampler/index.html) for providing the data set and vignettes that helped guide the creation of this lesson plan.
+
+### Citations
+
+***Data Source:*** Gregory, S.V. and I. Arismendi. 2020. Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present ver 14. Environmental Data Initiative. <https://doi.org/10.6073/pasta/7c78d662e847cdbe33584add8f809165>
+
+Kaylor, M.J. and D.R. Warren. 2017. Linking riparian shade and the legacies of forest management to fish and vertebrate biomass in forested streams. Ecosphere *8*(6). <https://doi.org/10.1002/ecs2.1845>
+
+<!--chapter:end:04-univariate.Rmd-->
+
+# Multivariate Statistics
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE)
+```
+
+In this lesson you will be introduced to statistical tests for dealing with more complex data sets, such as when you need to compare across more than two groups (ANOVA) or assess relationships in the form of an equation to predict response variables given single or multiple predictors (Regression).
+
+First you'll need to load in the libraries and data set for the lesson.
+
+We need to install one new package for today to use a specific statistical test. This package is called `car`. Follow the steps below to install the package, and then read in your libraries and data set for the lesson.\
+
+```{r eval = FALSE}
+#install the car package
+install.packages("car")
+
+```
+
+```{r}
+#load in packages
+library(tidyverse)
+library(lterdatasampler)
+library(car)
+
+# data set
+data("pie_crab")
+```
+
+## Explore the Data set
+
+This data set consists of Fiddler crab body size measured in salt marshes from Florida to Massachusetts during summer 2016 at Plum Island Ecosystem LTER.
+
+```{r}
+glimpse(pie_crab)
+```
+
+Learn more about each variable:
+
+```{r}
+?pie_crab
+```
+
+This data set provides a great opportunity to explore Bergmann's rule: where organisms at higher latitudes are larger than those at lower latitudes. There are various hypotheses on what drives this phenomenon, which you can read more about in [Johnson et al. 2019](https://onlinelibrary.wiley.com/doi/10.1002/ece3.5883).
+
+We have a continuous size variable (carapace width in mm), our dependent variable, and various predictor variables: site (categorical), latitude (continuous), air temperature (continuous) and water temperature (continuous).
+
+Let's explore the sample size at each site and how many sites are in this data set
+
+```{r}
+# sample size per site
+pie_crab %>% 
+  group_by(site) %>% 
+  count()
+
+```
+
+We have 13 sites with \~30 individual male crabs measured at each site.
+
+Let's also check the range of our continuous variables:
+
+```{r}
+summary(pie_crab)
+```
+
+## ANOVA
+
+First we can see if there is a significant difference in crab size among sites. Since we have a continuous response variable (size) and a categorical predictor (site) with \> 2 groups (13 sites), we will use an ANOVA test.
+
+Lets first visualize the distribution of size values for each site using a new visualization technique with ggplot called `geom_jitter()`. This function adds a small amount of variation to each point, so that all our points for each site are not stacked on top of each other (*for example, try running the following code below but with `geom_point()` instead of `geom_jitter()` and notice the difference*).
+
+In this code we also use the `reorder()` function to order our x axis value (site) by latitude to see any initial trends fitting Bergmann's rule.
+
+```{r}
+pie_crab %>% 
+  ggplot(aes(x = reorder(site, latitude), y = size, color = site)) + 
+  geom_jitter()+
+  # edit y axis label
+  labs(x = "", y = "Carapace width (mm)")+
+  # remove the legend and x axis label
+  theme(legend.position = "none",
+        axis.title.x = element_blank())
+```
+
+Looks like there is variation among sites, so lets test for statistical significance with the ANOVA test.
+
+### Assumptions
+
+***Normality***
+
+ANOVA assumes normal distributions within each group. Here our group sample sizes are \~30 each which can be considered as large enough to not worry about this assumption, but lets walk through how to statistically check for normality if you had smaller sample sizes.
+
+You could test for normality with the Shaprio-Wilk test for each group individually, but here we have a lot of groups (13) and that would be tedious. Instead, we can calculate the residuals for all groups and test for normal distribution on the single set of residuals.
+
+::: {.alert .alert-info}
+A residual value is computed for each observation as the difference between that value and the mean of all values for that group.
+:::
+
+We can get the residuals from the ANOVA model by running `aov()`. To carry out the ANOVA model, we specify the name of our continuous response (size) \~ the name of our categorical predictor (site), and specify the data set name. *Note that the `aov()` function won't work the `%>%` pipe.*
+
+```{r}
+res_aov <- aov(size ~ site, data = pie_crab)
+```
+
+We can then pull out the residuals of this `aov()` model like we do by indexing columns with the `$` operator. Let's check the distribution visually with `hist()` and then statistically with `shapiro.test()`.
+
+```{r}
+hist(res_aov$residuals)
+
+shapiro.test(res_aov$residuals)
+```
+
+This returns a p-value of 0.72, so we accept the null that this data **does** fit the normal distribution assumption.
+
+***Equal Variances***
+
+To test for equal variances among more than two groups, it is easiest to use a Levene's Test. To use this test we need to install a new package called `car`, which you should have done at the beginning of this lesson.
+
+```{r}
+leveneTest(size ~ site, data = pie_crab)
+```
+
+Similar to the `var.test()` function you've used before, the *null hypothesis* of the Levene's test is that the variances *are* *equal*. Given this small p-value (denoted the the 'Pr(\>F)' value) we see that the variances of our groups are not equal.
+
+Therefore we would have to perform a Welch ANOVA:
+
+```{r}
+oneway.test(size ~ site, data = pie_crab, var.equal = FALSE)
+```
+
+Our results here are highly significant, meaning that at least one of our groups means is significantly different from the others.
+
+Now ANOVAs don't tell us which groups are significantly different, for that we would need to use the post-hoc Tukey's HSD test.
+
+However for 13 groups that is a lot of pairwise comparisons to perform. For the next example lets filter our analysis to check for differences among 3 sites, choosing sites at the two extremes in latitude and one in the middle of the range.
+
+```{r}
+pie_sites <- pie_crab %>% 
+  filter(site %in% c("GTM", "DB", "PIE"))
+```
+
+We already know that this data set fits the normality assumption, but now lets check if the variances of these 3 sites are equal or not.
+
+```{r}
+leveneTest(size ~ site, data = pie_sites)
+```
+
+A p-value of 0.58 is much higher than our cut-off of 0.05, so we are confident that the variances are equal and we can therefore carry out the ANOVA with the `aov()` as we meet all its assumptions.
+
+```{r}
+pie_anova <- aov(size ~ site, data = pie_sites)
+```
+
+To view the ANOVA results of this model we use `summary()`
+
+```{r}
+summary(pie_anova)
+```
+
+### Post-hoc Tukey's HSD test
+
+From the ANOVA test we find that at least one of our group means is significantly different from the others. Now we can use the `TukeyHSD()` function to test all the pairwise differences to see which groups are different from each other.
+
+```{r}
+TukeyHSD(pie_anova)
+```
+
+This returns each combination of site comparisons and a p-value (the 'p adj' variable) for each.
+
+## Simple Linear Regression
+
+Lets more directly test Bergmann's rule by testing for a relationship between carapace width and latitude. Since our predictor (latitude) is a continuous, quantitative variable, we can conduct a simple linear regression.
+
+To conduct a regression model, we use the `lm()` function.
+
+```{r}
+pie_lm <- lm(size ~ latitude, data = pie_crab)
+
+#view the results of the linear model
+summary(pie_lm)
+```
+
+Our p-value is indicated in the 'Pr(\>\|t\|)' column for 'latitude' and at the bottom of these results, telling us that latitude does have a significant effect on crab size.
+
+From the results we also have an Estimate for latitude (0.49), which reflects the regression coefficient or strength and direction of the effect of latitude, along with the standard error for that estimate (0.03), reflecting the variation in that estimate.
+
+Lets view this visually and fit the linear regression line of best fit.
+
+```{r}
+pie_crab %>% 
+  ggplot(aes(x = latitude, y = size))+
+  geom_point()+
+  geom_smooth(method = "lm")
+
+```
+
+Now that we fit this model, we can use it to predict crab size at different latitudes with `predict()`. For example, lets predict carapace width at a latitudes of 32, 36, and 38 degrees. Note that we need to create these values as a new data frame with the same column name used in the data that the model was built of off.
+
+```{r}
+new_lat <- data.frame(latitude = c(32, 36, 38))
+
+predict(pie_lm, newdata = new_lat)
+```
+
+## Multiple Linear Regression
+
+Say we want to model the effect of more than one predictor on crab size. In this data set we also have continuous variables for air temperature and water temperature. Lets model the effect of latitude, air and water temperature on carapace width.
+
+Running a multiple linear regression is very similar to the simple linear regression, but now we specify our multiple predictor variables by adding them together with a `+` sign like this:
+
+```{r}
+pie_mlm <- lm(size ~ latitude + air_temp + water_temp, data = pie_crab)
+
+summary(pie_mlm)
+```
+
+These results show an overall p-value for the model, indicating a significant impact of the combination of predictor variables on crab size, and individual p-values for the effect of each individual predictor on crab size.
+
+Note however that normally with multiple regression, one of the assumptions is that there is no correlation between the predictor variables. We can test for correlations between more than two variables with the `cor()` function. Lets test for correlation between our three predictors:
+
+```{r}
+pie_crab %>% 
+  select(latitude, air_temp, water_temp) %>% 
+  cor()
+```
+
+Normally tests remove variables that have a correlation coefficient greater than 0.7/-0.7. These are all highly correlated (with coefficients near 1/-1), therefore probably not the best set of predictors to use for a multiple linear regression. Below in your assignment you will perform a multiple linear regression using variables that are a bit less correlated.
+
+## Exercises
+
+1.  **After** completing the ANOVA test (and post-hoc Tukey's HSD) in **section 6.2** to test for significant differences in crab size among 3 different sites: **1)** Create a boxplot showing the carapace width for each site where sites are *ordered by latitude* and **2)** report the findings of the statistical test as you would in a scientific paper. *Include both the code to create the boxplot and an image of the figure.* (6 pts.)
+
+2.  Conduct a simple linear regression for the effect of `water_temp_sd` (a measure reflecting annual variation in water temperature) on carapace width. Report your findings (include code *and* a sentence reporting the results) AND create a plot with a line of best fit. *Include both the code to create the plot and an image of the figure*. (10 pts).
+
+3.  Conduct a multiple linear regression for the effects of `latitude`, `air_temp_sd`, and `water_temp_sd` on carapace width. **First** check for correlations among the three predictor variables (and report the correlation table) and **second** report your findings from the multiple linear regression (code *and* a sentence reporting the results). (9 pts.)
+
+### Acknowledgements
+
+Thanks to the developers of [`lterdatasampler`](https://lter.github.io/lterdatasampler/index.html) for providing the data set and vignettes that helped guide the creation of this lesson plan.
+
+### Citations
+
+-   Johnson, D. 2019. Fiddler crab body size in salt marshes from Florida to Massachusetts, USA at PIE and VCR LTER and NOAA NERR sites during summer 2016. ver 1. Environmental Data Initiative. <https://doi.org/10.6073/pasta/4c27d2e778d3325d3830a5142e3839bb> (Accessed 2021-05-27).
+
+-   Johnson DS, Crowley C, Longmire K, Nelson J, Williams B, Wittyngham S. The fiddler crab, Minuca pugnax, follows Bergmann's rule. Ecol Evol. 2019;00:1--9. <https://doi.org/10.1002/ece3.5883>
+
+<!--chapter:end:05-multivariate.Rmd-->
+
+# PCA and R Markdown Intro
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE)
+```
+
+Before we get started with conducing a Principal Component Analysis (PCA), we are going to carry out this lesson in an R Markdown document and see how it can be used to **1)** organize workflows with text, code, and figures/results and **2)** render a nicely formatted report, which is what you will submit for this week's assignment.
+
+## Intro to R Markdown
+
+R Markdown is a notebook style interface integrating text and code, allowing you to create fully reproducible documents and render them to various elegantly formatted static or dynamic outputs.
+
+You can learn more about R Markdown at their website, which has really informative lessons on their [Getting Started](https://rmarkdown.rstudio.com/lesson-1.html) page and see the range of outputs you can create at their [Gallery](https://rmarkdown.rstudio.com/gallery.html) page.
+
+### Getting started with R Markdown
+
+Let's create a new document by going to File -\> New File -\> R Markdown. You will be prompted to add information like title and author. **Give it the title "Week 7 Assignment- PCA" and change the output to Word document.** Click OK to create the document.
+
+This creates an outline of an R Markdown document, and you see the title, author and date you gave the prompt at the top of the document which is called the YAML header.
+
+Notice that the file contains three types of content:
+
+-   An (optional) YAML header surrounded by `---`s
+
+-   R code chunks surrounded by ```` ``` ````s
+
+-   text mixed with simple text formatting
+
+Since this is a notebook style document, you run the code chunks by clicking the green play button, and then the output is returned either directly below the chunk or in the console depending on settings in Tools -\> Global Options -\> R Markdown.
+
+When you want to create a report from your notebook, you render it by hitting the 'Knit' button in the top of the Source pane, and it will render to the format you have specified in the YAML header. In order to do so though, you need to have the `rmarkdown` package installed *(which you will do below*).
+
+You can delete the rest of the code/text below the YAML header, and insert a new code chunk at the top. **You can insert code chunks by clicking the green C with the '+' sign at the top of the source editor, or with the keyboard short cut (Ctrl+Alt+I for Windows, Option+Command+I for Macs).** For the rest of the lesson you will be writing and executing code through code chunks, and you can type any notes in the main body of the document.
+
+The first chunk is almost always your set up code, where you read in libraries and any necessary data sets.
+
+We need three new packages for this lesson. `rmarkdown` is necessary in order to render your R Markdown (or .Rmd) files to specified formats (e.g., HTML, Word, PDF). `plotly` is a graphics library that we will use to demonstrate how you can make ggplot figures interactive and `ggfortify` is needed to plot PCA objects with `ggplot2`.
+
+Since you only need to install packages once, you do not need to include this in your R Markdown document, you can just run it directly in the console:
+
+```{r eval=FALSE}
+install.packages("rmarkdown")
+install.packages("plotly")
+install.packages("ggfortify")
+```
+
+This chunk should be placed at the beginning of your document to set up your environment for carrying out the analysis for the lesson.
+
+```{r}
+library(tidyverse)
+library(lterdatasampler)
+library(plotly)
+library(ggfortify)
+
+
+# retrieve data
+data("hbr_maples")
+```
+
+The `hbr_maples` data set consists of sugar maple seedling traits measured in calcium-treated and non-treated sites to study the response of seedlings to calcium addition at the Hubbard Brook LTER.
+
+Let's learn a little more about this data set:
+
+```{r}
+?hbr_maples
+```
+
+We have a lot of continuous variables representing leaf characteristics, and a few categorical variables (calcium-treated and non treated (reference) sites, low and mid elevation sites).
+
+With a large set of quantitative variables that are likely inter-correlated, this is a highly multivariate data space. This is where Principal Component Analysis (PCA) comes in to play. PCA is a type of ordination technique, which is a way of organizing things based on how similar they are. A PCA finds a new coordinate system by defining principal component (PC) axes that best account for the variation in this multivariate space, essentially reducing a large set of variables down to two variables that represent the two PC axes that (often) explain the most variance in the data. PCA is a common EDA (exploratory data analysis) technique to see patterns in multi-variable data sets, such as clusters among sites or samples, and/or you can use the PC variables in other analyses such as linear regression.
+
+## Principal Component Analysis (PCA)
+
+First, what is the temporal scale of this data set:
+
+```{r}
+unique(hbr_maples$year)
+```
+
+Data was collected for two years, 2003 and 2004. Let's run through this lesson with just the 2003 data. You notice that if you filter out just the 2004 samples, there was no data collected on leaf area, so lets just analyze the 2003 data which has 6 different trait variables. Its important to note that the PCA test does not handle NA values well, so let's use `drop_na()` here to drop any additional observations that have may have NAs for the quantitative variables.
+
+::: {.alert .alert-info}
+Note: using the `:` operator will select the range of columns from that on the left of `:` to that on the right, which works well for this data set since all of our quantitative variables of interest are ordered together.
+:::
+
+```{r}
+maples03 <- hbr_maples %>% 
+  filter(year == 2003) %>% 
+  drop_na(stem_length:corrected_leaf_area)
+
+```
+
+Let's first see if our quantitative variables are inter-correlated at all, as a PCA does not work the best with entirely uncorrelated data. To do this, we can use the `cor()` test you've seen before, and we need to reduce our `maples_03` data to just the quantitative variables we are performing the PCA on.
+
+```{r}
+vars <- maples03 %>% 
+  select(stem_length:corrected_leaf_area)
+
+cor(vars)
+```
+
+From this we see quite a few correlated variables (coefficients \~0.7 or greater). This tells us a PCA is a good analysis to use to summarize this data set.
+
+There are a few different functions to conduct a PCA in R (many available in additional R packages such as the `vegan` package for community analyses), but we are going to use the `prcomp()` function from base R, a reliable and stable function for conducting PCA. `prcomp()` takes in just the quantitative variables you want to perform the PCA on, so we can use the `vars` object we just created above.
+
+::: {.alert .alert-info}
+PCA is influenced by the magnitude of each variable, therefore scaling all your variables is often necessary. The `prcomp()` function can do this for us by adding `scale = TRUE`.
+:::
+
+```{r}
+maples03_pca <- prcomp(vars, scale = TRUE)
+```
+
+## Variance explained
+
+First we want to view the PC axes created and assess the variance explained by each. We can do this with `summary()` of our PCA object.
+
+```{r}
+summary(maples03_pca)
+```
+
+We can also view these results visually using a plot called a screeplot.
+
+```{r}
+screeplot(maples03_pca)
+```
+
+Looks like the first 2 axes explain nearly all the variance of the data space (\>80%, which is often the desired outcome). Notice that this function plots 'Variances' on the y-axis i.e., the **Eigenvalues** which reflect the *total* amount of variance explained by that axis instead of the proportion. The proportions are still interpretable from the size of the bar plots however.
+
+## Variable loadings
+
+We can next view the individual loadings of each variable (i.e., how much each variable contributes to each axis), by indexing the `rotation` element of the PCA object with the `$` operator.
+
+```{r}
+maples03_pca$rotation
+```
+
+Note that when we look at these individual loadings, when variables have opposite +/- values that means those variables are negatively correlated. From this we see that on the first axis PC1 (which explains the vast majority of the variance in the data set) all these variables are positively correlated. On PC2 we see a few negatively correlated, such as stem length and leaf dry mass.
+
+## Visualize patterns
+
+Now lets visualize some patterns with a biplot. We can create a biplot in base R with the `biplot()` function
+
+```{r}
+biplot(maples03_pca)
+```
+
+This however is pretty messy and hard to interpret. With the `ggfortify` package we can create biplots with `ggplot2` using the `autoplot()` function. We add `loadings = TRUE` and `loadings.label = TRUE` to add the variable loadings to the plots, on top of the sample scores (denoted with points).
+
+```{r}
+autoplot(maples03_pca, loadings = TRUE, loadings.label = TRUE)
+```
+
+This is still a little messy. To better view and interact with this visualization, we can leverage interactive plotting with the `plotly` package, and make this ggplot object interactive by putting it inside the `ggplotly()` function:
+
+```{r}
+ggplotly(autoplot(maples03_pca, loadings = TRUE, loadings.label = TRUE))
+```
+
+Notice now you can hover over the vector lines and points to see the raw values, and also zoom in to the plot to see the names of the clustered variable loadings better.
+
+We can view more patterns in the data by coloring points (i.e., seedling samples) by one of the other variables in our data set. This project involved assessing the impacts of Calcium addition on sugar maple seedlings by comparing seedling traits among calcium treated (W1) and untreated (Reference) sites. Therefore, let's color points by watershed treatment (the `watershed` variable) to see if there is any clustering in seedling traits among treatments.
+
+To do so with the `autoplot()` function we also specify the original dataset we used in `prcomp()` and the name of the column we want to color by. *(Note the `colour:` argument is spelled the British way.)* Let's make this interactive as well by using `ggplotly()`.
+
+```{r}
+ggplotly(autoplot(maples03_pca, data = maples03, colour = "watershed"))
+```
+
+There appears to be some visual separation/clustering among watershed types along PC1 (the x-axis). This pattern may lead you to statistically test for differences among watershed treatments, which you will carry out in Exercise 3 below.
+
+## A Note on Rendering:
+
+When knitting/rendering an R Markdown document to Word or PDF (anything *other than* HTML), it will fail if there is any code executing interactive visualizations. This includes anything created with `ggplotly()`. Therefore, **before rendering your assignment to a Word doc**, you should add `eval = FALSE` to any code chunk using `ggplotly()`. Put this argument at the top of the code chunk. It should look like this: `{r eval = FALSE}`.
+
+## Exercises
+
+To complete the assignment this week, you will write your entire workflow (i.e., the entire PCA lesson above) in an R Markdown document. At the bottom of your R Markdown document (after carrying out the PCA) please add an 'Exercises' section, write (or paste) questions 1-3 below and write your responses directly below them, and finally **knit your completed R Markdown file as a Word document**. For the assignment you will only need to submit the rendered Word document, which should contain all the code you ran AND your responses to the questions below (some of which also include code!).
+
+1.  Looking at the biplot, interpret the variable loadings based on vector angles. Which variable are positively, negatively, and uncorrelated with each other? (5 pts.)
+
+2.  Make a biplot (using the `autoplot` function) and color samples by **elevation**. Include the static plot (i.e., do not use `ggplotly`). Do you notice any clustering? (8 pts.)
+
+3.  We notice that there seems to be a visual separation among watershed treatment along our PC1 axis (which represents the entire set of seedling traits). Since we now have a single quantitative variable (PC1) and a categorical predictor (watershed), we can perform a t-test between watershed treatment to see if this difference in seedling traits is significant. Run the following chunk of code to add the PC1 variable to the original `maples03` data. Then perform a t-test and report your findings. Include all the code you ran (remember how to test for t-test assumptions and properly address them if needed) and format your interpretation as you would in a scientific paper/report. (12 pts.)
+
+```{r}
+# the PCA operates row wise, so we can bind the columns since they have the same number of rows that are all paired up. Recall that the 'x' element of the PCA shows each individual sample score on each axis
+
+maples03 <- bind_cols(maples03, maples03_pca$x)
+
+```
+
+<!--chapter:end:06-pca.Rmd-->
+
+# Introduction to Spatial Data in R
+
+```{r setup, include= FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE)
+```
+
+## Set Up
+
+You will return this assignment similar to last week, by working through this lesson in an R Markdown document, answering the Exercises at the end, and knitting as a Word document to submit to Canvas.
+
+Therefore, begin this lesson by creating a a new R Markdown document, and make sure to select output as Word.
+
+### Package Installation
+
+To carry out this lesson, you will need to install a couple new R packages to import and work with spatial data. The two main packages for working with spatial data are `sf` (*for vector data*) and `terra` (*for spatial data*). We will also be using `tmap` to visualize spatial data and make quick maps, along with the `tigris` package to import some vector data.
+
+::: {.alert .alert-info}
+Run the following chunk of code in your console, comment it out, OR add `eval = FALSE` in the top of the code chunk. You do not want it to be included when you knit the R Markdown document, because it re-install the packages every time you knit.
+:::
+
+```{r eval = FALSE}
+install.packages("sf")
+install.packages("terra")
+install.packages("tmap")
+install.packages("tigris")
+```
+
+Now we need to read in these packages at the beginning of our workflow. You **should** have this as an executable code chunk in your R Markdown document.
+
+```{r}
+library(tidyverse)
+library(sf)
+library(terra)
+library(tmap)
+library(tigris)
+```
+
+### Data download
+
+Second, you will need to download an elevation raster file to carry out this lesson. If you haven't already, in the R Project you have been using in this class, create a `data/` folder. Then, click the download button below, and save the file (elevation.tif) in the `data/` folder.
+
+::: callout-note
+<i class="bi bi-download"></i> [Download elevation raster](data/elevation.tif){download="elevation.tif"}
+:::
+
+## Spatial Data Formats
+
+**Vector Data**
+
+-   Locations (points)
+
+    -   Coordinates, address, country, city
+
+-   Shapes (lines or polygons)
+
+    -   Political boundaries, roads, building footprints, water bodies
+
+**Raster Data**
+
+-   Images (matrix of cells organized by rows and columns)
+
+    -   Satellite imagery, climate, landcover, elevation
+
+        ![](images/spatial_formats.png)
+
+## Import and manipulate spatial data
+
+### Vector Data
+
+[**`tigris`**](https://github.com/walkerke/tigris)
+
+**Polygons**
+
+All the data we are working with in this lesson is confined to the state of Colorado. Let's start by pulling in political boundaries for Colorado counties with the `tigris` package, which returns a shapefile consisting of polygons for each county.
+
+```{r}
+# download county shapefile for the state of Colorado
+counties <- counties(state = "CO")
+```
+
+The `tigris` package is one of many data retrieval R packages that uses API calls to pull in data from various online/open databases directly into your R session, without the need to separately download. When you close out your R session, these 'temp' files are erased, so it does not use up any of your local storage. At the end of this lesson you will learn how to save shapefiles to your computer if you do in fact want to store and use them in the future (e.g., you manipulated a data set quite a bit and don't want to re-run the entire process every new R session).
+
+**Lines**
+
+`tigris` has many other data sets in addition to political boundaries. Today let's work with another shapefile, importing roads for Larimer county, which returns a polyline dataset for all roads in Larimer County.
+
+```{r}
+roads <- roads(state = "CO", county = "Larimer")
+```
+
+[**`tmap`**](https://r-tmap.github.io/tmap/)
+
+Throughout this lesson we will be using the `tmap` package to produce quick static or interactive maps.
+
+`tmap` allows for both static ("plot" mode) and interactive ("view" mode) mapping options, which you can set using the function `tmap_mode()` . Lets start with making quick interactive plots. **Once you set the mode with `tmap_mode()`, every plot call to `tmap` after that produces a plot in that mode.**
+
+> Note: When you render this document to Word it will throw errors if you are trying to create interactive maps. *Before rendering* change "view" to "plot" in this code chunk.
+
+```{r}
+tmap_mode("view")
+```
+
+Lets view our Colorado counties and Larimer County roads shapefiles. To make a "quick thematic map" in `tmap` you can use the `qtm()` function. You can also use `tm_shape()` plus the type of spatial layer (e.g., `tm_polygons()`) to add your layers to the map if you want to customize the map a little more. Notice how the two following chunks of code produce the same map, but `qtm()` is much more concise (but limited on customization abilities). Note that to add map elements we use `+`, similar to `ggplot` objects.
+
+```{r eval = FALSE}
+#Using qtm
+qtm(counties)+
+  qtm(roads)
+
+```
+
+```{r}
+#Using tm_shape
+tm_shape(counties)+
+  tm_polygons()+
+tm_shape(roads)+
+  tm_lines()
+```
+
+*Rendering the map may take a little while due to relatively large size of the `roads` object.*
+
+Mess around with this map a little bit. See that you can change the basemap, turn layers on and off, and click on features to see their attributes.
+
+Let's inspect the spatial data sets a little more. What do you see when you run the following line of code:
+
+```{r}
+class(counties)
+```
+
+[**`sf`**](https://r-spatial.github.io/sf/)
+
+By default, the `tigris` package imports spatial data in `sf` format, which stands for 'simple features'. The `sf` package provides an easy and efficient way to work with vector data, and represents spatial features as a `data.frame` or `tibble` with a geometry column, and therefore also works well with `tidyverse` packages to perform manipulations like you would a data frame.
+
+For example, we are going to do an exercise for the Poudre Canyon Highway, so we want to filter out the roads data set to only those features. Using our investigative geography skills, we find the Poudre highway on the map and find out the 'FULLNAME' attribute is "Poudre Canyon Hwy". We can then use that knowledge to `filter()` the data set to just that highway:
+
+```{r}
+poudre_hwy <- roads %>% 
+  filter(FULLNAME == "Poudre Canyon Hwy")
+
+qtm(poudre_hwy)
+```
+
+**Points**
+
+Most often when you are working with points, you start with an excel file or something similar that consists of the raw geographic coordinates. When you have spatial data that is not explicitly spatial yet or not in the `sf` format, you use the `st_as_sf()` function to transform it.
+
+Lets work with a couple locations along the Poudre highway, making a small data frame of their coordinates:
+
+```{r}
+poudre_points <- data.frame(name = c("Mishawaka", "Rustic", "Blue Lake Trailhead"),
+                            long = c(-105.35634, -105.58159, -105.85563),
+                            lat = c(40.68752, 40.69687, 40.57960))
+```
+
+Now convert it to an `sf` object, specifying the longitude and latitude column names and the CRS (Coordinate Reference System). **Note that 'x' (longitude) always goes first followed by 'y' (latitude) in the `coords =`** argument. We use the WGS84 CRS (EPSG code = 4326) here because I know the source CRS I retrieved the coordinates from, and also the GPS system often used to collect coordinates uses WGS84.
+
+```{r}
+poudre_points_sf <- st_as_sf(poudre_points, coords = c("long", "lat"), crs = 4326)
+
+qtm(poudre_hwy)+
+  qtm(poudre_points_sf)
+```
+
+### Coordinate Reference Systems
+
+Probably the most important part of working with spatial data is the coordinate reference system (CRS) that is used. In order to analyze spatial data, all objects should be in the exact same CRS.
+
+We can check a spatial object's CRS by printing it to the console, which will return a bunch of metadata about the object. You can specifically return the CRS for `sf` objects with `st_crs()`.
+
+```{r}
+# see the CRS in the header metadata:
+counties
+
+#return just the CRS (more detailed)
+st_crs(counties)
+```
+
+You can check if two `sf` objects have the same CRS like this:
+
+```{r}
+st_crs(counties) == st_crs(poudre_points_sf)
+```
+
+Uh oh, the CRS of our points and lines doesn't match. While `tmap` performs some on-the-fly transformations to map the two layers together, in order to do any analyses with these objects you'll need to re-project one of them. You can project an `sf` object's CRS to that of another with `st_transform` like this:
+
+```{r}
+poudre_points_prj <- st_transform(poudre_points_sf, crs = st_crs(counties))
+
+#Now check that they match
+st_crs(poudre_points_prj) == st_crs(counties)
+```
+
+You can also project an `sf` object's CRS by specifying the EPSG code. [epsg.io](https://epsg.io/) can help you find the appropriate EPSG code for your coordinate system.
+
+For example, we know that `counties` is in NAD83 when we inspected the CRS above. The EPSG code for NAD83 is 4269, so we could also transform our points like this:
+
+```{r}
+poudre_points_prj <- st_transform(poudre_points_sf, crs = 4269)
+
+#Now check that they match
+st_crs(poudre_points_prj) == st_crs(counties)
+```
+
+### Raster Data
+
+Earlier in this lesson you downloaded a raster file for the elevation of Colorado. Make sure that file `elevation.tif` is in the `data/` folder of your R Project, and read the raster file in the `rast()` from the `terra` package like this:
+
+```{r}
+elevation <- rast("data/elevation.tif")
+```
+
+Make a quick plot to see the elevation layer:
+
+```{r}
+qtm(elevation)
+```
+
+By default, `tmap` uses a categorical symbology to color the cells by elevation. You can change that to a continuous palette with `tm_raster()` like this:
+
+```{r}
+tm_shape(elevation)+
+  tm_raster(style = "cont", title = "Elevation (m)")
+```
+
+Let's inspect this raster layer a little. By printing the object name to the console we see a bunch of metadata like resolution (cell size), extent, CRS, and file name.
+
+```{r}
+elevation
+```
+
+We see that the CRS (`coord. ref.`) is in NAD83. We can also retrieve the CRS of raster objects with `crs()`.
+
+```{r}
+crs(elevation)
+```
+
+Since this matches the CRS of our vector data we can carry on with analysis without re-projecting. However, if you did want to transform a raster object to a different CRS you would use the `project()` function from the `terra` package.
+
+**`terra`**
+
+We can use the `terra` package to work with raster data. For example, say we only want to see elevation along the Poudre highway. We can use `crop` to crop the raster to the extent of our `poudre_hwy` object using the `ext()` function to get the extent of that spatial object.
+
+> Note that 'extent' refers to the bounding box around a spatial object.
+
+```{r}
+
+elevation_crop <- crop(elevation, ext(poudre_hwy))
+
+```
+
+Lets make a final map with all the spatial data we created:
+
+```{r}
+qtm(elevation_crop)+
+  qtm(poudre_hwy)+
+  qtm(poudre_points_prj)
+```
+
+## Reading and Writing Spatial Data
+
+### Writing spatial data
+
+All of the spatial data we've created are only saved as objects in our environment. To save the data to disk, the `sf` and `terra` packages have functions to do so. You are not required to save these files, but if you want to follow along with these functions save the data to the `data/` folder you created at the beginning of this lesson.
+
+To save vector data with `sf`, use `write_sf()`
+
+```{r eval = FALSE}
+write_sf(poudre_hwy, "data/poudre_hwy.shp")
+
+write_sf(poudre_points_prj, "data/poudre_points.shp")
+```
+
+While you can give the file any name you want, note that **you must put '.shp' as the extension of the file**.
+
+After saving the above files, check your `data/` folder and notice the other auxiliary files saved with it (i.e., not just .shp). **It is VERY important that whenever you share shapefiles, all the auxiliary files are saved with it, so often shapefiles are transferred via .zip folders**. However, when reading shapefiles into R (*see below*) you only specify the file with the '.shp' extension. As long as all the other auxiliary files are saved in that same folder, it will read in the shapefile correctly.
+
+To save raster data with `terra` use `writeRaster()`
+
+```{r eval = FALSE}
+writeRaster(elevation_crop, "data/elevation_crop.tif")
+```
+
+Same as with the vector data, when saving raster data you must add the '.tif' file extension to the name. There are various formats raster data can be stored as (e.g., ASCII, ESRI Grid) but GeoTiffs are the most common and generally easiest to deal with in R.
+
+### Reading Spatial Data
+
+To read in shapefiles, you use `read_sf()` . *Note that this line of code will only run if you've saved your poudre_hwy object above with `write_sf()`.*
+
+```{r eval = FALSE}
+poudre_hwy <- read_sf("data/poudre_hwy.shp")
+```
+
+## Before Rendering!
+
+Before rendering this assignment to a Word document, remember Word does not work with any interactive visualizations. Therefore, go back to the beginning of your workflow where you set `tmap_mode()`, and instead change it to static plotting with `tmap_mode("plot")` OR comment out `tmap_mode("view")` as the default is "plot" mode.
+
+## Exercises
+
+Answer the following questions in your R Markdown document (also paste the questions above each answer). When your R Markdown document is complete, render it to a Word document and upload that to Canvas.
+
+**1.** Filter out the `counties` data set to only include Larimer, Denver, and Pueblo counties. (6 pts.)
+
+**2.** Lets look at the attributes for each county in our `counties` dataset:
+
+```{r}
+names(counties)
+```
+
+We have one variable in here `AWATER` that is the total area of surface water each county has. Say you want to spatially visualize the variation in surface water area among counties. Looking at the arguments you can use in `qtm()`:
+
+```{r eval = FALSE}
+?qtm
+```
+
+There is an argument `fill =`, where we can specify a variable in the dataset to color the polygons by. Use `qtm()` to make a map of `counties` that is colored by `AWATER`. Which county has the largest area of surface water? (7 pts.)
+
+**3.** Write two lines of code to retrieve the CRS from 1) `poudre_hwy` and 2) `elevation`. (5 pts.)
+
+**4.** `extract()` is a function in the `terra` package to extract raster values at specified spatial features. Run the following line of code, which will add a new column to `poudre_points_prj` called `elevation` that is the extracted elevation at each site.
+
+```{r}
+poudre_points_prj$elevation <-  extract(elevation, poudre_points_prj)[,2]
+```
+
+Then, make a barplot that compares the elevation at each of the 3 sites. *Hint : look into the use of `geom_col()`* *as opposed to `geom_bar()`.* Which site has the highest elevation? (7 pts).
+
+<!--chapter:end:07-spatial.Rmd-->
+
+# Data Visualization in R
+
+```{r include=FALSE}
+#knitr::opts_chunk$set(echo = TRUE, eval = TRUE, message = FALSE, warning = FALSE, fig.width = 16)
+
+
+```
+
+This lesson will go a little deeper into data visualization and how to customize figures and tables and make them 'publication ready'.
+
+First start by reading in the packages for this lesson:
+
+```{r eval = TRUE}
+library(tidyverse) #which includes ggplot2
+library(tmap) # interactive and static maps
+library(sf) # to manage spatial data to make maps
+library(tigris) # to import census tract spatial data
+```
+
+### Data Preparation
+
+For today's lesson we are going to be working with some census data for Larimer County, CO. This data can be found on Canvas in .csv format titled `larimer_census.csv`. Download that file and put it in your `data/` folder in the R Project you will be using for this lesson.
+
+After that, read the .csv into your R session:
+
+```{r eval = TRUE, message = FALSE}
+census_data <- read_csv("data/larimer_census.csv")
+```
+
+Inspect `census_data` and the structure of the data frame. This data contains information on median income, median age, and race and ethnicity for each census tract in Larimer County.
+
+::: {.alert .alert-info}
+Note: This census data for Larimer county was retrieved entirely in R using the `tidycensus` package. If you are interested in how I did this, I've uploaded the script to do so on Canvas titled 'getCensusData.R'. Note that you will need to retrieve your own census API key and paste it at the top of the script to run it (API keys are free and easy to get [here](https://api.census.gov/data/key_signup.html)). To learn more about `tidycensus`, check out [Analyzing U.S. Census Data](https://walker-data.com/census-r/index.html) by Kyle Walker.
+:::
+
+In the second half of this lesson we will be making maps, so we will need to retrieve spatial data in the form of census tract polygons for Larimer County. We can use the `tigris` package you used in the [Introduction to Spatial Data lesson](07-spatial.Rmd) to import a Larimer County census tract shapefile. We also want to just keep the `GEOID` column, as it will make our data join later on cleaner (i.e., we only need to keep the spatial data and an ID column).
+
+```{r eval = TRUE, message = FALSE}
+larimer_tracts <- tracts(state = "CO", county = "Larimer", progress_bar = FALSE) %>% 
+  select(GEOID)
+```
+
+Now in order to visualize our census tract attributes spatially, we need to join the `census_data` to `larimer_tracts`. We use the function `full_join()`, specify the two variables we want to join, and specify the name of the column in each that we want to join by (i.e., the column that is consistent between the two). In this case we want to use the column `GEOID`, which is a unique number given to each census tract in the US.
+
+We want to create a new variable that will become an `sf` object we can map with `tmap` later.
+
+```{r eval = TRUE}
+census_spatial <- full_join(larimer_tracts, census_data, by = ("GEOID"))
+```
+
+When you inspect this output, you can see that it is a spatial `sf` multipolygon object, where the data is exactly the same as our `census_data` data frame but now there is a geometry column/attribute tied to it.
+
+<hr>
+
+## Publication Ready Figures with `ggplot2`
+
+For this exercise you will learn how to spruce up your `ggplot2` figures with theme customization, annotation, color palettes, and more.
+
+To demonstrate some of these advanced visualization techniques, we will be analyzing the relationships among some census data for Larimer county.
+
+Let's start with this basic plot:
+
+```{r eval = TRUE}
+census_data %>% 
+  ggplot(aes(x = median_age, y = non_white_percent))+
+  geom_point(color = "black")
+```
+
+And by the end of this lesson turn it into this:
+
+![](images/census_plot.png)
+
+### General Appearance
+
+*Note that these customizations will vary depending on what `geom_`* *you are using.*
+
+#### Customize points within `geom_point()`
+
+-   color or size points by a variable or apply a specific color/number
+
+-   change the transparency with `alpha` (ranges from 0-1)
+
+```{r eval = TRUE}
+#specific color and size value
+census_data %>% 
+  ggplot(aes(x = median_age, y = non_white_percent))+
+  geom_point(color = "red", size = 4, alpha = 0.5)
+```
+
+When sizing or coloring points by a variable in the dataset, it goes within `aes():`
+
+```{r eval = TRUE}
+# size by a variable
+census_data %>% 
+  ggplot(aes(x = median_age, y = non_white_percent))+
+  geom_point(aes(size = median_income), color = "red")
+```
+
+```{r eval = TRUE}
+# color by a variable
+census_data %>% 
+  ggplot(aes(x = median_age, y = non_white_percent))+
+  geom_point(aes(color = median_income), size = 4)
+```
+
+#### Titles and limits
+
+-   add title with `ggtitle`
+
+-   edit axis labels with `xlab()` and `ylab()`
+
+-   change axis limits with `xlim()` and `ylim()`
+
+```{r eval = TRUE, warning=FALSE}
+census_data %>% 
+  ggplot(aes(x = median_age, y = non_white_percent))+
+  geom_point(aes(size = median_income), color = "black")+
+  ggtitle("Census Tract socioeconomic data for Larimer County")+
+  xlab("Median Age")+
+  ylab("People of Color (%)")+
+  xlim(c(20, 70))+
+  ylim(c(0, 35))
+```
+
+Be cautious of setting the axis limits however, as you notice it omits the full dataset which could lead to dangerous misinterpretations of the data.
+
+You can also put multiple label arguments within `labs()` like this:
+
+```{r eval = TRUE, warning=FALSE}
+census_data %>% 
+  ggplot(aes(x = median_age, y = non_white_percent))+
+  geom_point(aes(size = median_income), color = "black")+
+  labs(
+    title = "Census Tract socioeconomic data for Larimer County",
+    x = "Median Age",
+    y = "People of Color (%)"
+  ) +
+  xlim(c(20, 70))+
+  ylim(c(0, 35))
+```
+
+#### Chart components with `theme()`
+
+All `ggplot2` components can be customized within the `theme()` function. The full list of editable components (there's a lot!) can be found [here](https://ggplot2.tidyverse.org/reference/theme.html). Note that the functions used within `theme()` depend on the type of components, such as `element_text()` for text, `element_line()` for lines, etc.
+
+```{r eval = TRUE}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income), color = "black") +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)") +
+  theme(
+    #edit plot title
+    plot.title = element_text(size = 16, color = "blue"),
+    # edit x axis title
+    axis.title.x = element_text(face = "italic", color = "orange"),
+    # edit y axis ticks
+    axis.text.y = element_text(face = "bold"),
+    # edit grid lines
+    panel.grid.major = element_line(color = "black"),
+
+  )
+```
+
+Another change you may want to make is the value breaks in the axis labels (i.e., what values are shown on the axis). To customize that for a continuous variable you can use `scale_x_continuous()` / `scale_y_continuous` (for discrete variables use `scale_x_discrete` ). In this example we will also add `anlge =` to our axis text to able the labels so they are not too jumbled:
+
+```{r eval = TRUE}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income), color = "black") +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)") +
+  scale_x_continuous(breaks = seq(15, 90, 5))+
+  theme(
+    # angle axis labels
+    axis.text.x = element_text(angle = 45)
+  )
+```
+
+While these edits aren't necessarily *pretty*, we are just demonstrating how you would edit specific components of your charts. To edit overall aesthetics of your plots you can change the theme.
+
+#### Themes
+
+`ggplot2` comes with many built in theme options (see the complete list [here](https://r-graph-gallery.com/192-ggplot-themes)).
+
+For example, see what `theme_minimal()` and `theme_classic()` look like:
+
+```{r eval = TRUE}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income), color = "black") +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  theme_minimal()
+```
+
+```{r eval=TRUE}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income), color = "black") +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  theme_classic()
+```
+
+You can also import many different themes by installing certain packages. A popular one is `ggthemes`. A complete list of themes with this package can be seen [here](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/)
+
+To run this example, first install the `ggthemes` package and then load it in to your session:
+
+```{r eval = FALSE}
+install.packages("ggthemes")
+```
+
+```{r eval = TRUE}
+library(ggthemes)
+```
+
+Now explore a few themes, such as `theme_wsj`, which uses the Wall Street Journal theme, and `theme_economist` and `theme_economist_white` to use themes used by the Economist,
+
+```{r eval = TRUE}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income), color = "black") +
+  ggtitle("Socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  ggthemes::theme_wsj()+
+  # make the text smaller
+  theme(text = element_text(size = 8))
+```
+
+
+::: {.alert .alert-info}
+Note you may need to click 'Zoom' in the Plot window to view the figure better.
+:::
+
+```{r eval = TRUE}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income), color = "black") +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  ggthemes::theme_economist()
+```
+
+Some themes may look messy out of the box, but you can apply any elements from `theme()` afterwards to clean it up. For example, change the legend position:
+
+```{r eval = TRUE}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income), color = "black") +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  ggthemes::theme_economist()+
+  theme(
+    legend.position = "bottom"
+  )
+```
+
+
+### Color, Size and Legends
+
+#### Color
+
+To specify a single color, the most common way is to specify the name (e.g., `"red"`) or the Hex code (e.g., `"#69b3a2"`).
+
+You can also specify an entire color palette. Some of the most common packages to work with color palettes in R are `RColorBrewer` and [`viridis`](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html). Viridis is designed to be color-blind friendly, and RColorBrewer has a [web application](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) where you can explore your data requirements and preview various palettes.
+
+First, if you want to run these examples install the `RColorBrewer` and `viridis` packages:
+
+```{r eval = FALSE}
+install.packages("RColorBrewer")
+install.packages("viridis")
+
+```
+
+```{r eval = TRUE}
+library(RColorBrewer)
+library(viridis)
+```
+
+Now, lets color our points using the palettes in `viridis`. To customize continuous color scales with `viridis` we use `scale_color_viridis()`.
+
+```{r eval = TRUE}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income, color = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  viridis::scale_colour_viridis()
+```
+
+Second, let's see how to do that with an `RColorBrewer` palette, using the 'Greens' palette and `scale_color_distiller()` function. We add `direction = 1` to make it so that darker green is associated with higher values for income.
+
+```{r eval = TRUE}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income, color = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  scale_color_distiller(palette = "Greens", direction = 1)
+```
+
+#### Size
+
+You can edit the range of the point radius with `scale_radius` :
+
+```{r eval = TRUE}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income, color = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  scale_color_distiller(palette = "Greens", direction = 1)+
+  scale_radius(range = c(0.5, 6))
+  
+```
+
+#### Legends
+
+In the previous plots we notice that two separate legends are created for size and color. To create one legend where the circles are colored, we use `guides()` like this, specifying the same title for color and size:
+
+```{r eval = TRUE}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income, color = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  scale_color_distiller(palette = "BuGn", direction = 1)+
+  scale_radius(range = c(2, 6))+
+  theme_minimal()+
+  #customize legend
+  guides(color= guide_legend(title = "Median Income"), size=guide_legend(title = "Median Income"))
+```
+
+### Annotation
+
+Annotation is the process of adding text, or 'notes' to your charts. Say we wanted to highlight some details to specific points in our data, for example some of the outliers.
+
+When investigating the outlying point with the highest median age and high percentage of people of color, it turns out that census tract includes Rocky Mountain National Park and the surrounding area, and also the total population of that tract is only 53. Lets add these details to our chart with `annotate()`. This function requires several arguments:
+
+-   `geom`: type of annotation, most often `text`
+
+-   `x`: position on the x axis to put the annotation
+
+-   `y`: position on the y axis to put the annotation
+
+-   `label`: what you want the annotation to say
+
+-   Optional: `color`, `size`, `angle`, and more.
+
+```{r eval=TRUE}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income, color = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)")+
+  scale_color_distiller(palette = "BuGn", direction = 1)+
+  scale_radius(range = c(2, 6))+
+  theme_minimal()+
+  guides(color= guide_legend(title = "Median Income"), size=guide_legend(title = "Median Income"))+
+  # add annotation
+  annotate(geom = "text", x=76, y = 62,
+           label = "Rocky Mountain National Park region \n Total Populaion: 53")
+```
+
+We can also add an arrow to point at the data point the annotation is referring to with `geom_curve` and a few other arguments like so:
+
+```{r eval=TRUE}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income, color = median_income)) +
+  ggtitle("Census Tract socioeconomic data for Larimer County") +
+  xlab("Median Age") +
+  ylab("People of Color (%)") +
+  scale_color_distiller(palette = "BuGn", direction = 1) +
+  scale_radius(range = c(2, 6)) +
+  theme_minimal() +
+  guides(color = guide_legend(title = "Median Income"),
+         size = guide_legend(title = "Median Income")) +
+  annotate(geom = "text",
+           x = 74,
+           y = 62,
+           label = "Rocky Mountain National Park region \n Total Populaion: 53") +
+  # add arrow
+  geom_curve(
+    aes(
+      x = 82,
+      xend = 88,
+      y = 60,
+      yend = 57.5
+    ),
+    arrow = arrow(length = unit(0.2, "cm")),
+    size = 0.5,
+    curvature = -0.3
+  )
+```
+
+::: {.alert .alert-info}
+Note that with annotations you may need to mess around with the x and y positions to get it just right. Also, the preview you see in the 'plot' window may look jumbled and viewing it by clicking 'Zoom' can help.
+:::
+
+### Finalize and save
+
+We are almost done with this figure. I am going to add/change a few more elements below. Feel free to add your own!
+
+```{r eval = TRUE, fig.height=6}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income, color = median_income), alpha = 0.9) +
+  labs(
+    title = "Socioeconomic data for Larimer County",
+    subtitle = "Median age, median income, and percentage of people of color for each census tract",
+    x = "Median Age",
+    y = "People of Color (%)",
+    caption = "Data obtained from the U.S. Census 5-year American Community Survey Samples for 2017-2021"
+  )+
+  scale_radius(range = c(2, 6)) +
+  theme_classic() +
+  scale_color_viridis() + #use the Viridis palette
+  guides(color = guide_legend(title = "Median Income"),
+         size = guide_legend(title = "Median Income")) +
+  theme(
+    axis.title = element_text(face = "bold", size = 10),
+    plot.title = element_text(face = "bold",size = 15, margin = unit(c(1,1,1,1), "cm")),
+    plot.subtitle = element_text(size = 10, margin = unit(c(-0.5,0.5,0.5,0.5), "cm")),
+    plot.caption = element_text(face = "italic", hjust = -0.2),
+    plot.title.position = "plot", #sets the title to the left
+    legend.position = "bottom",
+    legend.text = element_text(size = 8)
+  ) +
+  annotate(geom = "text",
+           x = 74,
+           y = 62,
+           label = "Rocky Mountain National Park region \n Total Populaion: 53",
+           size = 3,
+           color = "black") +
+  geom_curve(
+    aes(
+      x = 82,
+      xend = 88,
+      y = 60,
+      yend = 57.5
+    ),
+    arrow = arrow(length = unit(0.2, "cm")),
+    size = 0.5,
+    color = "black",
+    curvature = -0.3
+  )
+```
+
+**Want to make it dark theme?**
+
+`ggdark` is a fun package to easily convert your figures to various dark themes. If you want to test it out, install the package and try `dark_theme_classic()` instead of `theme_classic()` in the previous figure:
+
+```{r eval = FALSE}
+install.packages("ggdark")
+```
+
+```{r eval = TRUE}
+library(ggdark)
+```
+
+```{r eval = TRUE}
+census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income, color = median_income), alpha = 0.9) +
+  labs(
+    title = "Socioeconomic data for Larimer County",
+    subtitle = "Median age, median income, and percentage of people of color for each census tract",
+    x = "Median Age",
+    y = "People of Color (%)",
+    caption = "Data obtained from the U.S. Census 5-year American Community Survey Samples for 2017-2021"
+  )+
+  scale_radius(range = c(2, 6)) +
+  dark_theme_classic() +
+  scale_color_viridis() + #use the Viridis palette
+  guides(color = guide_legend(title = "Median Income"),
+         size = guide_legend(title = "Median Income")) +
+  theme(
+    axis.title = element_text(face = "bold", size = 10),
+    plot.title = element_text(face = "bold",size = 15, margin = unit(c(1,1,1,1), "cm")),
+    plot.subtitle = element_text(size = 10, margin = unit(c(-0.5,0.5,0.5,0.5), "cm")),
+    plot.caption = element_text(face = "italic", hjust = -0.2),
+    plot.title.position = "plot", #sets the title to the left
+    legend.position = "bottom",
+    legend.text = element_text(size = 8)
+  ) +
+  annotate(geom = "text",
+           x = 74,
+           y = 62,
+           label = "Rocky Mountain National Park region \n Total Populaion: 53",
+           size = 3) +
+  geom_curve(
+    aes(
+      x = 82,
+      xend = 88,
+      y = 60,
+      yend = 57.5
+    ),
+    arrow = arrow(length = unit(0.2, "cm")),
+    size = 0.5,
+    curvature = -0.3
+  )
+```
+
+**Saving with `ggsave`**
+
+You can save your plot in the "Plots" pane by clicking "Export", or you can also do it programmatically with `ggsave()`, which also lets you customize the output file a little more. Note that you can give the argument a variable name of a ggplot object, or **by default it will save the last plot in the "Plots" pane**.
+
+```{r eval = FALSE}
+#specify the file path and name, and height/width (if necessary)
+ggsave(filename = "data/census_plot.png", width = 6, height = 5, units = "in")
+```
+
+#### Want to make it interactive?
+
+Remember the use of the `plotly` package and the `ggplotly()` function from previous lessons. We can put our entire ggplot code above inside `ggplotly()` below:
+
+```{r eval = TRUE}
+library(plotly)
+```
+
+```{r eval = TRUE}
+ggplotly(census_data %>%
+  ggplot(aes(x = median_age, y = non_white_percent)) +
+  geom_point(aes(size = median_income, color = median_income), alpha = 0.9) +
+  labs(
+    title = "Socioeconomic data for Larimer County",
+    subtitle = "Median age, median income, and percentage of people of color for each census tract",
+    x = "Median Age",
+    y = "People of Color (%)",
+    caption = "Data obtained from the U.S. Census 5-year American Community Survey Samples for 2017-2021"
+  )+
+  scale_radius(range = c(2, 6)) +
+  dark_theme_classic() +
+  scale_color_viridis() + #use the Viridis palette
+  guides(color = guide_legend(title = "Median Income"),
+         size = guide_legend(title = "Median Income")) +
+  theme(
+    axis.title = element_text(face = "bold", size = 10),
+    plot.title = element_text(face = "bold",size = 15, margin = unit(c(1,1,1,1), "cm")),
+    plot.subtitle = element_text(size = 10, margin = unit(c(-0.5,0.5,0.5,0.5), "cm")),
+    plot.caption = element_text(face = "italic", hjust = -0.2),
+    plot.title.position = "plot", #sets the title to the left
+    legend.position = "bottom",
+    legend.text = element_text(size = 8)
+  ))
+```
+
+Note that we removed the annotations as `plotly` doesn't yet support them.
+
+## Publication Ready Maps with `tmap`
+
+You used `tmap` in the [Introduction to Spatial Data lesson](07-spatial.Rmd). Let's use it here to visualize the spatial patterns of our Larimer County census data, and learn how to customize the map to make it 'Publication Ready'.
+
+To run these examples, make sure you have created the `census_spatial` object at the beginning of this lesson in the 'Data Preparation' section.
+
+```{r message=FALSE}
+#set the tmap mode to static
+tmap_mode("plot")
+```
+
+#### Color polygons
+
+Within `tm_polygons()` we can color by a variable in the data, specify the quantiles to group values by, and add a title:
+
+```{r eval = TRUE}
+tm_shape(census_spatial)+
+  tm_polygons(col = "median_income",
+              style = "quantile",
+              title = "Median Income")
+```
+
+#### Edit the layout
+
+Within `tm_layout()`, there are many ways to customize the map layout and elements. For example, let's remove the border around the map and move the legend:
+
+```{r eval = TRUE}
+tm_shape(census_spatial)+
+  tm_polygons(col = "median_income",
+              style = "quantile",
+              title = "Median Income")+
+  tm_layout(frame = FALSE,
+            legend.outside = TRUE)
+```
+
+You can also add other things like a scale bar, compass, and map credit:
+
+```{r eval = TRUE}
+tm_shape(census_spatial)+
+  tm_polygons(col = "median_income",
+              style = "quantile",
+              title = "Median Income")+
+  tm_layout(frame = FALSE,
+            legend.outside = TRUE)+
+  tm_scale_bar(position = c("left", "bottom")) +
+  tm_compass(position = c("right", "top")) +
+  tm_credits("Map credit goes here", position = c("left", "bottom"))
+```
+
+#### Faceting
+
+Want to compare across multiple variables? We can quickly do that with `tm_facets()` and supplying a string of column names for each variable we want to create a map for.
+
+Also, lets focus on the Fort Collins area. To change the extent of the map `tmap` has a cool feature that you can supply a city name to `bbox =` within `tm_shape()` and it will use Open Street Map to locate that city and crop your map to it!
+
+```{r eval = TRUE}
+tm_shape(census_spatial, bbox = "Fort Collins") +
+  tm_polygons(
+    c("median_income", "median_age", "non_white_percent"),
+    title = c("Median Income", "Median Age", "People of Color (%)"),
+    style = "quantile",
+    n = 5
+  ) +
+  tm_facets(ncol = 3) +
+  tm_layout(frame = FALSE,
+            legend.position = c("left", "bottom"),
+            legend.width = 0.5)
+```
+
+#### Color and Themes
+
+A few ways you can edit the aesthetics are shown below. You can supply any `RColorBrewer` or `viridis` palette to `palette =`, control border colors by separating `tm_polygons()` into `tm_borders()` and `tm_fill()`, and explore the different styles of `tm_style()` by running `?tm_style()`
+
+```{r eval = TRUE}
+tm_shape(census_spatial, bbox = "Fort Collins") +
+  tm_borders(col = "lightgray")+
+  tm_fill(
+    col = "non_white_percent",
+    title = "People of Color (%)",
+    style = "quantile",
+    n = 6,
+    palette = "PuBu",
+    legend.hist = TRUE #adds a histogram of the data to the map
+  ) +
+  tm_style("classic")+
+  tm_layout(frame = FALSE,
+            legend.outside = TRUE,
+            legend.hist.width = 5)
+```
+
+#### Saving your maps
+
+You can save your maps within the "Plots" pane, or use `tmap_save()`.
+
+```{r eval = FALSE}
+map <- tm_shape(census_spatial, bbox = "Fort Collins") +
+  tm_borders(col = "lightgray")+
+  tm_fill(
+    col = "non_white_percent",
+    title = "People of Color (%)",
+    style = "quantile",
+    n = 6,
+    palette = "PuBu",
+    legend.hist = TRUE
+  ) +
+  tm_style("classic")+
+  tm_layout(frame = FALSE,
+            legend.outside = TRUE,
+            legend.hist.width = 5)
+
+tmap_save(map, filename = "data/census_map.png")
+```
+
+## Publication Ready Tables with [`flextable`](https://ardata-fr.github.io/flextable-book/)
+
+While tables aren't necessarily always grouped in to the 'data visualization' discussion (but check out [these awesome tables](https://ardata.fr/en/flextable-gallery/) made with the `flextable` package!), this section will provide a quick example of creating publication ready tables you can render in your Word documents.
+
+To make tables that can render in a Word document, you can use the `flextable` package. If you want to test it out, install and load the package:
+
+```{r eval = FALSE}
+install.packages("flextable")
+```
+
+```{r eval = TRUE}
+library(flextable)
+```
+
+Using the `flextable` package, rendering nicely formatted tables is pretty simple by feeding a data frame into the `flextable()` argument. Normally you don't want a table with 50+ rows in it (publication tables are meant to summarize), so let's make a quick table showing some summary information of race and ethnicity for the top 5 wealthiest census tracts.
+
+We can clean our data and then pipe it into `flextable()` to create the rendered table:
+
+```{r eval = TRUE}
+census_data %>% 
+  arrange(-median_income) %>% 
+  filter(median_income > 145000) %>% 
+  select(NAME, White:Hispanic) %>% 
+  # round values to 2 decimal places
+  mutate(across(White:Hispanic, ~round(.x, digits = 2))) %>% 
+  flextable()
+```
+
+In addition to cleaning and formatting your data with `dplyr` functions before creating the flextable (e.g., edit column names, round numeric values), there are a ton of ways you can customize the flextable objects with various `flextable` functions. Check out the [flextable book](https://ardata-fr.github.io/flextable-book/) for more details.
+
+<hr>
+
+## The Assignment
+
+This week's assignment is to use anything you've learned today and additional resources (if you want) to make two maps. One 'good map' and one 'bad map'. Essentially you will first make a good plot, and then break all the rules of data viz and ruin it. For the bad map you **must specify two things** that are wrong with it (e.g., not color-blind friendly, jumbled labels, wrong plot for the job, poor legend or axis descriptions, etc.) Be as 'poorly' creative as you want! Check out [this thread](https://twitter.com/NSilbiger/status/1642006283103662080?s=20) by Dr. Nyssa Silbiger and [this thread](https://twitter.com/drdrewsteen/status/1172547837046820864?s=20) by Dr. Drew Steen for some bad plot examples, which were both the inspiration for this assignment.
+
+You can create these plots with any data (e.g., the census data from today, any datasets we've used in past lessons, or new ones!), the good (and bad) visualization just has to be something we have not made in class before.
+
+To submit the assignment, create an R Markdown document that includes reading in of the data and libraries, and the code to make the good figure and the bad figure. You will render your assignment to Word (**and make sure both code and plots are shown in the output**), and don't forget to add the two reasons (minimum) your bad figure is 'bad'. You will then submit this rendered Word document on Canvas. (25 pts. total)
+
+*Note: the class will vote on the worst bad plot and the winner will receive 5 points of extra credit!*
+
+<hr>
+
+### Acknowledgements and Resources
+
+The `ggplot2` content in this lesson was created with the help of [Advanced data visualization with R and ggplot2](https://www.yan-holtz.com/PDF/Ggplot2_advancedTP_correction.html#2-_annotation) by Yan Holtz. For more information on working with census data in R check out [Analyzing US Census Data](https://walker-data.com/census-r/index.html) by Kyle Walker (which includes a [visualization chapter](https://walker-data.com/census-r/exploring-us-census-data-with-visualization.html)).
+
+<!--chapter:end:08-viz.Rmd-->
+
+# Working with Qualitative Data in R
+
+The main package we use to analyze qualitative (i.e, non-numeric) data in R is [`tidytext`](https://juliasilge.github.io/tidytext/), which by the name you may have already guessed is designed to work with `tidyverse` packages and tidy data principles.
+
+Before starting make sure to `install.packages("tidytext")`. Also, if you want to make a word cloud visualization later in this tutorial, also install the `wordcloud` package. Then, read in the libraries:
+
+```{r eval =TRUE, warning=FALSE}
+library(tidyverse)
+library(tidytext)
+library(wordcloud)
+```
+
+You should download the `Qual Methods Survey.xlsx` file from Canvas and put it in the `data/` folder you've been using throughout class (within an R Project). Then run the following chunk of code, which uses `readxl` (which should already be installed with RStudio) to read in an Excel file. We also have to specify which sheet of the excel file to read in.
+
+```{r eval = TRUE}
+data <- readxl::read_excel("data/Qual Methods Survey.xlsx", 
+    sheet = "Form1")
+
+```
+
+Now, let's analyze one question at a time.
+
+### Is Science Objective?
+
+The first one was a short, 'Yes' or 'No' in response to the question 'Do you think science is objective?'.
+
+We can make a quick plot to summarize the responses:
+
+```{r eval = TRUE}
+data %>% 
+  ggplot(aes(x = `Do you think science is objective?`))+
+  geom_bar()+
+  #adds the actual count value to the chart
+  geom_text(aes(label = after_stat(count)), stat = "count", vjust = 1.5, size = 12, color = "white")
+```
+
+**Note that since we have spaces in our column headers, we must put the title within \` \` or " ".**
+
+Now the next question was an open ended follow up, "Why or Why Not?"
+
+Before we conduct the text analysis, lets split our data in two, those that said 'yes' and those that said 'no'.
+
+```{r eval = TRUE}
+yes <- data %>% 
+  filter(`Do you think science is objective?` == "Yes")
+
+
+no <- data %>% 
+  filter(`Do you think science is objective?` == "No")
+```
+
+Let's analyze the 'Yes' responses first.
+
+First, we always set up the text analysis by using the `tidytext` function `unnest_tokens()` which will tokenize the text for us, meaning taking the full responses and separating each word out into its own row becoming a unique observation. You can also separate responses by consecutive words (i.e., ngrams), sentences, and more by changing the `token =`argument, which we will do later.
+
+There is a second step we want to add to this process, which is to remove 'stop words', removing noise in the data. `tidytext` has a built in data frame of these stop words in English called `stop_words`.
+
+```{r eval = TRUE}
+stop_words
+```
+
+We remove these stop words from our data frame with the `anti_join()` function, which keeps all the words that are NOT found in `stop_words`. To easily `anti_join()`, we want to also name the new text column we create from `unnest_tokens()` `word`.
+
+So, to prepare our data set for text analysis the code looks like this:
+
+```{r eval = TRUE}
+yes_why <- yes %>%
+  #keep just our column of interest
+  select(`Why or why not?`) %>% 
+  unnest_tokens(output = word, #the new column name to put the text in
+                input = `Why or why not?`)  %>%
+  anti_join(stop_words, by = "word") # remove any stop words
+```
+
+```{r}
+yes_why
+```
+
+Let's do some summary stats of these responses:
+
+```{r eval = TRUE}
+yes_why %>% 
+  count(word, sort = TRUE)
+```
+
+We see a few most common words stand out. Let's visualize this, and since we still have 96 words lets visualize the words the come up more than once:
+
+```{r eval = TRUE}
+yes_why %>% 
+  count(word) %>% 
+  filter(n >1) %>% 
+  ggplot(aes(x = reorder(word,n), y = n))+ #reorder makes the bars go in order low to high by a variable
+  geom_col()+
+  theme(axis.text.x = element_text(angle = 45))
+```
+
+Now lets do the same for the "No" responses and compare:
+
+```{r eval = TRUE}
+no_why <- no %>% 
+  select(`Why or why not?`) %>% 
+  unnest_tokens(output = word, #the new column name to put the text in
+                input = `Why or why not?`)  %>%
+  anti_join(stop_words, by = "word")
+  
+```
+
+Snapshot of the word summary:
+
+```{r eval = TRUE}
+no_why %>% 
+  count(word, sort = TRUE)
+```
+
+```{r eval = TRUE}
+no_why %>% 
+  count(word) %>% 
+  filter(n >1) %>% 
+  ggplot(aes(x = reorder(word,n), y = n))+ #reorder makes the bars go in order high to low
+  geom_col()+
+  scale_y_continuous(expand = c(0,0))+
+  theme(axis.text.x = element_text(angle = 45))
+```
+
+Let's compare the top 5 words in "Yes" vs. "No" by binding our dataframes and faceting:
+
+```{r eval = TRUE, message=FALSE}
+yes_summary <- yes_why %>% 
+  count(word) %>% 
+  # take the top 5
+  top_n(5) %>% 
+  # create a new variable we can facet by later
+  mutate(answer = "Yes")
+
+
+# do the same for No
+no_summary <- no_why %>% 
+  count(word) %>% 
+  # take the top 5
+  top_n(5) %>% 
+  # create a new variable we can facet by later
+  mutate(answer = "No")
+  
+```
+
+Now bind these into one data frame and compare the answers
+
+```{r eval = TRUE}
+bind_rows(yes_summary, no_summary) %>% 
+  ggplot(aes(x = reorder(word,n), y = n))+
+  geom_col()+
+  facet_wrap(~answer)+
+  theme(axis.text.x = element_text(angle = 45))
+```
+
+Another way to compare the answers is to calculate the proportion of each word in the dataset and create a correlation plot
+
+```{r eval=TRUE, warning=FALSE}
+bind_rows(mutate(yes_why, answer = "yes"),
+          mutate(no_why, answer = "no"))%>% 
+  group_by(answer) %>% 
+  count(word) %>% 
+  mutate(proportion = n / sum(n)) %>% 
+  select(-n) %>% 
+  pivot_wider(names_from = answer, values_from = proportion) %>% 
+  ggplot(aes(x = no, y = yes))+
+  geom_jitter(color = "black")+
+  geom_text(aes(label = word), color = "black", check_overlap = TRUE, vjust = 1)
+```
+
+### What are the pros and cons of open science?
+
+Next, let's analyze the responses describing the pros and cons to open science.
+
+For this example let's compare the responses using n-grams, which looks at adjacent words instead of just single words, so we can detect common phrases and word associations. The process is similar as before, using the `unnest_tokens()` function, but this time we add the argument `token = "ngrams"`. We also specify `n` for how many consecutive words to examine, starting with an `n = 2` argument which is often called a 'bigram'.
+
+Let's start analyzing the *pros* of open science:
+
+```{r eval=TRUE}
+pros_bigrams <- data %>% 
+  select(ID, text = `What do you think are the pros of open science?`) %>% 
+  unnest_tokens(bigram, text, token = "ngrams", n = 2)
+```
+
+Examine the most common pairs of words:
+
+```{r eval=TRUE}
+pros_bigrams %>% 
+  count(bigram, sort = TRUE)
+```
+
+Let's clean this us by removing stop words. Since we now have a column with two word strings instead of one, we have to clean this a little differently. First, we use `separate()` to convert our single column into two, and specify that the empty space is our separator. Then we filter out stop words from both columns.
+
+```{r eval=TRUE}
+pros_bigrams %>% 
+  separate(bigram, into = c("word1", "word2"), sep = " ") %>% 
+  filter(!word1 %in% stop_words$word) %>% 
+  filter(!word2 %in% stop_words$word) %>% 
+  count(word1, word2, sort = TRUE)
+```
+
+Now we can see the most common pairs of words in the responses that don't contain noise/stop words. Lets do the same for the cons of open science:
+
+```{r eval =TRUE}
+cons_biograms <- data %>% 
+  select(ID, text = `What do you think are the cons of open science?`) %>% 
+  unnest_tokens(bigram, text, token = "ngrams", n = 2)
+```
+
+Now clean and summarize:
+
+```{r eval=TRUE}
+cons_biograms %>% 
+  separate(bigram, into = c("word1", "word2"), sep = " ") %>% 
+  filter(!word1 %in% stop_words$word) %>% 
+  filter(!word2 %in% stop_words$word) %>% 
+  count(word1, word2, sort = TRUE)
+```
+
+### Contribute to Equity and Environmental Justice
+
+Lastly, let's work with the survey question 'In what ways do you believe you can contribute to equity and environmental justice?'
+
+Let's first analyze the most common words in the data set, and make a word cloud using the `wordcloud` package.
+
+```{r eval=TRUE}
+data %>% 
+  select(`In what ways do you believe you (in any aspect of your life or career) can contribute to equity and environmental justice?`) %>% 
+  unnest_tokens(output = word, #the new column name to put the text in
+                input = `In what ways do you believe you (in any aspect of your life or career) can contribute to equity and environmental justice?`)  %>%
+  anti_join(stop_words, by = "word") %>% 
+  count(word) %>% 
+  # make the wordcloud
+  with(wordcloud(
+    words = word,
+    freq = n,
+    random.order = FALSE,
+    scale = c(2, 0.5),
+    min.freq = 2,
+    max.words = 100,
+    colors = c("#6FA8F5",
+               "#FF4D45",
+               "#FFC85E")
+  ))
+```
+
+Looks like the most common words are pretty repetitive of those in the original question. Lets look at the ngrams for these responses, and try looking at phrases by pulling three consecutive words at a time.
+
+```{r eval=TRUE}
+data %>% 
+  select(ID, text = `In what ways do you believe you (in any aspect of your life or career) can contribute to equity and environmental justice?`) %>% 
+  unnest_tokens(bigram, text, token = "ngrams", n = 3) %>% 
+  separate(bigram, into = c("word1", "word2", "word3"), sep = " ") %>% 
+  filter(!word1 %in% stop_words$word) %>% 
+  filter(!word2 %in% stop_words$word) %>% 
+  filter(!word3 %in% stop_words$word) %>% 
+  count(word1, word2, word3, sort = TRUE)
+```
+
+## More Resources
+
+There's a lot more you can do with qualitative data in R. I recommend checking out the `tidytext` [website](https://juliasilge.github.io/tidytext/index.html) and [book](https://www.tidytextmining.com/) for more things you can do with the package, such as sentiment analysis (identifying positive and negative words in a quantitative way), topic modeling, and more.
+
+<!--chapter:end:09-qual.Rmd-->
+

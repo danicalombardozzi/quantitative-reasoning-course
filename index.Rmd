@@ -1,6 +1,6 @@
 ---
 title: "Quantitative Reasoning for Ecosystem Science"
-author: "Danica Lombardozzi, PhD; Caitlin C. Mothes, PhD"
+author: "Danica Lombardozzi, PhD and Caitlin C. Mothes, PhD"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
