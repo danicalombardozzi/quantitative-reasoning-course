@@ -1,3 +1,9 @@
+---
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
 # Introduction to R and RStudio
 
 ```{r include=FALSE}
@@ -16,11 +22,13 @@ When you first open RStudio, it is split into 3 panels:
 
 <br>
 
-To write and save code you use **scripts**. You can open a new script with File -\> New File -\> R Script or by clicking the icon with the green plus sign in the upper left corner under 'File'. When you open a script, RStudio then opens a fourth **'Source' panel** in the upper-left to write and save your code. You can also send code from a script directly to the console to execute it by highlighting the **entire** code line/chunk (or place your cursor at the very end of the code chunk) and hit CTRL+ENTER on a PC or CMD+ENTER on a Mac.
+To write and save code you use **scripts**. Using a script will allow you to easily and quickly repeat your work, and make any quick modifications that arise. 
+
+You can open a new script with File -\> New File -\> R Script or by clicking the icon with the green plus sign in the upper left corner under 'File'. When you open a script, RStudio then opens a fourth **'Source' panel** in the upper-left to write and save your code. You can also send code from a script directly to the console to execute it by highlighting the **entire** code line/chunk (or place your cursor at the very end of the code chunk) and hit CTRL+ENTER on a PC or CMD+ENTER on a Mac.
 
 ![Image Credit: Software Carpentry](https://swcarpentry.github.io/r-novice-gapminder/fig/01-rstudio-script.png){alt="Image Credit: Software Carpentry"}
 
-It is good practice to add comments/notes throughout your scripts to document what the code is doing. To do this start your text with a `#`. R knows to ignore everything after a `#`, so you can write whatever you want there. Note that R reads line by line, so if you want your comments to carry over multiple lines you need a `#` at every line.
+In an R script, comments begin with a # - this causes R to recognize these lines/words as comments. A comment is a line of text embedded in a script file that R will not execute. Good programmers put lots of notes in their code so they (and others) can follow their logic. You should do the same. In R, a comment symbol (#) causes R to ignore all statements/text on the same line and to the right of the symbol. Note that R reads line by line, so if you want your comments to carry over multiple lines you need a `#` at every line.
 
 ## R Projects
 
@@ -32,21 +40,46 @@ You can start an R project in an existing directory or in a new one. To create a
 
 ![](images/project-start.png)
 
-Let's choose 'New Directory' then 'New Project'. Now choose a directory name, this will be both the folder name and the project name, so use proper spelling conventions (no spaces!). We recommend naming it something course specific, like 'ESS-330-2023'. Choose where on your local file system you want to save this new folder/project, then click 'Create Project'.
+Let's choose 'New Directory' then 'New Project'. Now choose a directory name, this will be both the folder name and the project name, so use proper spelling conventions (no spaces!). We recommend naming it something course specific, like 'ESS-330-2024'. Choose where on your local file system you want to save this new folder/project, then click 'Create Project'.
 
 Now you can see your RStudio session is working in the R project you just created. You can see the working directory printed at the top of your console is now the project directory, and in the 'Files' tab in RStudio you can see there is an .Rproj file with the same name as the R project, which will open up this R project in RStudio whenever you come back to it.
 
 **Test out how this .Rproj file works**. Close out of your R session, navigate to the project folder on your computer, and double-click the .Rproj file.
 
 ::: {.alert .alert-info}
-***What is a working directory?*** A working directory is the default file path to a specific file location on your computer to read files from or save files to. Since everyone's computer is unique, everyone's full file paths will be different. This is an advantage of working in R Projects, you can use *relative* file paths, since the working directory defaults to wherever the .RProj file is saved on your computer you don't need to specify the full unique path to read and write files within the project directory.
+***What is a working directory?*** A working directory is the default file path to a specific file location on your computer to read files from or save files to. Since everyone's computer is unique, everyone's full file paths will be different. An advantage of working in R Projects is that you can use *relative* file paths. Since the working directory defaults to wherever the .RProj file is saved on your computer you don't need to specify the full unique path to read and write files within the project directory.
 :::
+
+### Workspace
+When you run R, your workspace consists of the complete set of variables and functions and data that you have created or input. In RStudio - you can see your workspace, organized by argument type in your "Environment" on the right side of screen. You can view all of the stuff in your workspace by using `ls()`. Consider this example:
+```{r}
+# the long way to make a vector of integers 1-8
+long <- c(1, 2, 3, 4, 5, 6, 7, 8)
+# the short way to make a vector of integers 1-8
+short <- 1:8
+
+ls()
+```
+You should see 'long' and 'short' in your workspace. 
+
+You can remove stuff from your workspace by using rm(arg), where arg is some variable that you want to remove (you don’t literally type “arg” – “arg” is used as shorthand for “an argument to be passed to the function rm"). 
+
+Example: rm(long) should get rid of variable 'long'. Did it?
+```{r}
+rm(long)
+ls()
+```
+
+You can get rid of everything with the command:
+```{r}
+rm(list = ls())
+```
 
 ## Write your first script
 
 Let's start coding!
 
-The first thing you do in a fresh R session and at the beginning of a workfow is set up your environment, which mostly includes installing and loading necessary libraries and reading in required data sets. Let's open a fresh R script and save it in our root (project) directory. Call this script something like 'r-intro.R'.
+The first thing you do in a fresh R session and at the beginning of a workflow is set up your environment, which mostly includes installing and loading necessary libraries and reading in required data sets. Let's open a fresh R script and save it in our root (project) directory. Call this script something like 'r-intro.R'.
 
 ### Commenting code
 
@@ -62,7 +95,7 @@ At the top of your script, write some details about the script like a title, you
 # date
 ```
 
-Now for the rest of this lesson, write all the code in this script you just created. You can execute code from a script (i.e., send it from the script to the console) in various ways (see below). Think of these scripts as your code notes, you can write and execute code, add notes throughout, and then save it and come back to it whenever you want.
+For the rest of this lesson, write all the code in this script you just created. You can execute code from a script (i.e., send it from the script to the console) in various ways (see below). Think of these scripts as your code notes, you can write and execute code, add notes throughout, and then save it and come back to it whenever you want.
 
 ### Executing code
 
@@ -78,8 +111,17 @@ To execute code you can either highlight the entire line(s) of code you want to 
 
 You can also place your cursor at the very end of the line or chunk of code you want to run and hit CTRL+Enter or CMD+Enter.
 
+### Parentheses, Brackets, Quotes
+R uses special characters to “bracket” certain bits of information that must be interpreted in a particular way. For example, the parentheses ( ) are used to enclose the “arguments” that get sent to a particular function.
+
+The square brackets, [ ], are used to index elements of vectors, matrices, or other data types. Indexing is described below.
+
+The “curly braces”, { }, are used in function definitions – e.g., the enclose the code that defines whatever processes any functions you create will do. If this isn’t clear, you’ll see  example functions later.
+
+Apostrophes and quotation marks generally mean the following: "whatever is between me is text". You can also assign text to variables
+
 ::: {.alert .alert-info}
-All functions and other code chunks must properly close all parentheses or brackets to execute. If you have an un-closed parentheses/bracket you will get stuck in a never ending loop and will keep seeing `+` printed in the console. To get out of this loop you can either close the parentheses or bracket, or hit ESC to start over. You want to make sure you see the `>` in the console and not the `+` to execute code.
+All functions and other code chunks must properly close all parentheses or brackets to execute. If you have an open parentheses/bracket you will get stuck in a never ending loop and will keep seeing `+` printed in the console. To get out of this loop you can either close the parentheses or bracket, or hit ESC to start over. You want to make sure you see the `>` in the console and not the `+` to execute code.
 :::
 
 ### Getting help with code
@@ -92,14 +134,39 @@ Take advantage of the 'Help' pane in RStudio! There you can search packages and 
 
 ### Functions
 
+The most basic thing to do with R is math. The order of operations that R will follow is similar to general algebra: parentheses first, then exponents, next multiplication/division and finally addition/subtraction
+
+```{r}
+# mathematical functions with numbers:
+
+# addition: +
+4 + 5
+
+# subtraction: -
+10 - 8
+
+# multiplication: *
+5 * 6
+
+# division: /
+100 / 3
+
+# exponentiation: ^ or **
+4 ^ 7
+
+# parentheses can control the order of operations
+(4 + 5) ^ 6
+4 + (5 ^ 6)
+
+# log
+log(10)
+```
+
 R has many built in functions to perform various tasks. To run these functions you type the function name followed by parentheses. Within the parentheses you put in your specific arguments needed to run the function.
 
 Practice running these various functions and see what output is printed in the console.
 
 ```{r}
-# mathematical functions with numbers
-log(10)
-
 # average a range of numbers
 mean(1:5)
 
@@ -127,6 +194,24 @@ And now you see the output, '2.3025...' saved as a variable named 'x'. You can n
 x + 5
 ```
 
+You may be aware the "=" can also be used to assign variable - do NOT use this. Why? The assignment operator "<-" assigns stuff like a list of numbers to “x”, or an operation to a function, and so on, where an "=" can be interpreted as equality (note that R uses "==" to specify equality). Use the assignment operator for precision and to avoid confusion. You can read more [on this blog](https://colinfay.me/r-assignment/).
+
+You will frequently use the "=" sign in the context of logical comparisons. Some examples of logical comparisons: 
+
+```{r}
+5 == 4
+5 <= 4
+5 >= 4
+```
+
+After assigning a variable, you can access it's value by typing the variable and running the line of code:
+```{r}
+x
+```
+
+Variable names should start with a letter and can contain letters and numbers. You can easily “overwrite” a variable name by assigning something else to it. Assigning something to a variable you’ve already been using essentially voids the “old content” of the variable and frees it up to be assigned a new value.
+
+
 #### Base R vs. The Tidyverse
 
 You may hear the terms 'Base R' and 'Tidyverse' a lot throughout this course. Base R includes functions that are installed with the R software and do not require the installation of additional packages to use them. The Tidyverse is a collection of R packages designed for data manipulation, exploration, and visualization that you are likely to use in every day data analysis, and all use the same design philosophy, grammar, and data structures. When you install the Tidyverse, it installs all of these packages, and you can then load all of them in your R session with `library(tidyverse)`. Base R and Tidyverse have many similar functions, but many prefer the style, efficiency and functionality of the Tidyverse packages, and we will mostly be sticking to Tidyverse functions for this course.
@@ -147,33 +232,129 @@ You now see it in the Environment pane. Print it to the console to see a snapsho
 penguins
 ```
 
-This data is structured is a data frame, probably the most common data type and one you are most familiar with. These are like the spreadsheets you worked with in the first lesson, tabular data organized by rows and columns. However we see at the top this is called a `tibble` which is just a fancy kind of data frame specific to the `tidyvese`.
+This data is structured is a data frame, probably the most common data type and one you are most familiar with. These are like the spreadsheets you worked with in the first lesson, tabular data organized by rows and columns. However we see at the top this is called a `tibble` which is just a fancy kind of data frame specific to the `tidyverse`.
 
-At the top we can see the data type of each column. There are five main data types:
+At the top we can see the data type of each column. There are four main data types:
 
--   **character**: `"a"`, `"swc"`
+-   **string**: types of text which must be assigned with quotes (single quotes or double quotes will work). Example: `"a"`, `"swc"` 
 
--   **numeric**: `2`, `15.5`
+-   **boolean**: A logical with only two options, `TRUE`, `FALSE`. All letters need to be capitalized and they are not strings so do not need quotes. You can also use `T` and `F`. 
 
--   **integer**: `2L` (the `L` tells R to store this as an integer, otherwise integers can also be numeric data types)
+-   **float**: Numbers that are continuous. Example: `2`, `15.5`
 
--   **logical**: `TRUE`, `FALSE`
+-   **integer**: Whole numbers (positive, negative, and 0) that are used for counting things. Example: `2L` (the `L` tells R to store this as an integer). 
 
--   **complex**: `1+4i` (complex numbers with real and imaginary parts)
+Note: R will convert between ints and floats and you'll probably never have to worry about the difference but it is a good habit to get into to using the appropriate one - especially if you plan on programming in other languages
 
-Data types are combined to form data structures. R's basic data structures include
 
--   atomic vector
+### Data Structures
+Data types are combined to form data structures. R's basic data structures include vectors, lists, matrices, and data frames. The below section describes the different data types and how to create them in R. 
 
--   list
+#### Vector
+A **vector** is a series of variables in a specific order, where all the variables have the same type (i.e. number, string, or boolean). Vectors are constructed in a variety of ways. A few are described below.
+```{r}
+# The function 'c()' combines values into a vector or list
+c(1,2,3,4)  # here is a vector with a length of 4 containing the numbers between 1 and 4
 
--   matrix
+# The function 'rep()' replicates elements of vectors and lists
+rep(3, 4)   # this is a vector with a length of 4 containing the number 3, repeated 4 times
 
--   data frame
+# Vectors containing simple sequences can also be made using a colon as such:
+1:10  # going up
+84:35  # or going down
 
--   factors
+# more complex sequences can be made with seq(), which takes three inputs: a start, a stop, and a step as such:
+seq(3,45,2)  # starts at 3, goes to 45, by 2s
+```
 
-You can see the data type or structure of an object using the `class()` function, and get more specific details using the `str()` function. (Note that 'tbl' stands for tibble).
+Vectors can also be variables if they are assigned: 
+```{r}
+#Numeric vector
+myVec <- c(3,6,2,5,7,8)
+myVec2 <- rep(myVec, 4)  #repeating the first vector ("myVec") 4 times and storing that as a new vector
+mode(myVec)
+
+#String vector
+myStringVec <- c("erica", "jon", "jules")
+mode(myStringVec)
+
+#Boolean vector
+myBoolVec <- rep(T, 6)
+mode(myBoolVec)
+```
+
+#### List
+A **list** is a 1-dimensional object that holds mixed data types and structures. You can put together almost anything in a list, and can even nest a list within a list. Lists are not the best data structure for computation, though. 
+
+```{r}
+#Create a list
+myList <- list("apple", 1993, FALSE, penguins)
+str(myList)
+
+#Nest a list within a list
+list(myList, list("more stuff here", list("and more")))
+```
+
+You can use the `names()` function to retrieve or assign names to list and vector elements.
+
+```{r}
+names(myList) <- c("fruit", "year", "logic", "data")
+names(myList)
+```
+
+
+#### Matrix
+A **matrix** is is a two-dimensional set of variables - with rows and columns. They are formed in one of two ways: (1) with `matrix()` or (2) by combining multiple vectors with `cbind()` or `rbind()`. The first example uses `matrix()`.
+
+```{r}
+# the first vector is the data that will be in the matrix:
+dataForMatrix <- 1:100
+# the second vector is the dimensions of the matrix:
+dimensionsForMatrix <- c(20,5)  # this will end up being the number of rows (20) and the number of columns (5)
+# this builds the matrix:
+myMatrix <- matrix(dataForMatrix, dimensionsForMatrix)
+myMatrix
+
+# Equivalently, you can use the data itself rather than the variable names:
+myMatrix <- matrix(1:100, c(20,5))
+myMatrix  # this is now a matrix with 5 columns and 20 rows containing the numbers 1 to 100
+```
+
+Alternatively, if we have many vectors that need to be combined into a matrix we can use cbind or rbind, as in the below example
+
+```{r}
+# here are a bunch of data vectors
+dat1 <- 1:20
+dat2 <- 21:40
+dat3 <- 41:60
+dat4 <- 61:80
+dat5 <- 81:100
+
+myMatrix2 <- cbind(dat1, dat2, dat3, dat4, dat5)  # this uses cbind(), combining columns		
+myMatrix3 <- rbind(dat1, dat2, dat3, dat4, dat5)  # this uses rbind(), combining rows
+# for each of these to work, the vectors must be the same length
+```
+
+
+#### Data Frame
+A **data frame** is just like a matrix with one really big difference: data frames can store multiple types of data, for instance one column can have strings and the next can have integers. For this reason, data frames are the most common way to store biological data. They are created similar to matrixes with `data.frame()` or `cbind.data.frame()` and `rbind.data.frame()`. The function `data.frame()` is slightly different than `matrix()` however, as it takes any number of vectors of the same length and essentially cbinds them. Remember that a tibble (`tbl`) is a special type of data frame specific to the `tidyverse`
+
+```{r}
+# Vectors of different types
+Names <- c("erica", "jon", "jules", "molly")  # vectors of strings
+Ages <- c(40, 42, 2, 13)  # vector of ints
+Genus <- c("Homo", "Homo", "Homo", "Canis")  # vector of strings
+
+# Ways to combine to create a data frame
+Family <- data.frame(Names, Ages, Genus)
+cbind.data.frame(Names, Ages, Genus)  # this is exactly the same				
+rbind.data.frame(Names, Ages, Genus)  # this puts the data in rows rather than columns.
+```
+
+`Data.frame()` can take more inputs than just vectors, and one important one is stringsAsFactors which is by default set to TRUE, but often needs to be set to FALSE. What does it mean for strings to be factors (distinct groups) or not? Good question, and one that has caused much trouble to those learning R. If you would like to know more, you can read [this blog](https://blog.r-project.org/2020/02/16/stringsasfactors/)
+
+#### Checking data type or structure
+You can see the data type or structure of an object using the `class()` function, and get more specific details for a specific variable using the `str()` function.
 
 ```{r}
 class(penguins)
@@ -187,26 +368,6 @@ str(penguins$species)
 
 When we pull one column from a data frame, like we just did above with the `$` operator, that returns a vector. Vectors are 1-dimensional, and must contain data of a single data type (i.e., you cannot have a vector of both numbers and characters).
 
-If you want a 1-dimensional object that holds mixed data types and structures, that would be a list. You can put together pretty much anything in a list.
-
-```{r}
-myList <- list("apple", 1993, FALSE, penguins)
-str(myList)
-```
-
-You can even nest lists within lists
-
-```{r}
-list(myList, list("more stuff here", list("and more")))
-
-```
-
-You can use the `names()` function to retrieve or assign names to list and vector elements
-
-```{r}
-names(myList) <- c("fruit", "year", "logic", "data")
-names(myList)
-```
 
 ### Indexing
 
@@ -215,7 +376,7 @@ Indexing is an extremely important aspect to data exploration and manipulation. 
 Index lists:
 
 ```{r}
-# for lists we use double brackes [[]]
+# for lists we use double brackets [[]]
 myList[[1]]
 
 myList[["data"]]
@@ -230,29 +391,46 @@ myVector <- c("apple", "banana", "pear")
 myVector[2]
 ```
 
-Index data frames:
+Index data frames or matrices:
 
 ```{r}
-# dataframe[row(s), columns()]
+# dataframe[row(s), column(s)]
+# note that the ':' specifies a range. In the below example, the range is 1 through 5
 penguins[1:5, 2]
 
-penguins[1:5, "island"]
-
 penguins[1, 1:5]
+```
+
+When selecting an entire row or column, we leave that space 'open', using a ',' to hold that space.
+
+```{r}
+# select an entire column
+penguins[,4] # whole fourth column
+
+# select an entire row
+penguins[2,] # whole second row
+```
+
+Additional index options for data frames include column names and using the `$` notion. Note that these work because the columns in a data frame are named.
+
+```{r}
+
+penguins[1:5, "island"]
 
 penguins[1:5, c("species","sex")]
 
 penguins[penguins$sex=='female',]
 
 # $ for a single column
-penguins$species
+penguins$species # the whole 'species' column
+penguins$species[5] # the fifth element of the 'species' column
 ```
 
 ### Read and Write Data
 
 We used an R data package today to read in our data frame, but that probably isn't how you will normally read in your data. There are many ways to read and write data in R. To read in .csv files, you can use `read_csv()` which is included in the Tidyverse with the `readr` package, and to save csv files use `write_csv()`. The `readxl` package is great for reading in excel files, however it is not included in the Tidyverse and will need to be loaded separately.
 
-Find the .csv you created at the end of last week's lesson. Created a folder in your project directory called 'data/' and copy the .csv file there. You will store various data sets in this 'data/' folder throughout the course.
+Find the .csv you created at the end of last week's lesson. Create a folder in your project directory called 'data/' and copy the .csv file there. You will store various data sets in this 'data/' folder throughout the course.
 
 Say your .csv is called 'survey_data_clean.csv'. This is how you would read it in to R, giving it the object name 'survey_data'
 
