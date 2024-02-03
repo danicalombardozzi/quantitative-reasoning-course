@@ -1,7 +1,8 @@
 ---
 output:
-  pdf_document: default
+  word_document: default
   html_document: default
+  pdf_document: default
 ---
 # Setup Instructions
 
@@ -33,7 +34,7 @@ We will be working in RStudio this entire course, so after you have installed bo
 
 You will learn more about the ins and outs of RStudio in lab, but for set up purposes you will just be running code in the Console. Normally you want to save the code you write, but since package installation is only needed once (unless you are working on a new machine or need to update any packages) you can execute this directly in the console.
 
-Run the following three lines of code (one at a time) in the console. *You can click the copy button in the upper right corner when you hover over the code chunk, then paste that after the `>` in the Console. Spelling is important!*
+Run the following three lines of code (one at a time) in the console. *You can copy the code chunk, then paste that after the `>` in the Console. If you type the code by hand, keep in mind that spelling is important!*
 
 **Install the `tidyverse` package.** The Tidyverse is actually a collection of multiple R packages designed for data manipulation, exploration, and visualization that you are likely to use in every day data analysis. When you install the Tidyverse, it installs all of these packages, and you can later load all of them in your R session with `library(tidyverse).` Since you are installing multiple packages here this may take a little while.
 
